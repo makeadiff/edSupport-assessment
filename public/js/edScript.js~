@@ -1,0 +1,20 @@
+$(document).ready(function(){
+
+  //Working Script ----- alert('Hi');
+  
+  $('#select-center').change(function(e){
+    var centerId = selectClass.centerId.value;
+    //alert(centerId);
+    var url = '/fetchClasses';
+    e.preventDefault();
+    
+    $.post('fetchClass',{centerId: centerId},function(data){
+            
+    });
+    
+    
+  });
+
+  
+  
+});

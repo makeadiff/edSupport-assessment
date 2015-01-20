@@ -1,0 +1,43 @@
+/* Coded By: Rohit Nair */
+
+p.errMsg{
+	font-size:10px;
+	color:#900;
+	margin-left:10px;
+	font-style:italic;
+	font-family:verdana;
+	height:10px;
+}
+
+#childForm{
+	width:250px;
+	height:auto;
+	padding:25px;
+	margin:auto;
+	background:#F9F9F9;
+	font-family:verdana;
+	font-size:12px;
+	margin-top:100px;
+	box-shadow:0 0 5px #CCC;
+	-o-box-shadow:0 0 5px #CCC;
+	-ms-box-shadow:0 0 5px #CCC;
+	-moz-box-shadow:0 0 5px #CCC;
+	-webkit-box-shadow:0 0 5px #CCC;
+}
+
+input.cName{
+	width:95%;
+	padding:0 2.5%;
+	height:35px;
+	outline:0;
+	border:none;
+	border-bottom:thin #CCC solid;
+	background:none;
+}
+
+@media only screen and (min-width:150px) and (max-width:550px){
+	#childForm{
+		width:95%;
+		margin:auto;
+	}
+}

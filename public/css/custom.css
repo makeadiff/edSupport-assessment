@@ -1,0 +1,269 @@
+@font-face {
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Oswald Bold'), local('Oswald-Bold'), url(../fonts/Oswald-Bold.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Roboto Light'), local('Roboto-Light'), url(../fonts/Roboto-300.woff) format('woff');
+}
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(../fonts/Roboto-400.woff) format('woff');
+}
+.centered
+{
+
+    text-align: center;
+
+}
+
+@media (max-width:500px){
+    h1.title
+    {
+        font-family: 'Oswald',sans-serif;
+        color:#ffffff;
+        text-transform: uppercase;
+        font-size: 300%;
+    }
+}
+
+@media (min-width:500px) {
+    h1.title
+    {
+        font-family: 'Oswald',sans-serif;
+        color:#ffffff;
+        text-transform: uppercase;
+        font-size: 400%;
+    }
+}
+
+
+h2.sub-title
+{
+    font-family: 'Oswald',sans-serif;
+    color:#ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 300%;
+}
+
+h3.sub-title,h4.sub-title,h5.sub-title
+{
+    font-family: 'Oswald',sans-serif;
+    color:#ffffff;
+    display: inline-block;
+
+
+}
+.btn-dash
+{
+    height: 120px;
+    width : 120px;
+    padding:5px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+    background-color: Transparent;
+    border : none;
+
+}
+
+.white
+{
+    color:white;
+}
+
+.grey
+{
+    color:grey;
+}
+
+.twenty-five
+{
+    width : 25%
+}
+
+p.success
+{
+    font-family: sans-serif;
+    color:#ffffff;
+    font-size : 120%;
+}
+
+
+
+.transparent
+{
+    background-color: Transparent;
+}
+
+.form-control
+{
+
+
+}
+
+
+
+
+
+div.pin
+{
+   /* background-color:rgba(255,255,255,0.1);*/
+
+    padding:20px;
+
+    /*margin-left: 50px;
+    margin-right: 50px;*/
+}
+
+
+div.board
+{
+    margin:30px;
+}
+
+
+body.blue-red
+{
+    background: #3f4591; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #3f4591 0%, #a5607f 69%, #db766a 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#3f4591), color-stop(69%,#a5607f), color-stop(100%,#db766a)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4591', endColorstr='#db766a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+}
+
+
+body{
+  margin:0;
+  padding:0;
+ }
+
+#scoreUpdate table{
+  width:100%;
+  margin:auto;
+}
+
+input.markInput{
+  width:100%;
+  background:#F9F9F9;
+  text-align:center;
+  color:#FFF;
+  border:none;
+  background:none;
+}
+
+input.markSubmit{
+  width:200px;
+  height:40px;
+  outline:0;
+  border:none;
+  text-align:center;
+  color:#222;
+  border-radius:5px;
+  -o-border-radius:5px;
+  -ms-border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px; 
+  background:none;
+  font-weight:bold;
+  color:#FFF;
+  margin-top:5px;
+  border:2px solid #FFF;
+  transition:all 0.5s ease;
+  -o-transition:all 0.5s ease;
+  -ms-transition:all 0.5s ease;
+  -moz-transition:all 0.5s ease;
+  -webkit-transition:all 0.5s ease;  
+}
+
+input.markSubmit:hover{
+  transition:all 0.5s ease;
+  -o-transition:all 0.5s ease;
+  -ms-transition:all 0.5s ease;
+  -moz-transition:all 0.5s ease;
+  -webkit-transition:all 0.5s ease;  
+  background:#FFF;
+  color:#222;
+}
+
+select.edSelect{
+  width:80%;
+  height:40px;
+  background:#FFF;
+  border:none;
+  -webkit-appearance: none;
+  color:#222;
+}
+
+#scoreUpdate{
+  width:60%;
+  margin:auto;
+  margin-top:20px;
+  color:#FFF;  
+}
+
+#header td{
+  font-weight:900;
+  text-align:center;
+  padding:1%;
+  border:thin solid #FFF;
+}
+
+#content td{
+  font-weight:500;
+  margin-bottom:3px;
+  padding:1%;
+  border:thin solid #EEE;
+}
+
+p.title{
+  text-align:center;
+  color:#FFF;
+  font-weight:900;
+}
+
+option{
+  height:20px;
+  background:none;
+  outline:0;
+  border:none;
+}
+
+@media only screen and (min-width:150px) and (max-width:500px){
+  #scoreUpdate{
+    width:95%;
+    margin:auto;
+    margin-top:20px;
+    color:#FFF;  
+  }
+  
+  #scoreUpdate table{
+    width:100%;
+    margin:auto;
+  }
+  
+  #header td{
+    font-weight:900;
+    text-align:center;
+    border:thin solid #FFF;
+  }
+
+  #content td{
+    font-weight:500;
+    margin-bottom:3px;
+    border:thin solid #EEE;
+  }
+}

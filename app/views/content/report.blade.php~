@@ -1,0 +1,49 @@
+@extends('master.default')
+@section('content')
+
+	<?php
+		$centerId = $data['center'];	
+		$classId = $data['class'];
+		$year = $data['year'];	
+		
+		$yearText = $year.'-'.($year+1);
+		echo 'Center Id: '.$centerId.', Class Id: '.$classId.', Year: '.$yearText.'.';
+					
+		$users = DB::table('studentScores')->where('centerId',$centerId)->where('classId',$classId)->where('year',$year)->get();
+		echo Form::open(['route'=>'store']);		
+		echo '<table width="50%">'.'<thead> <td width="20%">Student Name</td>'.
+		'<td width="30%">MATH</td>'.
+		'<td width="30%">SCIENCE</td>'.
+		'<td width="30%">ENGLISH</td></thead>';		
+		foreach ($users as $user){
+			echo '<tr>'.
+			'<td>'.$user->studentId.'</td>';
+				
+				if($user->scoreMath==0){
+					$math = "";			
+				}
+				else{
+					$math = $user->scoreMath;		
+				}
+				if($user->scoreEng==0){
+					$eng = "";			
+				}
+				else{
+					$eng = $user->scoreEng;		
+				}
+				if($user->scoreScience==0){
+					$sci = "";			
+				}
+				else{
+					$sci = $user->scoreScience;		
+				}
+			echo '<td>'.
+			'<input type="text" value="'.$math.'"name="mathScore"/></td>'.
+			'<td><input type="text" value="'.$eng.'"name="sciScore"/></td>'.
+			'<td><input type="text" value="'.$sci.'"name="engScore"/></td>'.
+			'</tr>';
+		}
+		echo '</table>';
+
+	?>
+@stop
