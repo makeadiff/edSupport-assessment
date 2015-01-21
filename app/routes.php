@@ -41,4 +41,4 @@ Route::group(array('before'=>'login_check|edSupport_check'),function()
   Route::get('/manage/assessment','EditController@index');
   Route::post('/manage/assessment/update','EditController@updateData');
   Route::get('/manage/assessment/update','EditController@index');
-  
+  Route::get('/manage/report','ReportController@index');

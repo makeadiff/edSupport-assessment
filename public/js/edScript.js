@@ -11,11 +11,16 @@ $(document).ready(function(){
     	console.log(data);
 	var obj = JSON.parse(data);
 	var string="";
-	for(i=0;i<obj.length;i++){
-	  string += '<option value="'+obj[i].year+'">'+obj[i].year+'-'+(Number(obj[i].year)+1)+'</option>';
+	var string2="";
+	for(i=0;i<obj.year.length;i++){
+	  string += '<option value="'+ obj.year[i].year+'">'+obj.year[i].year+'-'+(Number(obj.year[i].year)+1)+'</option>';
 	}
 	$('#select-year').html(string);
-// 	console.log(string);
+	for(i=0;i<obj.class.length;i++){  
+	  string2 += '<option value="'+ obj.class[i].id+'">'+obj.class[i].name+'</option>'; 
+	}
+	$('#classSelected').html(string2);
+	console.log(string);
     });
   });
 
@@ -37,6 +42,28 @@ $(document).ready(function(){
     
     
   });
-  
-  
+   
+    
 });
+
+
+function ValidateMarkForm(){
+    var total = parseInt(updateScores.totalMarks.value);
+    if(total>100){
+      alert('Total Marks should not be greater than 100');
+    }
+    var subjects = 3;
+    var length = $('.markInput').length;
+    for (var i=0;i<length;i++){
+  	var markValue = parseInt(document.getElementsByClassName('markInput').item(i).value);	
+	
+	if(markValue>total){
+	  //Obtained Marks Cannot be Greater than Total Marks
+	  alert('Marks Obtained cannot be grater than to Total Marks Allocated');
+	  return false;
+	}
+    }
+    return true;
+}
+
+  
