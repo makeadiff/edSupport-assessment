@@ -1,11 +1,3 @@
-<?php
-	//session_start();
-	if(!isset($_SESSION)){
-		//take it to the MADApp login page.		
-	}
-?>
-
-
 <!doctype html>
 <html lang="en">
 <head> 
@@ -39,28 +31,28 @@
 <body>
 <body class="blue-red">
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <!--@section('navbar-header')-->
-        <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
-        <a class="navbar-brand" href="{{{URL::to('/')}}}">Ed Support</a>
-        @show
-    </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-            <!--@section('navbar-links')-->
-            <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
-            <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
-            <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
-            <li class=""><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
-            
-        </ul>
-
+    <div class="container-fluid">
+      <div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+	      <span class="sr-only">Toggle navigation</span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	  </button>
+	  <!--@section('navbar-header')-->
+	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
+	  <a class="navbar-brand" href="{{{URL::to('/')}}}">Ed Support</a>
+	  @show
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse-1">
+	  <ul class="nav navbar-nav navbar-right">
+	      <!--@section('navbar-links')-->
+	      <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
+	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
+	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
+	      <li class=""><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
+	  </ul>
+      </div>
     </div>
 </nav>
     <div class='board transparent-container'>	

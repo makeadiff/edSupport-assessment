@@ -2,6 +2,7 @@
 
 @section('content')
 	<div id="childForm">	
+	<div class="col-md-12 col-sm-6 text-center"><p class="title">Select the Center and Class and Enter Marks for the Selected Academic Year</p></div>
 	  <form id="select-class" name="selectClass" role="form" method="post" enctype="multipart/form-data" action="{{{URL::to('manage/assessment/')}}}">
 		  <div class="col-md-4 col-sm-6 text-center">
 		  <p class="title">Center</p>
@@ -17,11 +18,8 @@
 		  <div class="col-md-4 col-sm-6 text-center">
 		  <p class="title">Year</p>
 		  <select name="year" class="edSelect" id="select-year">
-			  <?php 
-			    foreach ($year as $yr){
-			      echo '<option value="'.$yr->year.'">'.$yr->year.'-'.($yr->year+1).'</option>';
-			    }
-			  ?> 
+		    <option value="2013">2013-2014</option>
+		    <option value="2014">2014-2015</option>
 		  </select>
 		  </div>
 		  <div class="col-md-4 col-sm-6 text-center">

@@ -157,12 +157,13 @@ body{
 }
 
 input.markInput{
-  width:100%;
+  width:45%;
   background:#F9F9F9;
   text-align:center;
   color:#FFF;
   border:none;
   background:none;
+  border-bottom:thin #FFF dashed;
 }
 
 input.markSubmit{
