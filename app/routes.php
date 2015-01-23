@@ -42,4 +42,9 @@ Route::group(array('before'=>'login_check|edSupport_check'),function()
   Route::post('/manage/assessment/update','EditController@updateData');
   Route::get('/manage/assessment/update','EditController@index');
   Route::get('/manage/report','ReportController@index');
-  Route::get('/manage/report/check-report','ReportController@generateReport');
+  Route::get('/manage/report/class-progress','ReportController@classProgress');
+  Route::post('/manage/report/fetchListOfCentres', 'ReportController@cityList');
+  Route::post('/manage/report/fetchYear', 'ReportController@fetchYear');
+  Route::post('/manage/report/class-progress/check-report','ReportController@generateReport');
+  
+  
