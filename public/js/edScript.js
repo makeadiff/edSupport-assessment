@@ -2,6 +2,20 @@ $(document).ready(function(){
 
   //Working Script ----- alert('Hi');
   
+  var height = $(window).height();
+  $('.blue-red').css({
+    minHeight:height    
+  });
+  
+  $('.total-all').change(function(){
+     var total = this.value;
+//      alert(total);
+     var totalClass = document.getElementsByClassName('total');
+     for(var i=0;i < totalClass.length; i++){
+	totalClass[i].setAttribute("value",total);
+     }
+  });
+  
   $('#select-center').change(function(e){
     var centerId = selectClass.centerId.value;
     var year = selectClass.year.value;
@@ -63,8 +77,8 @@ function ValidateMarkForm(){
       alert('Total Marks should not be greater than 100');
     }
     var subjects = 3;
-    var length = $('.markInput').length;   
-    for (var i=0;i<length-1;i+=2){
+      var length = $('.markInput').length;   
+    for (var i=1;i<length-1;i+=2){
   	var markValue = parseInt(document.getElementsByClassName('markInput').item(i).value);	
 	var total = parseInt(document.getElementsByClassName('markInput').item(i+1).value);
 // 	alert(total);
@@ -72,7 +86,7 @@ function ValidateMarkForm(){
     
 	if(markValue>total){
 	  //Obtained Marks Cannot be Greater than Total Marks
-	  alert('Marks Obtained cannot be grater than to Total Marks Allocated');
+	  alert('Marks Obtained cannot be grater than the Total Marks Allocated');
 	  return false;
 	}
     }

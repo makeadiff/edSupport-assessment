@@ -8,6 +8,9 @@
 	</p>
 	<div class="row" id="scoreUpdate">
 	<form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
+	  <div class="col-md-12 col-sm-6 text-center">
+	    <p class="title">Change Total for all: <input class="markInput total-all" type="number" value="100" max="100" min="0"/></p>
+	  </div>
 	<table><tr id="header"> <td width="40%">Student Name</td>
 	<?php
 	  echo '<input type="hidden" name="year" value="'.$year.'"/>';
@@ -44,13 +47,16 @@
 		      echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
 		    }
 		    if($class->subject_id == 8){
-		      echo '<input class="markInput math" type="number" value="'.$class->marks.'" max="100" min="0" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
+		      if($class->marks<0) $class->marks='';
+		      echo '<input class="markInput math" type="number" value="'.$class->marks.'" max="100" min="0" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
 		    }
 		    else if($class->subject_id == 9){
-		      echo '<td><input class="markInput sci" type="number" value="'.$class->marks.'" max="100" min="0" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
+		      if($class->marks<0) $class->marks='';
+		      echo '<td><input class="markInput sci" type="number" value="'.$class->marks.'" max="100" min="0" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
 		    }
 		    else if($class->subject_id == 10){
-		      echo '<td><input class="markInput eng" type="number" value="'.$class->marks.'" max="100" min="0" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
+		      if($class->marks<0) $class->marks='';
+		      echo '<td><input class="markInput eng" type="number" value="'.$class->marks.'" max="100" min="0" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
 		    }
 		    $studentId=$class->id;
 		  }

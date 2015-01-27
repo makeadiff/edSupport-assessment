@@ -141,15 +141,10 @@ body.blue-red
     background: -ms-linear-gradient(-45deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* IE10+ */
     background: linear-gradient(135deg,  #3f4591 0%,#a5607f 69%,#db766a 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4591', endColorstr='#db766a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-
 }
 
 
-body{
-  margin:0;
-  padding:0;
- }
+
 
 #scoreUpdate table{
   width:100%;
@@ -181,7 +176,7 @@ input.markSubmit{
   background:none;
   font-weight:bold;
   color:#FFF;
-  margin-top:5px;
+  margin-top:50px;
   border:2px solid #FFF;
   transition:all 0.5s ease;
   -o-transition:all 0.5s ease;
@@ -234,6 +229,7 @@ p.title{
   text-align:center;
   color:#FFF;
   font-weight:900;
+  height:35px;
 }
 
 option{
@@ -277,5 +273,68 @@ input.totalMarks{
     font-weight:500;
     margin-bottom:3px;
     border:thin solid #EEE;
+  }
+  
+  input.markInput{
+    width:80%;
+    background:#F9F9F9;
+    text-align:center;
+    color:#FFF;
+    border:none;
+    background:none;
+    border-bottom:thin #FFF dashed;
+  }
+  
+  #childform{
+	width:95%;
+	margin:auto;
+	margin-top:50px;
+  }
+  
+  input.markSubmit{
+    width:200px;
+    height:40px;
+    outline:0;
+    border:none;
+    text-align:center;
+    color:#222;
+    border-radius:5px;
+    -o-border-radius:5px;
+    -ms-border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px; 
+    background:none;
+    font-weight:bold;
+    color:#FFF;
+    margin-top:10px;
+    border:2px solid #FFF;
+    transition:all 0.5s ease;
+    -o-transition:all 0.5s ease;
+    -ms-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease;
+    -webkit-transition:all 0.5s ease;  
+  }
+  
+  #scoreUpdate table{
+    width:100%;
+    margin:auto;
+    margin-top:20px;
+  }
+  
+  select.edSelect{
+    width:100%;
+    height:40px;
+    background:#FFF;
+    border:none;
+    -webkit-appearance: none;
+    color:#222;
+  }
+  
+  #formRow{
+	margin-top:40px;
+  }
+  
+  p.title{
+	margin-top:10px;
   }
 }

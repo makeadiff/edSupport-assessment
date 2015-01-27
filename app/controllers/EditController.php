@@ -64,8 +64,11 @@
 	$totalEng = Input::get($te);
 	$totalSci = Input::get($ts);
 	
-// 	return $totalMath;
-
+	if(empty($marksEng)) $marksEng = -1;
+	if(empty($marksMath)) $marksMath = -1;
+	if(empty($marksSci)) $marksSci = -1;
+	
+	
 	$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();
 	$value2 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',9)->where('exam_id',$exam_id)->get();
 	$value3 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',10)->where('exam_id',$exam_id)->get();

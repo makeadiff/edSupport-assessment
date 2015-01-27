@@ -6,7 +6,7 @@
       <div class="centered">
 	  <br>
 	  <br>
-	  <h1 class="title">Oops!</h1>
+	  <h1 class="title"></h1>
 	  <br>
 	  <div class="row">
 	      <p class="success">
@@ -15,7 +15,7 @@
 	  </div>
 	  <br>
 	  <div class="row">
-	      <a href="{{{URL::to('/manage/')}}}" class='btn btn-primary btn-lg transparent'>Back to Home</a>;
+	      <a href="{{{URL::to('/manage/')}}}" class='btn btn-primary btn-lg transparent'>Back to Home</a>
 	  </div>
       </div>
   </div>

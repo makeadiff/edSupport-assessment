@@ -42,7 +42,7 @@
 	  <!--@section('navbar-header')-->
 	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
 	  <a class="navbar-brand" href="{{{URL::to('/')}}}">Ed Support</a>
-	  @show
+	  
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse-1">
 	  <ul class="nav navbar-nav navbar-right">
@@ -55,10 +55,12 @@
       </div>
     </div>
 </nav>
-    <div class='board transparent-container'>	
-    <h1 class='title' style="text-align:center">Ed Support Assessment</h1>
-  
-	@yield('content')
-    </div>
+  <div class="container-fluid">
+      <div class='board transparent-container'>	
+      <h1 class='title' style="text-align:center">Ed Support Assessment</h1>
+    
+	  @yield('content')
+      </div>
+  </div>
 </body>
 </html>

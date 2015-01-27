@@ -7,18 +7,44 @@
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
+	<table width="100%">
+	  <tr id="header">
+	    <td width="10%">Grade</td>
+	    <td width="10%">A1</td>
+	    <td width="10%">A2</td>
+	    <td width="10%">B1</td>
+	    <td width="10%">B2</td>
+	    <td width="10%">C1</td>
+	    <td width="10%">C2</td>
+	    <td width="10%">D</td>
+	    <td width="10%">E1</td>
+	    <td width="10%">E2</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">Mark Range</td>
+	    <td width="10%">91-100</td>
+	    <td width="10%">81-90</td>
+	    <td width="10%">71-80</td>
+	    <td width="10%">61-70</td>
+	    <td width="10%">51-60</td>
+	    <td width="10%">41-50</td>
+	    <td width="10%">33-40</td>
+	    <td width="10%">21-32</td>
+	    <td width="10%">0-20</td>
+	  </tr>
+	</table>
 	<table><tr id="header"> <td width="40%" rowspan="2">Student Name</td>
 	  <td width="20%" colspan="2">English</td>
 	  <td width="20%" colspan="2">Maths</td>
 	  <td width="20%" colspan="2">Science</td>
 	</tr>
 	<tr id="header">
-	  <td width="10%" colspan="1">2013-2014</td>
-	  <td width="10%" colspan="1">2014-2015</td>
-	  <td width="10%" colspan="1">2013-2014</td>
-	  <td width="10%" colspan="1">2014-2015</td>
-	  <td width="10%" colspan="1">2013-2014</td>
-	  <td width="10%" colspan="1">2014-2015</td>
+	  <td width="10%" colspan="1">2013-14</td>
+	  <td width="10%" colspan="1">2014-15</td>
+	  <td width="10%" colspan="1">2013-14</td>
+	  <td width="10%" colspan="1">2014-15</td>
+	  <td width="10%" colspan="1">2013-14</td>
+	  <td width="10%" colspan="1">2014-15</td>
 	</tr>
 	
 	<?php
@@ -35,8 +61,6 @@
 	?>
 		</table>
 		  <br/>
-		  <div class="col-md-12 col-sm-6 text-center">
-		    <input type="submit" class="markSubmit" name="submit" value="Update Scores" />
-		  </div>
+		    <div class="col-md-12 col-sm-6 text-center"></div>
 		</div>
 @stop
