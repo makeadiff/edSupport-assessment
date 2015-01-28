@@ -1,9 +1,0 @@
-<?php
-
-  Route::get('/',function(){
-    return View::Make('content.index');
-  });
-
-  /*Route::resource('/','EdControl');
-  Route::resource('manageScores','EdControl');
-  Route::resource('child','EdControl');*/
