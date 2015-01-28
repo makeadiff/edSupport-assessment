@@ -7,19 +7,19 @@
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
-	<table width="100%">
-	  <tr id="header">
-	    <td width="10%">Grade</td>
-	    <td width="10%">A1</td>
-	    <td width="10%">A2</td>
-	    <td width="10%">B1</td>
-	    <td width="10%">B2</td>
-	    <td width="10%">C1</td>
-	    <td width="10%">C2</td>
-	    <td width="10%">D</td>
-	    <td width="10%">E1</td>
-	    <td width="10%">E2</td>
-	  </tr>
+	<table class="footable" width="100%">
+	  <thead id="header">
+	    <th width="10%">Grade</th>
+	    <th data-hide="phone" width="10%">A1</th>
+	    <th data-hide="phone" width="10%">A2</th>
+	    <th data-hide="phone" width="10%">B1</th>
+	    <th data-hide="phone" width="10%">B2</th>
+	    <th data-hide="phone" width="10%">C1</th>
+	    <th data-hide="phone" width="10%">C2</th>
+	    <th data-hide="phone" width="10%">D</th>
+	    <th data-hide="phone" width="10%">E1</th>
+	    <th data-hide="phone" width="10%">E2</th>
+	  </thead>
 	  <tr id="header">
 	    <td width="10%">Mark Range</td>
 	    <td width="10%">91-100</td>

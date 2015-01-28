@@ -35,7 +35,7 @@
     }
   
     public function index(){
-      return View::make('content.errorAccess');
+      return View::make('content.errorAccess')->with('message','This page cannot be accessed directly');
     }
     
     public function updateData(){

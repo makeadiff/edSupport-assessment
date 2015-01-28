@@ -10,9 +10,9 @@
     <script src="{{{URL::to('/')}}}/js/jquery-1.9.0.js"></script>
     <script src="{{{URL::to('/')}}}/js/bootstrap.min.js"></script>
     <script src="{{{URL::to('/')}}}/js/footable.min.js"></script>
-    <script src="{{{URL::to('/')}}}/js/footable.filter.min.js"></script>
+<!--     <script src="{{{URL::to('/')}}}/js/footable.filter.min.js"></script> -->
     <script src="{{{URL::to('/')}}}/js/footable.paginate.min.js"></script>
-    <script src="{{{URL::to('/')}}}/js/footable.sort.min.js"></script>
+<!--     <script src="{{{URL::to('/')}}}/js/footable.sort.min.js"></script> -->
     <script src="{{{URL::to('/')}}}/js/uservoice.js"></script>
     <script src="{{{URL::to('/')}}}/js/edScript.js"></script>
     <script type="text/javascript">

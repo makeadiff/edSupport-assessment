@@ -10,7 +10,7 @@
 	  <br>
 	  <div class="row">
 	      <p class="success">
-		  THIS PAGE CANNOT BE ACCESS DIRECTLY
+		  {{$message}}
 	      </p>
 	  </div>
 	  <br>

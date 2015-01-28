@@ -200,7 +200,7 @@ select.edSelect{
   height:40px;
   background:#FFF;
   border:none;
-  -webkit-appearance: none;
+/*   -webkit-appearance: none; */
   color:#222;
 }
 
@@ -216,6 +216,7 @@ select.edSelect{
   text-align:center;
   padding:1%;
   border:thin solid #FFF;
+  height:auto;
 }
 
 .content td{
@@ -250,6 +251,12 @@ input.totalMarks{
 
 }	
 
+.footable-row-detail-cell{
+  border:thin solid #FFF;  
+  width:95%;
+  padding:2.5%;
+}
+
 @media only screen and (min-width:150px) and (max-width:500px){
   #scoreUpdate{
     width:95%;
@@ -273,16 +280,6 @@ input.totalMarks{
     font-weight:500;
     margin-bottom:3px;
     border:thin solid #EEE;
-  }
-  
-  input.markInput{
-    width:80%;
-    background:#F9F9F9;
-    text-align:center;
-    color:#FFF;
-    border:none;
-    background:none;
-    border-bottom:thin #FFF dashed;
   }
   
   #childform{
@@ -326,7 +323,7 @@ input.totalMarks{
     height:40px;
     background:#FFF;
     border:none;
-    -webkit-appearance: none;
+/*     -webkit-appearance: none; */
     color:#222;
   }
   
@@ -337,4 +334,6 @@ input.totalMarks{
   p.title{
 	margin-top:10px;
   }
+  
+ 
 }
