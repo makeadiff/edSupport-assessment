@@ -3,28 +3,30 @@
   Route::filter('login_check',function()
   {
       session_start();
-      
-//       if(empty($_SESSION['user_id'])){
-// 
-// 	  if(App::environment('local'))
-// 	      return Redirect::to('http://localhost/makeadiff.in/home/makeadiff/public_html/madapp/index.php/auth/login/' . base64_encode(Request::url()));
-// 	  else
-// 	      return Redirect::to('http://makeadiff.in/madapp/index.php/auth/login/' . base64_encode(Request::url()));
-// 
-//       }
+//       $_SESSION['user_id']=629;
+      if(empty($_SESSION['user_id'])){
 
+	  if(App::environment('local'))
+	      return Redirect::to('http://localhost/makeadiff.in/home/makeadiff/public_html/madapp/index.php/auth/login/' . base64_encode(Request::url()));
+	  else
+	      return Redirect::to('http://makeadiff.in/madapp/index.php/auth/login/' . base64_encode(Request::url()));
 
+      }
   });
   
   Route::filter('cs_check',function(){
-    $user_id = 6;
+    
+    $user_id = $_SESSION['user_id'];
+//     $user_id = 6;
     $user = DB::table('User')->find($user_id);
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$user_id)->get(); 
     
     $flag = false;
-
+  
+//     return $groups;
+    
     foreach($groups as $group) {
-      if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access') {
+      if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access' || $group->name == 'Leadership Team') {
 	  $flag = true;
       }
     }
@@ -34,7 +36,7 @@
   });
 
 
-  Route::group(array('before'=>'cs_check|login_check'),function()
+  Route::group(array('before'=>'login_check|cs_check'),function()
   {
     Route::get('/','HomeController@edHome');
     Route::get('/manage','EdControl@index');
