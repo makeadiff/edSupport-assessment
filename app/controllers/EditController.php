@@ -11,10 +11,14 @@
       $centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
       $levelName = DB::table('Level')->select('name')->where('id',$levelId)->first();
       
-      $classList = DB::table('Student')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id')->distinct()->where('level_id',$levelId)->get();
+//       $classList = DB::table('Student')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id')->distinct()->where('level_id',$levelId)->get();
+//       
+      $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',$levelId)->get();
       
-      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
+//       $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
 
+      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
+      
 //       return $marks; /* Marks is the Array with student marks against their names and Subject Ids. */
       
       if(empty($classList)){

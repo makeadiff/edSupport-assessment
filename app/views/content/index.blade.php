@@ -1,5 +1,5 @@
 @extends('master.default')
-@section('title')
+@section('link')
   
 @stop
 

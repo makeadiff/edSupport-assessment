@@ -50,6 +50,18 @@
 	      <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
 	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
 	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
+	      <li class=""><a>
+	      <?php
+		$id = $_SESSION['user_id'];
+		$name = DB::table('User')->select('name')->where('id',$id)->first();
+		echo $name->name.' (';	
+		$groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$id)->get();
+		foreach ($groups as $group){
+		  echo $group->name.',';
+		}
+		echo ')';
+    	      ?></a>
+	      </li>
 	      <li class=""><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
 	  </ul>
       </div>
