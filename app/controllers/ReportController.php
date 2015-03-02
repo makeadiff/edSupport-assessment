@@ -6,7 +6,41 @@
       return View::make('report.index');
     }
     
+//     select Student.Name,Center.name,City.name,Mark.marks,Subject.name,Mark.Total,EXTRACT(year from Exam.Exam_on) from Mark inner join Student on Student.id = Mark.student_id inner join Subject on Subject.id = Mark.subject_id inner join Exam on Exam.id = Mark.exam_id inner join Center on Student.center_id = Center.id inner join City on City.id = Center.city_id where marks > 0;
+    
+    public function generateRawDump(){
+      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.name as Student_Name','Student.sex as Sex','Level.name as Section','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total as Total','Exam.Exam_on as Year','Mark.status as status')->get();
+      
+      
+//       'Student.name as Student_Name','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total','EXTRACT(year from Exam.Exam_on)'
+//       return $datas;
+      
+      $file = fopen('AssessmentReport.csv','w');
+      $header = 'Student Name,Sex,Section,Center,City,Marks,Subject,Total,Year,Grade'.PHP_EOL;
+      fwrite($file,$header);
+      foreach($datas as $data){
+	$value = (float)$data->Marks/$data->Total*100;
+	$grade = getGrade($value);
+	$marks = $data->Marks;
+	if($marks<0){
+	  $marks = $data->status;
+	}
+	$year = strstr($data->Year, '-', true);
+	$string = $data->Student_Name.','.$data->Sex.','.$data->Section.','.$data->Center_Name.','.$data->City_Name.','.$marks.','.$data->Subject_Name.','.$data->Total.','.$year.','.$grade.PHP_EOL;
+	fwrite($file,$string);
+      }
+      
+      fclose($file);
+      $file='AssessmentReport.csv';
+      $headers = array(
+              'Content-Type: application/csv',
+            );
+      return Response::download($file,'Annual_Assessment_Report_Data',$headers);
+      
+    }
+    
     public function classProgress(){
+      
       
       $cityList = DB::table('City')->select('id','name')->where('id','<=',25)->orderBy('name','ASC')->get();
       $cityFirst = DB::table('City')->select('id','name')->where('id','<=',25)->orderBy('name','ASC')->first();
@@ -55,24 +89,24 @@
     $centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
     $levelName = DB::table('Level')->select('name')->where('id',$levelId)->first();
     
-    $classList = DB::table('Student')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id')->distinct()->where('level_id',$levelId)->get();
-    
+    $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',	$levelId)->get();
     
       
-    $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id','Mark.marks','Mark.subject_id','Mark.total','Mark.exam_id')->distinct()->where('level_id',$levelId)->get();
+    $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->get();
     
     if(empty($classList)||empty($marks)){
       return View::make('updateScores.nodata')->with('message','No Data is avaiable for the selected Center and Level.');
     }
     
-    $students = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.id')->distinct()->where('level_id',$levelId)->get();
-  
+    $students = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.id')->distinct()->where('level_id',$levelId)->get();
+    
+//     return $students;
     
     $data = array();
     $i = 0;
     foreach($students as $student){
       $studentId = $student->id;
-      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id','Mark.marks','Mark.subject_id','Mark.total','Mark.exam_id')->distinct()->where('level_id',$levelId)->where('Student.id',$studentId)->get();
+      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','Level.id','Mark.marks','Mark.subject_id','Mark.total','Mark.exam_id')->distinct()->where('level_id',$levelId)->where('Student.id',$studentId)->get();
 //       return $marks;
       $tempId = 0;
       foreach($marks as $mark){
@@ -112,6 +146,7 @@
     return View::make('report.showReport',['data'=>$data,'city'=>$cityName,'center'=>$centerName,'level'=>$levelName]);
     
    }
+   
    
       
    

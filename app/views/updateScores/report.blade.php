@@ -1,4 +1,4 @@
-@extends('master.default')
+@extends('master.update')
 @section('content')
 
 	<p class="title">
@@ -10,6 +10,26 @@
 	  <div class="col-md-12 col-sm-6 text-center">
 	    <p class="title">Change Total for all: <input class="markInput total-all" type="number" value="100" max="100" min="0"/></p>
 	  </div>
+	<p class="title">Legend: Incase the marks of the student are not presnet due to some reasons, Enter the values from the legend table below</p>
+	<br/><br/><br/>
+	<table class="footable" width="50%">
+	  <thead id="header">
+	    <th width="25%">Abbreviations</th>
+	    <th width="25%">Meaning</th>
+	  </thead>
+	  <tr id="header">
+	    <td width="10%">AB</td>
+	    <td width="10%">Student was Absent</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">NA</td>
+	    <td width="10%">Data not available</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">OT</td>
+	    <td width="10%">Other Reasons</td>
+	  </tr>
+	</table>
 	<table class="footable"><thead id="header"> <th width="40%">Student Name</td>
 	  <form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
@@ -26,11 +46,11 @@
 			      '<td>'.$class->name.'</td>';
 			      echo '<td>'.
 				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
-				  '<input class="markInput math" type="number" value="" max="100" min="0" name="engScore'.$i.'"/>/'.
+				  '<input class="markInput secured math" type="text" value="" name="engScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalEng'.$i.'"/></td>'.
-				  '<td><input class="markInput sci" type="number" value="" max="100" min="0" name="mathScore'.$i.'"/>/'.
+				  '<td><input class="markInput secured sci" type="text" value="" name="mathScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalMath'.$i.'"/></td>'.
-				  '<td><input class="markInput eng" type="number" value="" max="100" min="0" name="sciScore'.$i.'"/>/'.
+				  '<td><input class="markInput secured eng" type="text" value="" name="sciScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalSci'.$i.'"/></td>'.
 				'</tr>';
 			      $i++;
@@ -47,16 +67,28 @@
 			  echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
 			}
 			if($class->subject_id == 8){
-			  if($class->marks<0) $class->marks='';
-			  echo '<input class="markInput math" type="number" value="'.$class->marks.'" max="100" min="0" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
+			  if($class->marks == '-1' ) $class->marks='';
+			  if($class->marks == '-2' ) $class->marks='AB';
+			  if($class->marks == '-3' ) $class->marks='NA';
+			  if($class->marks == '-4' ) $class->marks='OT';
+
+			  echo '<input class="markInput secured math" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
 			}
 			else if($class->subject_id == 9){
-			  if($class->marks<0) $class->marks='';
-			  echo '<td><input class="markInput sci" type="number" value="'.$class->marks.'" max="100" min="0" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
+			  if($class->marks == '-1') $class->marks='';
+			  if($class->marks == '-2' ) $class->marks='AB';
+			  if($class->marks == '-3' ) $class->marks='NA';
+			  if($class->marks == '-4' ) $class->marks='OT';
+			  
+			  echo '<td><input class="markInput secured sci" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
 			}
 			else if($class->subject_id == 10){
-			  if($class->marks<0) $class->marks='';
-			  echo '<td><input class="markInput eng" type="number" value="'.$class->marks.'" max="100" min="0" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
+			  if($class->marks == '-1' ) $class->marks='';
+			  if($class->marks == '-2' ) $class->marks='AB';
+			  if($class->marks == '-3' ) $class->marks='NA';
+			  if($class->marks == '-4' ) $class->marks='OT';
+			  
+			  echo '<td><input class="markInput secured eng" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
 			}
 			$studentId=$class->id;
 		      }

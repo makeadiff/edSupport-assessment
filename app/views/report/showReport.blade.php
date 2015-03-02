@@ -1,4 +1,4 @@
-@extends('master.default')
+@extends('master.report')
 @section('content')
 
 	<p class="title">

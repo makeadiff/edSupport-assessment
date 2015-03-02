@@ -32,6 +32,15 @@
         text-transform: uppercase;
         font-size: 300%;
     }
+
+    h3.title
+    {
+        font-family: 'Oswald',sans-serif;
+        color:#ffffff;
+        text-transform: uppercase;
+        font-size: 300%;
+    }
+  
 }
 
 @media (min-width:500px) {
@@ -41,6 +50,14 @@
         color:#ffffff;
         text-transform: uppercase;
         font-size: 400%;
+    }
+    
+    h3.title
+    {
+        font-family: 'Oswald',sans-serif;
+        color:#ffffff;
+        text-transform: uppercase;
+        font-size: 300%;
     }
 }
 

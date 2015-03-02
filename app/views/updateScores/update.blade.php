@@ -1,4 +1,4 @@
-@extends('master.default')
+@extends('master.update')
 
 @section('content')
 	<div class="col-md-12 col-sm-6 text-center">

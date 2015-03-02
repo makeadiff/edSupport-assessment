@@ -11,16 +11,12 @@
       $centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
       $levelName = DB::table('Level')->select('name')->where('id',$levelId)->first();
       
-//       $classList = DB::table('Student')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id')->distinct()->where('level_id',$levelId)->get();
-//       
-      $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',$levelId)->get();
+      $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',	
+      $levelId)->get();
       
-//       $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentClass','StudentClass.student_id','=','Student.id')->join('Class','Class.id','=','StudentClass.class_id')->join('Level','Level.id','=','Class.level_id')->select('Student.name','Student.id','Class.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
-
       $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
       
-//       return $marks; /* Marks is the Array with student marks against their names and Subject Ids. */
-      
+  
       if(empty($classList)){
 	return View::make('updateScores.nodata')->with('message','No Data is avaiable for the selected Center and Level.');
       }
@@ -67,11 +63,60 @@
 	$totalMath = Input::get($tm);
 	$totalEng = Input::get($te);
 	$totalSci = Input::get($ts);
+	$statusEng = 'updated';
+	$statusMath = 'updated';
+	$statusSci = 'updated';
 	
-	if(empty($marksEng)) $marksEng = -1;
-	if(empty($marksMath)) $marksMath = -1;
-	if(empty($marksSci)) $marksSci = -1;
+	if(empty($marksEng)){
+	  $marksEng = -1;
+	  $statusEng = 'not updated';
+	}
+	else if($marksEng == "AB" || $marksEng ==  "ab"){
+	  $marksEng = -2;
+	  $statusEng = 'absent';
+	}
+	else if($marksEng == "NA" || $marksEng == "na"){
+	  $marksEng = -3;
+	  $statusEng = 'not available';
+	}
+	else if($marksEng == "OT" || $marksEng == "ot"){
+	  $marksEng = -4;
+	  $statusEng = 'others';
+	}
+	 
+	if(empty($marksMath)){
+	  $marksMath = -1;
+	  $statusMath = 'not updated';
+	}
+	else if($marksMath == "AB" || $marksMath ==  "ab"){
+	  $marksMath = -2;
+	  $statusMath = 'absent';
+	}
+	else if($marksMath == "NA" || $marksMath == "na"){
+	  $marksMath = -3;
+	  $statusMath = 'not available';
+	}
+	else if($marksMath == "OT" || $marksMath == "ot"){
+	  $marksMath = -4;
+	  $statusMath = 'others';
+	}
 	
+	if(empty($marksSci)){
+	  $marksSci = -1;
+	  $statusSci = 'not updated';
+	}
+	else if($marksSci == "AB" || $marksSci ==  "ab"){
+	  $marksSci = -2;
+	  $statusSci = 'absent';
+	}
+	else if($marksSci == "NA" || $marksSci == "na"){
+	  $marksSci = -3;
+	  $statusSci = 'not available';
+	}
+	else if($marksSci == "OT" || $marksSci == "ot"){
+	  $marksSci = -4;
+	  $statusSci = 'others';
+	}
 	
 	$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();
 	$value2 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',9)->where('exam_id',$exam_id)->get();
@@ -81,22 +126,22 @@
 
 	if(empty($value1)){
 	    DB::table('Mark')->insert(
-	      array('student_id'=>$studentId,'subject_id'=>8,'exam_id'=>$exam_id,'marks'=> $marksEng,'total'=>$totalEng)
+	      array('student_id'=>$studentId,'subject_id'=>8,'exam_id'=>$exam_id,'marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng)
 	    );
 	}
 	else{
-	  DB::table('Mark')->where('id',(int)($value1[0]->id))->limit(1)->update(array('marks'=> $marksEng,'total'=>$totalEng));
+	  DB::table('Mark')->where('id',(int)($value1[0]->id))->limit(1)->update(array('marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng));
 	}
 	
   //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones      
 
 	if(empty($value2)){
 	    DB::table('Mark')->insert(
-	      array('student_id'=>$studentId,'subject_id'=>9,'exam_id'=>$exam_id,'marks'=>$marksMath,'total'=>$totalMath)
+	      array('student_id'=>$studentId,'subject_id'=>9,'exam_id'=>$exam_id,'marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath)
 	    );
 	}
 	else{
-	  DB::table('Mark')->where('id',(int)($value2[0]->id))->update(array('marks'=>$marksMath,'total'=>$totalMath)
+	  DB::table('Mark')->where('id',(int)($value2[0]->id))->update(array('marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath)
 	  );
 	}
 	
@@ -104,11 +149,11 @@
   
 	if(empty($value3)){
 	    DB::table('Mark')->insert(
-	      array('student_id'=>$studentId,'subject_id'=>10,'exam_id'=>$exam_id,'marks'=>$marksSci,'total'=>$totalSci)
+	      array('student_id'=>$studentId,'subject_id'=>10,'exam_id'=>$exam_id,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci)
 	    );
 	}
 	else{
-	  DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('marks'=>$marksSci,'total'=>$totalSci));
+	  DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci));
 	}
 	
 	$j++;

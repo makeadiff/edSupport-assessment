@@ -15,7 +15,7 @@
 	  </div>
 	  <br>
 	  <div class="row">
-	      <a href='http://www.makeadiff.in/madapp/' class='btn btn-primary btn-lg transparent'>Back to Home</a>;
+	      <a href="{{{URL::to('/manage/update')}}}" class='btn btn-primary btn-lg transparent'>Back to Home</a>
 	  </div>
       </div>
   </div>

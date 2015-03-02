@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-//       $_SESSION['user_id']=629;
+//       $_SESSION['user_id']=67916;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -17,16 +17,15 @@
   Route::filter('cs_check',function(){
     
     $user_id = $_SESSION['user_id'];
-//     $user_id = 6;
     $user = DB::table('User')->find($user_id);
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$user_id)->get(); 
     
     $flag = false;
   
-//     return $groups;
+    $_SESSION['groups']=$groups;
     
     foreach($groups as $group) {
-      if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access' || $group->name == 'Leadership Team') {
+      if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access' || $group->name == 'Leadership Team' || $group->name == 'Ed Support Fellow' || $group->name == 'Teacher' || $group->name == 'Mentor') {
 	  $flag = true;
       }
     }
@@ -52,6 +51,7 @@
     Route::post('/manage/report/fetchListOfCentres', 'ReportController@cityList');
     Route::post('/manage/report/fetchYear', 'ReportController@fetchYear');
     Route::post('/manage/report/class-progress/check-report','ReportController@generateReport');
+    Route::get('/manage/report/generatecsv','ReportController@generateRawDump');
   });
     
   

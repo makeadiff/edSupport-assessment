@@ -6,7 +6,6 @@
 		  $user_id = $_SESSION['user_id'];
 		  $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
 		  $cityId = $cityId->city_id;
-// 		  $cityId=24;
 		  $centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
 		  
 		  $centerFirst = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->first();
