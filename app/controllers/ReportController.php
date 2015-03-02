@@ -35,7 +35,7 @@
       $headers = array(
               'Content-Type: application/csv',
             );
-      return Response::download($file,'Annual_Assessment_Report_Data',$headers);
+      return Response::download($file,'Annual_Assessment_Report_Data.csv',$headers);
       
     }
     
