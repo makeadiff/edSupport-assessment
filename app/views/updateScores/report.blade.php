@@ -3,14 +3,14 @@
 
 	<p class="title">
 	  <?php
-		  echo 'Center Name: '.$centerName->name.', Level Name: '.$levelName->name.', Year: '.$year.'.';
+		  echo 'Center Name: '.$centerName->name.' | Level Name: '.$levelName->name.' | Year: '.$year.'.';
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
 	  <!-- <div class="col-md-12 col-sm-6 text-center">
 	    <p class="title">Change Total for all: <input class="markInput total-all" type="number" value="100" max="100" min="0"/></p>
 	  </div> -->
-	<p class="title">Legend: Incase the marks of the student are not preseet due to some reasons, Enter the values from the legend table below</p>
+	<p class="title">In case marks are not available, please enter the abbreviations from the table below.</p>
 	
 	<table class="footable" width="50%">
 	  <thead id="header">
@@ -19,7 +19,7 @@
 	  </thead>
 	  <tr id="header">
 	    <td width="10%">AB</td>
-	    <td width="10%">Student was Absent</td>
+	    <td width="10%">Student Absent</td>
 	  </tr>
 	  <tr id="header">
 	    <td width="10%">NA</td>

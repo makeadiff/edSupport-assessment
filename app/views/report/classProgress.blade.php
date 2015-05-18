@@ -2,7 +2,7 @@
 
 @section('content')
 	<div id="childForm">	
-	<div class="col-md-12 col-sm-6 text-center"><p class="title">Select the Center and Class and Generate the Academic Report for the Selected Academic Year</p></div>
+	<div class="col-md-12 col-sm-6 text-center"><p class="title">Select the city, center, and class to generate the academic report</p></div>
 	  <form id="select-class" name="getReport" role="form" method="post" enctype="multipart/form-data" action="{{{URL::to('manage/report/class-progress/check-report')}}}">
 		  <div class="col-md-4 col-sm-6 text-center">
 		  <p class="title">City</p>

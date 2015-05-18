@@ -73,30 +73,18 @@ $(document).ready(function(){
 
 
 function ValidateMarkForm(){
-//     if(total>100){
-//       alert('Total Marks should not be greater than 100');
-//     }
-    var subjects = 3;
-    var length = $('.markInput').length;   
-    for (var i=1;i<length-1;i+=2){
-	var markValue = parseInt(document.getElementsByClassName('markInput').item(i).value);	
-	//var total = parseInt(document.getElementsByClassName('markInput').item(i+1).value);
-	var marks = document.getElementsByClassName('markInput').item(i).value;
-	
-	/*if(!isNaN(markValue)){
-	  if(markValue > total){
-	    alert("Marks cannot be greater than total value");
-	    return false;
-	  }
-	}
-	else{*/
-	  if(marks == "AB" ||marks == "ab" || marks == "NA" || marks == "na" || marks == "OT" || marks == "ot" || (marks >= 0 && marks <=100)){
+  var subjects = 3;
+  var length = $('.markInput').length;   
+  for (var i=1;i<length-1;i+=2){
+	 var markValue = parseInt(document.getElementsByClassName('markInput').item(i).value);	
+	 var marks = document.getElementsByClassName('markInput').item(i).value;
+	 if(marks == "AB" ||marks == "ab" || marks == "NA" || marks == "na" || marks == "OT" || marks == "ot" || (marks >= 0 && marks <=100)){
 	  }
 	  else{
 	    alert("Enter Marks or values from the Legend");
 	    return false;
 	  }
-	//}
+	}
 
     //}
     return true;
