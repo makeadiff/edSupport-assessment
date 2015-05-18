@@ -16,7 +16,7 @@
 	  <br>
 		  <div class="row">
 			  <div class="row">
-			      <a href="{{{URL::to('/')}}}" class='btn btn-primary btn-lg transparent'>Back to Home</a> &nbsp; <a href="{{{URL::to('/manage/update')}}}" class='btn btn-primary btn-lg transparent'>Update Scores</a>
+			      <a href="http://makeadiff.in/madapp/index.php/edsupport/dashboard_view" class='btn btn-primary btn-lg transparent'>Back to Home</a> &nbsp; <a href="{{{URL::to('/manage/update')}}}" class='btn btn-primary btn-lg transparent'>Update Scores</a>
 			  </div>
 	      </div>
       </div>
