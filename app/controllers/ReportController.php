@@ -114,28 +114,112 @@
 	    $data[$i]['name'] = $mark->name;
 	  }
 	  if($mark->subject_id==8 && $mark->exam_id==1){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['eng13'] = getGrade($value);
+      if($mark->marks==-1){
+        $data[$i]['eng13'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['eng13'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['eng13'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['eng13'] = 'OT';
+      }
+      else{
+  	    $value = (float)$mark->marks/$mark->total*100;
+  	    $data[$i]['eng13'] = getGrade($value);
+      }
 	  }
 	  else if($mark->subject_id==9 && $mark->exam_id==1){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['math13'] = getGrade($value);
+	    if($mark->marks==-1){
+        $data[$i]['math13'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['math13'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['math13'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['math13'] = 'OT';
+      }
+      else{
+        $value = (float)$mark->marks/$mark->total*100;
+        $data[$i]['math13'] = getGrade($value);
+      }
 	  }
 	  else if($mark->subject_id==10 && $mark->exam_id==1){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['sci13'] = getGrade($value);
+	    if($mark->marks==-1){
+        $data[$i]['sci13'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['sci13'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['sci13'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['sci13'] = 'OT';
+      }
+      else{
+        $value = (float)$mark->marks/$mark->total*100;
+        $data[$i]['sci13'] = getGrade($value);
+      }
 	  }
 	  else if($mark->subject_id==8 && $mark->exam_id==2){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['eng14'] = getGrade($value);
+	    if($mark->marks==-1){
+        $data[$i]['eng14'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['eng14'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['eng14'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['eng14'] = 'OT';
+      }
+      else{
+        $value = (float)$mark->marks/$mark->total*100;
+        $data[$i]['eng14'] = getGrade($value);
+      }
 	  }
 	  else if($mark->subject_id==9 && $mark->exam_id==2){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['math14'] = getGrade($value);
-	  }
+	    if($mark->marks==-1){
+        $data[$i]['math14'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['math14'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['math14'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['math14'] = 'OT';
+      }
+      else{
+        $value = (float)$mark->marks/$mark->total*100;
+        $data[$i]['math14'] = getGrade($value);
+      }
+    }
 	  else if($mark->subject_id==10 && $mark->exam_id==2){
-	    $value = (float)$mark->marks/$mark->total*100;
-	    $data[$i]['sci14'] = getGrade($value);
+	    if($mark->marks==-1){
+        $data[$i]['sci14'] = 'NU';
+      }
+      else if($mark->marks ==-2){
+        $data[$i]['sci14'] = 'AB';
+      } 
+      else if($mark->marks ==-3){
+        $data[$i]['sci14'] = 'NA';
+      } 
+      else if($mark->marks ==-4){
+        $data[$i]['sci14'] = 'OT';
+      }
+      else{
+        $value = (float)$mark->marks/$mark->total*100;
+        $data[$i]['sci14'] = getGrade($value);
+      }
 	  }
 	  $tempId = $mark->id;
       }
@@ -148,7 +232,9 @@
    }
    
    
-      
+   public function generateAnnualImpact(){
+    return View::make('report.annualImpact');
+   }    
    
    
   }

@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-//       $_SESSION['user_id']=67916;
+      $_SESSION['user_id']=67916;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -52,6 +52,7 @@
     Route::post('/manage/report/fetchYear', 'ReportController@fetchYear');
     Route::post('/manage/report/class-progress/check-report','ReportController@generateReport');
     Route::get('/manage/report/generatecsv','ReportController@generateRawDump');
+    Route::get('/manage/report/annual-impact','ReportController@generateAnnualImpact');
   });
     
   

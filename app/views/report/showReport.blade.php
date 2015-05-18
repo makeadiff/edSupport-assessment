@@ -33,6 +33,29 @@
 	    <td width="10%">0-20</td>
 	  </tr>
 	</table>
+	<br/>
+	<table class="footable" width="50%">
+	  <thead id="header">
+	    <th width="25%">Abbreviations</th>
+	    <th width="25%">Meaning</th>
+	  </thead>
+	  <tr id="header">
+	    <td width="10%">AB</td>
+	    <td width="10%">Student was Absent</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">NA</td>
+	    <td width="10%">Not Applicable</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">OT</td>
+	    <td width="10%">Other Reasons</td>
+	  </tr>
+	  <tr id="header">
+	    <td width="10%">NU</td>
+	    <td width="10%">Not Updated</td>
+	  </tr>
+	</table>
 	<table><tr id="header"> <td width="40%" rowspan="2">Student Name</td>
 	  <td width="20%" colspan="2">English</td>
 	  <td width="20%" colspan="2">Maths</td>

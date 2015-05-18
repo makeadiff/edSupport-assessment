@@ -7,11 +7,11 @@
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
-	  <div class="col-md-12 col-sm-6 text-center">
+	  <!-- <div class="col-md-12 col-sm-6 text-center">
 	    <p class="title">Change Total for all: <input class="markInput total-all" type="number" value="100" max="100" min="0"/></p>
-	  </div>
-	<p class="title">Legend: Incase the marks of the student are not presnet due to some reasons, Enter the values from the legend table below</p>
-	<br/><br/><br/>
+	  </div> -->
+	<p class="title">Legend: Incase the marks of the student are not preseet due to some reasons, Enter the values from the legend table below</p>
+	
 	<table class="footable" width="50%">
 	  <thead id="header">
 	    <th width="25%">Abbreviations</th>
@@ -23,14 +23,18 @@
 	  </tr>
 	  <tr id="header">
 	    <td width="10%">NA</td>
-	    <td width="10%">Data not available</td>
+	    <td width="10%">Not Applicable</td>
 	  </tr>
 	  <tr id="header">
 	    <td width="10%">OT</td>
 	    <td width="10%">Other Reasons</td>
 	  </tr>
+	  <tr id="header">
+	    <td width="10%">NU</td>
+	    <td width="10%">Not Updated</td>
+	  </tr>
 	</table>
-	<table class="footable"><thead id="header"> <th width="40%">Student Name</td>
+	<table class="footable"><thead id="header"> <th width="40%">Student Name</th>
 	  <form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
 	      echo '<input type="hidden" name="year" value="'.$year.'"/>';

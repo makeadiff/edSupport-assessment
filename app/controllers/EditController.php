@@ -159,7 +159,7 @@
 	$j++;
       }
       
-      return View::make('updateScores.nodata')->with('message','Data Entry/Updation Successful');
+      return View::make('updateScores.sucess')->with('message','Data Entry/Updation Successful');
     }
     
   }
