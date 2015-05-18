@@ -3,7 +3,7 @@
 
 	<p class="title">
 	  <?php
-		  echo 'Center Name: '.$centerName->name.' | Level Name: '.$levelName->name.' | Year: '.$year.'.';
+		  echo 'Center Name: '.$centerName->name.' | Level Name: '.$levelName->name.' | Year: '.$year.'-'.($year+1);
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
