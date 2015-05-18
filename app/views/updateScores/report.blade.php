@@ -34,15 +34,19 @@
 	    <td width="10%">Not Updated</td>
 	  </tr>
 	</table>
-	<table class="footable"><thead id="header"> <th width="40%">Student Name</th>
+	<table class="footable">
 	  <form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
 	      echo '<input type="hidden" name="year" value="'.$year.'"/>';
 	      echo '<br/>';
-		      
-		    echo '<th data-hide="phone" width="20%">ENGLISH</th>'.
-		    '<th data-hide="phone" width="20%">MATH</th>'.
-		    '<th data-hide="phone" width="20%">SCIENCE</th></thead>';
+		?> 
+		<thead id="header">      
+		    <th width="40%">Student Name</th>
+		    <th data-hide="phone" data-name="English" width="20%">ENGLISH</th>
+		    <th data-hide="phone" data-name="Math" width="20%">MATH</th>
+		    <th data-hide="phone" data-name="Science" width="20%">SCIENCE</th>
+		</thead>
+		<?php
 		    if($flag==0){
 		      $i = 0;
 		      foreach ($classList as $class){

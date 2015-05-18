@@ -19,7 +19,7 @@
         $(function () {
             $('.footable').footable({
                 breakpoints: {
-                    phone: 555
+                    phone: 640,
                 }
             });
         });
