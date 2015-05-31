@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      //$_SESSION['user_id']=67916;
+      $_SESSION['user_id']=67916;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -22,7 +22,7 @@
     
     $flag = false;
   
-    $_SESSION['groups']=$groups;
+    //$_SESSION['groups']=$groups;
     
     foreach($groups as $group) {
       if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access' || $group->name == 'Leadership Team' || $group->name == 'Ed Support Fellow' || $group->name == 'Teacher' || $group->name == 'Mentor') {
