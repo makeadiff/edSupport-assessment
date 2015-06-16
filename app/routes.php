@@ -18,14 +18,14 @@
     
     $user_id = $_SESSION['user_id'];
     $user = DB::table('User')->find($user_id);
-    $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$user_id)->get(); 
+    $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
     
     $flag = false;
   
     //$_SESSION['groups']=$groups;
     
     foreach($groups as $group) {
-      if($group->name == 'CS Intern' || $group->name == 'Center Support Fellow' || $group->name == 'City Team Lead' || $group->name == 'All Access' || $group->name == 'Leadership Team' || $group->name == 'Ed Support Fellow' || $group->name == 'Teacher' || $group->name == 'Mentor') {
+      if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8) {
 	  $flag = true;
       }
     }
