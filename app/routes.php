@@ -37,7 +37,8 @@
 
   Route::group(array('before'=>'login_check|cs_check'),function()
   {
-    Route::get('/','HomeController@edHome');
+    Route::get('/',['as'=>'home','uses'=>'HomeController@edHome']);
+    //Route::get('/','HomeController@edHome');
     Route::get('/manage','EdControl@index');
     Route::get('/manage/update','EdControl@update');
     Route::post('/manage/fetchYear','EdControl@fetchYear');

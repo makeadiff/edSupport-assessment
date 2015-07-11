@@ -41,7 +41,10 @@
 	  </button>
 	  <!--@section('navbar-header')-->
 	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
-	  <a class="navbar-brand" href="{{{URL::to('/')}}}">Ed Support</a>
+	  @if(Route::currentRouteName() != "home")
+            <a class="navbar-brand" href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      @endif
+      <a class="navbar-brand" href="{{{URL::to('/manage')}}}">Ed Support</a>
 	  
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse-1">
@@ -66,7 +69,7 @@
             echo $value.')';
         ?></a>
 	      </li>
-	      <li class=""><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
+	      <li class=""><a href="{{{URL::to('/manage')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
 	  </ul>
       </div>
     </div>

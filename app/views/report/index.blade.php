@@ -6,9 +6,9 @@
 	  <div class="col-md-4 col-sm-6 text-center">
 		      <a href="{{{URL::to('/manage/report/class-progress')}}}" class='btn btn-primary btn-dash transparent'><img src="{{{URL::to('/img/reports.png')}}}"><br>Class Progress <br/>Report </a>
 	  </div>
-	  <div class="col-md-4 col-sm-6 text-center">
+	  <!--<div class="col-md-4 col-sm-6 text-center">
 		      <a href="{{{URL::to('manage/report/annual-impact')}}}" class='btn btn-primary btn-dash transparent'><img src="{{{URL::to('/img/reports.png')}}}"> <br>Annual Impact</a>
-	  </div>
+	  </div>-->
 	  <div class="col-md-4 col-sm-6 text-center">
 		      <a href="{{{URL::to('manage/report/generatecsv')}}}" class='btn btn-primary btn-dash transparent'><img src="{{{URL::to('/img/sheet.png')}}}"> <br>Generate Report</a>
 	  </div>
