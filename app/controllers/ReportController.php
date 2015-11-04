@@ -9,14 +9,14 @@
 //     select Student.Name,Center.name,City.name,Mark.marks,Subject.name,Mark.Total,EXTRACT(year from Exam.Exam_on) from Mark inner join Student on Student.id = Mark.student_id inner join Subject on Subject.id = Mark.subject_id inner join Exam on Exam.id = Mark.exam_id inner join Center on Student.center_id = Center.id inner join City on City.id = Center.city_id where marks > 0;
     
     public function generateRawDump(){
-      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.name as Student_Name','Student.sex as Sex','Level.name as Section','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total as Total','Exam.Exam_on as Year','Mark.status as status')->get();
+      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.name as Student_Name','Student.sex as Sex','Level.grade as Class','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total as Total','Exam.Exam_on as Year','Mark.status as status')->get();
       
       
 //       'Student.name as Student_Name','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total','EXTRACT(year from Exam.Exam_on)'
 //       return $datas;
       
       $file = fopen('AssessmentReport.csv','w');
-      $header = 'Student Name,Sex,Section,Center,City,Marks,Subject,Total,Year,Grade'.PHP_EOL;
+      $header = 'Student Name,Sex,Class,Center,City,Marks,Subject,Total,Year,Grade'.PHP_EOL;
       fwrite($file,$header);
       foreach($datas as $data){
 	$value = (float)$data->Marks/$data->Total*100;
@@ -26,7 +26,7 @@
 	  $marks = $data->status;
 	}
 	$year = strstr($data->Year, '-', true);
-	$string = $data->Student_Name.','.$data->Sex.','.$data->Section.','.$data->Center_Name.','.$data->City_Name.','.$marks.','.$data->Subject_Name.','.$data->Total.','.$year.','.$grade.PHP_EOL;
+	$string = $data->Student_Name.','.$data->Sex.','.$data->Class.','.str_replace(",","-",$data->Center_Name).','.$data->City_Name.','.$marks.','.str_replace(",","-",$data->Subject_Name).','.$data->Total.','.$year.','.$grade.PHP_EOL;
 	fwrite($file,$string);
       }
       
