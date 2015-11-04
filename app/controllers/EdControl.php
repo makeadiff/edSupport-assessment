@@ -14,8 +14,8 @@
 // 		  $year = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->get();
 // 		  $yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->first();
 		  
-		  $year = 2014;		  
-		  $classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->get();
+		  $year = date('Y');		  
+		  $classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->orderby('grade','ASC')->get();
 		  return View::make('updateScores.update',['centerList'=>$centerList,'classList'=>$classList]);
 	  }
 	  
@@ -31,9 +31,9 @@
 	  public function fetchYear(){
 	      if(Request::ajax()){
 		$centerId =  (int)Input::get('centerId');
-// 		$year = DB::table('Level')->select('year')->distinct()->where('center_id',$centerId)->where('status','1')->get();
 // 		$yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$centerId)->first();
-		$classList = DB::table('Level')->select('id','name','grade')->where('center_id',$centerId)->where('year',2014)->get();
+		$year = date('Y');
+		$classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->orderby('grade','ASC')->get();
 		$data = array('class'=>$classList);
 		return json_encode($data);
 		}

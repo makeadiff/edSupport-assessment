@@ -31,7 +31,7 @@
 		      <select name="levelId" class="edSelect" id="classSelected">
 			<?php 
 			  foreach ($classList as $class){
-			      echo '<option value="'.$class->id.'">'.$class->name.'</option>';
+			      echo '<option value="'.$class->id.'">'.$class->grade.'</option>';
 			  }
 			?> 
 		      </select>
