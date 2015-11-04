@@ -13,13 +13,22 @@
 
       }
   });
+
+
   
   Route::filter('cs_check',function(){
     
     $user_id = $_SESSION['user_id'];
     $user = DB::table('User')->find($user_id);
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
-    
+    $_SESSION['original_city_id']=$_SESSION['city_id'];
+
+   /* $user_id = $_SESSION['user_id'];
+    $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
+    $cityId = $cityId->city_id;
+    $_SESSION['original_city_id']=$cityId;
+    */
+
     $flag = false;
   
     //$_SESSION['groups']=$groups;
@@ -31,7 +40,7 @@
     }
 
     if($flag == false)
-	return View::make('content.errorAccess')->with('message','Only Center Support Fellows and Interns are allowed to access the page');
+	return View::make('content.errorAccess')->with('message','Only Center Support & Ed Support Fellows and Volunteers sare allowed to access the page');
   });
 
 
@@ -40,6 +49,7 @@
     Route::get('/',['as'=>'home','uses'=>'HomeController@edHome']);
     //Route::get('/','HomeController@edHome');
     Route::get('/manage','EdControl@index');
+    Route::post('/selectCity','HomeController@changeCity');
     Route::get('/manage/update','EdControl@update');
     Route::post('/manage/fetchYear','EdControl@fetchYear');
     Route::post('/manage/fetchLevel','EdControl@fetchLevel');

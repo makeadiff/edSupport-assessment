@@ -4,8 +4,8 @@
 
 	  public function update(){
 		  $user_id = $_SESSION['user_id'];
-		  $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
-		  $cityId = $cityId->city_id;
+		  //$cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
+		  $cityId = $_SESSION['city_id'];
 		  $centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
 		  
 		  $centerFirst = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->first();
@@ -22,6 +22,14 @@
 	  public function index(){
 	    return View::make('content.manage');
 	  }
+
+	  public function changeCity(){
+	  	$city_id = Input::get('select_city');
+	  	$_SESSION['original_city_id']=$_SESSION['city_id'];
+	  	$_SESSION['city_id']=$city_id;
+	  	return Redirect::to('/');
+	  }
+
 
 	  public function store(){
 		  

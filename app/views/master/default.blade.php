@@ -38,6 +38,14 @@
 	      <span class="icon-bar"></span>
 	      <span class="icon-bar"></span>
 	      <span class="icon-bar"></span>
+        @section('navbar-header')
+            <!--<a class="navbar-brand" href="{{URL::to('/')}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
+          @if(Route::currentRouteName() != "home")
+            <a class="navbar-brand" href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          @endif
+          <a class="navbar-brand" href="{{URL::to('/')}}"><span class="glyphicon glyphicon-home"></span>&nbsp;Propel</a>
+
+        @show
 	  </button>
 	  <!--@section('navbar-header')-->
 	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
@@ -53,8 +61,42 @@
 	      <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
 	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
 	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
-	      <li class=""><a>
-	      <?php
+	      <li>
+          @if($_SESSION['original_city_id']=='26')
+          <form class="navbar-form navbar-right" method="post" action="{{{URL::to('/selectCity')}}}">  
+              <?php
+              $all_cities = DB::table('City')->select('id','name')->orderBy('name','ASC')->get();
+              $years = array();
+              for($y = date('Y'); $y >=2011 ; $y--) $years[$y] = $y;
+ 
+              echo '<select name="select_city">';
+              foreach ($all_cities as $city) {
+                echo '<option value="'.
+                $city->id.'" '.($city->id==$_SESSION['city_id']?'selected>':'>').
+                $city->name.'</option>';
+              }
+              echo '</select>';
+
+              /*echo '<select name="year">';
+              foreach ($years as $year) {
+                echo '<option value="'.
+                $year.'">'.
+                $year.'</option>';
+              }
+              echo '</select>';
+              */
+
+              /*
+              echo form_dropdown('year', $years, $this->session->userdata('year'));
+              echo form_submit('action', "Change");*/
+              echo '<input type="submit" value="Change">';
+              ?>
+          </form>
+          @endif
+        </li>
+        <li class=""><a>
+	      
+        <?php
             $i = 0;
             $id = $_SESSION['user_id'];
             $name = DB::table('User')->select('name')->where('id',$id)->first();
@@ -81,5 +123,16 @@
 	  @yield('content')
       </div>
   </div>
+
+  @if(Session::has('success'))
+      <div class="center-block alert alert-success" role="alert" style="width:20%;">{{ Session::get('success') }}</div>
+  @endif
+
+  @if(Session::has('error'))
+  <div class="center-block alert alert-danger" role="alert" style="width:20%;">{{ Session::get('error') }}</div>
+  @endif
+
+  @yield('body')
+
 </body>
 </html>

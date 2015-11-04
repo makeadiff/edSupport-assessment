@@ -53,7 +53,40 @@
 	      <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
 	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
 	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
-	      <li class=""><a>
+	      <li>
+          @if($_SESSION['original_city_id']=='26')
+          <form class="navbar-form navbar-right" method="post" action="{{{URL::to('/selectCity')}}}">
+              <?php
+              $all_cities = DB::table('City')->select('id','name')->orderBy('name','ASC')->get();
+              $years = array();
+              for($y = date('Y'); $y >=2011 ; $y--) $years[$y] = $y;
+ 
+              echo '<select name="select_city">';
+              foreach ($all_cities as $city) {
+                echo '<option value="'.
+                $city->id.'" '.($city->id==$_SESSION['city_id']?'selected>':'>').
+                $city->name.'</option>';
+              }
+              echo '</select>';
+
+              /*echo '<select name="year">';
+              foreach ($years as $year) {
+                echo '<option value="'.
+                $year.'">'.
+                $year.'</option>';
+              }
+              echo '</select>';
+              */
+
+              /*
+              echo form_dropdown('year', $years, $this->session->userdata('year'));
+              echo form_submit('action', "Change");*/
+              echo '<input type="submit" value="Change">';
+              ?>
+          </form>
+          @endif
+        </li>
+        <li class=""><a>
 	      <?php
             $i = 0;
             $id = $_SESSION['user_id'];
