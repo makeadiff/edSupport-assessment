@@ -62,7 +62,7 @@
 	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
 	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
 	      <li>
-          @if($_SESSION['original_city_id']=='26')
+          @if($_SESSION['group_id']=='1')
           <form class="navbar-form navbar-right" method="post" action="{{{URL::to('/selectCity')}}}">  
               <?php
               $all_cities = DB::table('City')->select('id','name')->orderBy('name','ASC')->get();

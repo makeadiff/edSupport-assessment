@@ -20,16 +20,8 @@
 	  }
 	  
 	  public function index(){
-	    return View::make('content.manage');
+	  	return View::make('content.manage');
 	  }
-
-	  public function changeCity(){
-	  	$city_id = Input::get('select_city');
-	  	$_SESSION['original_city_id']=$_SESSION['city_id'];
-	  	$_SESSION['city_id']=$city_id;
-	  	return Redirect::to('/');
-	  }
-
 
 	  public function store(){
 		  
