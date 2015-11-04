@@ -9,7 +9,7 @@
       $exam_id =  $exam_id[0]->id;
       $levelId = Input::get('levelId');
       $centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
-      $levelName = DB::table('Level')->select('name')->where('id',$levelId)->first();
+      $levelName = DB::table('Level')->select('grade', 'name')->where('id',$levelId)->first();
       
       $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',	
       $levelId)->get();
