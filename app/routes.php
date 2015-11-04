@@ -31,12 +31,13 @@
 
     $flag = false;
   
-    //$_SESSION['groups']=$groups;
+    $_SESSION['group_id']=0;
     
     foreach($groups as $group) {
       if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8) {
 	  $flag = true;
       }
+      if($group->id == 1 || $group_id == 3) $_SESSION['group_id']=1;
     }
 
     if($flag == false)
