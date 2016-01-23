@@ -11,11 +11,16 @@
 		  $centerFirst = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->first();
 		  $idFirst =  $centerFirst->id;
 		  
-// 		  $year = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->get();
-// 		  $yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->first();
+ 		  $year = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->get();
+ 		  $yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$idFirst)->first();
+	
+
+
+//		  $year = date('Y');		  
+		  $classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$yearFirst)->orderby('grade','ASC')->get();
 		  
-		  $year = date('Y');		  
-		  $classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->orderby('grade','ASC')->get();
+		  return $classList;
+
 		  return View::make('updateScores.update',['centerList'=>$centerList,'classList'=>$classList]);
 	  }
 	  
@@ -39,14 +44,14 @@
 		}
 	  }
 	  
-// 	  public function fetchLevel(){
-// 	    if(Request::ajax()){
-// 	      $centerId = (int)Input::get('centerId');
-// 	      $year = (int)Input::get('year');
-// 	      $levelList = DB::table('Level')->select('id','name')->distinct()->where('center_id',$centerId)->where('year',$year)->where('status','1')->get();
-// 	      return json_encode($levelList);
-// 	    }
-// 	  }
+ 	  public function fetchLevel(){
+ 	    if(Request::ajax()){
+ 	      $centerId = (int)Input::get('centerId');
+ 	      $year = (int)Input::get('year');
+ 	      $levelList = DB::table('Level')->select('id','name')->distinct()->where('center_id',$centerId)->where('year',$year)->where('status','1')->get();
+ 	      return json_encode($levelList);
+ 	    }
+ 	  }
 
   }
 

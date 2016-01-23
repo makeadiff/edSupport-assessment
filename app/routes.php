@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      //$_SESSION['user_id']=67916;
+      $_SESSION['user_id']=67916;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -21,13 +21,14 @@
     $user_id = $_SESSION['user_id'];
     $user = DB::table('User')->find($user_id);
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
-    $_SESSION['original_city_id']=$_SESSION['city_id'];
+    //$_SESSION['original_city_id']=$_SESSION['city_id'];
 
-   /* $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
     $cityId = $cityId->city_id;
+    //$_SESSION['city_id']=$cityId;
     $_SESSION['original_city_id']=$cityId;
-    */
+      
 
     $flag = false;
   
