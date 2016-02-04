@@ -3,7 +3,7 @@
 
 	<p class="title">
 	  <?php
-		  echo 'Center Name: '.$centerName->name.' | Level Name:'.$levelName->grade.' - '.$levelName->name.' | Year: '.$year.'-'.($year+1);
+		  echo 'Center Name: '.$centerName->name.' | Year: '.$year.'-'.($year+1);
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
@@ -34,24 +34,44 @@
 	    <td width="10%">Not Updated</td>
 	  </tr>
 	</table>
+
+	<!--
+		Fetching the data for all the students in the mentioned center.
+	 -->
+	<div class="row">
+		<div class="btn-group" role="group" aria-label="...">
+		  <p>
+		  	Select Grade
+		  </p>
+		  <?php
+
+		  	foreach ($className as $grade) {
+		  	  echo '<button type="button" class="btn btn-default">'.$grade->grade.'</button>';
+			}
+		  ?>
+		</div>	
+	</div>
+
 	<table class="footable">
 	  <form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
 	      echo '<input type="hidden" name="year" value="'.$year.'"/>';
 	      echo '<br/>';
 		?> 
-		<thead id="header">      
-		    <th width="40%">Student Name</th>
-		    <th data-hide="phone" data-name="English" width="20%">ENGLISH</th>
-		    <th data-hide="phone" data-name="Math" width="20%">MATH</th>
-		    <th data-hide="phone" data-name="Science" width="20%">SCIENCE</th>
+		<thead id="header" class="TextCenter">      
+		    <th width="30%">Student Name</th>
+		    <th data-hide="phone" width="10">Grade</th>
+		    <th data-hide="phone,tablet" data-name="English" width="20%">ENGLISH | <input class="markInput" type="number" value="100" max="200" min="0" name="totalEng"/></th>
+		    <th data-hide="phone" data-name="Math" width="20%">MATH | <input class="markInput" type="number" value="100" max="200" min="0" name="totalEng"/></th>
+		    <th data-hide="phone" data-name="Science" width="20%">SCIENCE | <input class="markInput" type="number" value="100" max="200" min="0" name="totalEng"/></th>
 		</thead>
 		<?php
 		    if($flag==0){
 		      $i = 0;
 		      foreach ($classList as $class){
 			      echo '<tr class="content">'.
-			      '<td>'.$class->name.'</td>';
+			      '<td><strong>'.$class->name.'</strong></td>'.
+			      '<td>'.$class->grade.'</td>';
 			      echo '<td>'.
 				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
 				  '<input class="markInput secured math" type="text" value="" name="engScore'.$i.'"/>/'.
@@ -71,7 +91,7 @@
 		      foreach ($classList as $class){
 			if($class->id != $studentId){
 			  $i++;
-			  echo '<tr class="content">'.'<td>'.$class->name.'</td>';
+			  echo '<tr class="content">'.'<td>'.$class->name.'</td>'.'<td>'.$class->grade.'</td>';
 			  echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
 			}
 			if($class->subject_id == 8){

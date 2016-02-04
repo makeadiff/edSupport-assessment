@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      $_SESSION['user_id']=67916;
+      $_SESSION['user_id']=67594;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -25,8 +25,9 @@
 
     $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
+
     $cityId = $cityId->city_id;
-    //$_SESSION['city_id']=$cityId;
+    $_SESSION['city_id']=$cityId;
     $_SESSION['original_city_id']=$cityId;
       
 
@@ -42,7 +43,7 @@
     }
 
     if($flag == false)
-	return View::make('content.errorAccess')->with('message','Only Center Support & Ed Support Fellows and Volunteers sare allowed to access the page');
+    return View::make('content.errorAccess')->with('message','Only Center Support & Ed Support Fellows and Volunteers sare allowed to access the page');
   });
 
 

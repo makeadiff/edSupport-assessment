@@ -7,30 +7,36 @@
       $year = Input::get('year');
       $exam_id = DB::select(DB::raw("select id,exam_type_id from Exam where EXTRACT(year from Exam_on)='$year' and status='1' limit 1"));
       $exam_id =  $exam_id[0]->id;
-      $levelId = Input::get('levelId');
       $centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
-      $levelName = DB::table('Level')->select('grade', 'name')->where('id',$levelId)->first();
       
-      $classList = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id')->distinct()->where('level_id',$levelId)->get();
+      $dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
       
-      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total')->distinct()->where('level_id',$levelId)->where('Mark.exam_id',$exam_id)->get();
+      $dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year);
+
+      $classList = $dataSelect->get();
       
-  
+      $className = $dataClass->select('Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->where('Level.grade','>','0')->groupby('Level.grade')->get();
+
+      //$className is fetching all the grades available in the selected Center.
+      
+      $marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('Center','Center.id','=','Student.center_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total','Level.grade')->distinct()->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->get();
+      
+  	//Information 01: If the data set is empty, without marks, we fetch the list of students only. Else we fetch the data from the MARK table.
+
       if(empty($classList)){
-	return View::make('updateScores.nodata')->with('message','No Data is avaiable for the selected Center and Level.');
+		return View::make('updateScores.nodata')->with('message','No Data is avaiable for the selected Center and Level.');
       }
       
       if(empty($marks)){
-	$flag = 0;
-	return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'levelName'=>$levelName,'classList'=>$classList,'flag'=>$flag]);
-      }
-      else{
-	$flag = 1;
-	return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'levelName'=>$levelName,'classList'=>$marks,'flag'=>$flag]);
-      }
-      
-  // // // //  $classList is the list of students
-     
+		$flag = 0;
+		//Flag 0
+		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$classList,'flag'=>$flag,'className'=>$className]);
+	  }
+	  else{
+		$flag = 1;
+		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$marks,'flag'=>$flag,'className'=>$className]);
+	  }
+	     
     }
   
     public function index(){

@@ -24,6 +24,11 @@
 
 }
 
+
+.TextCenter{
+  text-align: center;
+}
+
 @media (max-width:500px){
     h1.title
     {
