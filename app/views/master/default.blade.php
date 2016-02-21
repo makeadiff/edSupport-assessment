@@ -2,14 +2,17 @@
 <html lang="en">
 <head> 
  
-    <link href="{{{URL::to('/')}}}/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="{{{URL::to('/')}}}/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="{{{URL::to('/')}}}/css/footable.core.css" rel="stylesheet " type="text/css">
-    <link href="{{{URL::to('/')}}}/css/custom.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link href="{{{URL::to('/')}}}/css/custom.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{{URL::to('/')}}}/js/jquery-1.9.0.js"></script>
     <script src="{{{URL::to('/')}}}/js/bootstrap.min.js"></script>
     <script src="{{{URL::to('/')}}}/js/footable.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 <!--     <script src="{{{URL::to('/')}}}/js/footable.filter.min.js"></script> -->
     <script src="{{{URL::to('/')}}}/js/footable.paginate.min.js"></script>
 <!--     <script src="{{{URL::to('/')}}}/js/footable.sort.min.js"></script> -->
@@ -29,93 +32,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	
 </head>
-<body class="blue-red">
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<body>
+<div class="navbar-fixed">
+  <nav>
     <div class="container-fluid">
-      <div class="navbar-header">
-	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-	      <span class="sr-only">Toggle navigation</span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-        @section('navbar-header')
-            <!--<a class="navbar-brand" href="{{URL::to('/')}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
-          @if(Route::currentRouteName() != "home")
-            <a class="navbar-brand" href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span></a>
-          @endif
-          <a class="navbar-brand" href="{{URL::to('/')}}"><span class="glyphicon glyphicon-home"></span>&nbsp;Propel</a>
-
-        @show
-	  </button>
-	  <!--@section('navbar-header')-->
-	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
-	  @if(Route::currentRouteName() != "home")
-            <a class="navbar-brand" href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      @if(Route::currentRouteName() != "home")
+        <a class="brand-logo" href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span></a>
       @endif
-      <a class="navbar-brand" href="{{{URL::to('/manage')}}}">Ed Support</a>
-	  
-      </div>
-      <div class="collapse navbar-collapse" id="navbar-collapse-1">
-	  <ul class="nav navbar-nav navbar-right">
-	      <!--@section('navbar-links')-->
-	      <!--<li><a href="{{{URL::to('/')}}}/calendar">Calendar</a></li>
-	      <li><a href="{{{URL::to('/')}}}/attendance">Attendance</a></li>
-	      <li><a href="{{{URL::to('/')}}}/wingman-journal">Wingman Journal</a></li>-->
-	      <li>
+      <a class="brand-logo" href="{{{URL::to('/manage')}}}">&nbsp; &nbsp;Ed Support</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
           @if($_SESSION['group_id']=='1')
-          <form class="navbar-form navbar-right" method="post" action="{{{URL::to('/selectCity')}}}">  
-              <?php
-              $all_cities = DB::table('City')->select('id','name')->orderBy('name','ASC')->get();
-              $years = array();
-              for($y = date('Y'); $y >=2011 ; $y--) $years[$y] = $y;
- 
-              echo '<select name="select_city">';
-              foreach ($all_cities as $city) {
-                echo '<option value="'.
-                $city->id.'" '.($city->id==$_SESSION['city_id']?'selected>':'>').
-                $city->name.'</option>';
-              }
-              echo '</select>';
-
-              /*echo '<select name="year">';
-              foreach ($years as $year) {
-                echo '<option value="'.
-                $year.'">'.
-                $year.'</option>';
-              }
-              echo '</select>';
-              */
-
-              /*
-              echo form_dropdown('year', $years, $this->session->userdata('year'));
-              echo form_submit('action', "Change");*/
-              echo '<input type="submit" value="Change">';
-              ?>
-          </form>
-          @endif
-        </li>
-        <li class=""><a>
-	      
-        <?php
-            $i = 0;
-            $id = $_SESSION['user_id'];
-            $name = DB::table('User')->select('name')->where('id',$id)->first();
-            echo $name->name.' (';  
-            $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$id)->get();
-            $result = array(); 
-            foreach ($groups as $group){
-                $result[$i]=$group->name;
-                $i++;
+          <form class="form-nav" method="post" action="{{{URL::to('/selectCity')}}}">  
+          <?php
+            $all_cities = DB::table('City')->select('id','name')->orderBy('name','ASC')->get();
+            $years = array();
+            for($y = date('Y'); $y >=2011 ; $y--) $years[$y] = $y;
+            echo '<div class="input-field col 3"><div class="row"><div class="col 6"><select id="selectCity" name="select_city">';
+            foreach ($all_cities as $city) {
+              echo '<option value="'.
+              $city->id.'" '.($city->id==$_SESSION['city_id']?'selected>':'>').
+              $city->name.'</option>';
             }
-            $value = join(',',$result);
-            echo $value.')';
-        ?></a>
-	      </li>
-	      <li class=""><a href="{{{URL::to('/manage')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
-	  </ul>
+            echo '</select></div><div class="col 6"><button class="waves-effect waves-light btn submit" type="submit" name="action">Submit</button></div></div> ';
+          ?>
+        </form>
+        @endif
+      </li>
+      <li>
+            <a>
+             <?php
+              $i = 0;
+              $id = $_SESSION['user_id'];
+              $name = DB::table('User')->select('name')->where('id',$id)->first();
+              echo $name->name.' (';  
+              $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$id)->get();
+              $result = array(); 
+              foreach ($groups as $group){
+                  $result[$i]=$group->name;
+                  $i++;
+              }
+              $value = join(',',$result);
+              echo $value.')';
+            ?></a>
+          </li>
+          <li><a href="{{{URL::to('/manage')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
+        </ul>
       </div>
     </div>
-</nav>
+  </nav>
+</div>
   <div class="container-fluid">
       <div class='board transparent-container'>	
       <h1 class='title' style="text-align:center">Ed Support Assessment</h1>

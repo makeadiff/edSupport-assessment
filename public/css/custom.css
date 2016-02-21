@@ -5,27 +5,40 @@
     src: local('Oswald Bold'), local('Oswald-Bold'), url(../fonts/Oswald-Bold.woff) format('woff');
 }
 
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Roboto Light'), local('Roboto-Light'), url(../fonts/Roboto-300.woff) format('woff');
-}
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Roboto Regular'), local('Roboto-Regular'), url(../fonts/Roboto-400.woff) format('woff');
-}
 .centered
 {
-
     text-align: center;
+}
 
+.form-nav select#selectCity, .form-nav button.submit{
+  font-size: 14px;
+}
+
+.form-nav{
+  margin-left: -200px;
+}
+
+.form-nav button.submit{
+  font-size: 14px;
+  height: 45px;
+}
+
+nav a.hover{
+  color:#FFF;
+  text-decoration: none;
+}
+
+.TextCenter{
+  text-align: center;
+}
+
+.black{
+  color:#333132;
+  padding: 5px;
 }
 
 
-.TextCenter{
+.text-center{
   text-align: center;
 }
 
@@ -33,17 +46,17 @@
     h1.title
     {
         font-family: 'Oswald',sans-serif;
-        color:#ffffff;
-        text-transform: uppercase;
-        font-size: 300%;
+        color:#333132;
+        text-transform: ;
+        font-size: 200%;
     }
 
     h3.title
     {
         font-family: 'Oswald',sans-serif;
-        color:#ffffff;
-        text-transform: uppercase;
-        font-size: 300%;
+        color:#333132;
+        text-transform: ;
+        font-size: 200%;
     }
   
 }
@@ -52,17 +65,17 @@
     h1.title
     {
         font-family: 'Oswald',sans-serif;
-        color:#ffffff;
-        text-transform: uppercase;
-        font-size: 400%;
+        color:#333132;
+        text-transform: ;
+        font-size: 200%;
     }
     
     h3.title
     {
         font-family: 'Oswald',sans-serif;
-        color:#ffffff;
-        text-transform: uppercase;
-        font-size: 300%;
+        color:#333132;
+        text-transform: ;
+        font-size: 200%;
     }
 }
 
@@ -70,16 +83,16 @@
 h2.sub-title
 {
     font-family: 'Oswald',sans-serif;
-    color:#ffffff;
-    text-transform: uppercase;
+    color:#333132;
+    text-transform: ;
     text-align: center;
-    font-size: 300%;
+    font-size: 200%;
 }
 
 h3.sub-title,h4.sub-title,h5.sub-title
 {
     font-family: 'Oswald',sans-serif;
-    color:#ffffff;
+    color:#333132;
     display: inline-block;
 
 
@@ -99,7 +112,7 @@ h3.sub-title,h4.sub-title,h5.sub-title
 
 .white
 {
-    color:white;
+    color:#333132;
 }
 
 .grey
@@ -115,7 +128,7 @@ h3.sub-title,h4.sub-title,h5.sub-title
 p.success
 {
     font-family: sans-serif;
-    color:#ffffff;
+    color:#333132;
     font-size : 120%;
 }
 
@@ -153,6 +166,8 @@ div.board
 }
 
 
+
+
 body.blue-red
 {
     background: #3f4591; /* Old browsers */
@@ -165,7 +180,9 @@ body.blue-red
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4591', endColorstr='#db766a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-
+body{
+  background:#FAFAFA;
+}
 
 
 #scoreUpdate table{
@@ -177,7 +194,7 @@ input.markInput{
   width:45%;
   background:#F9F9F9;
   text-align:center;
-  color:#FFF;
+  color:#333132;
   border:none;
   background:none;
   border-bottom:thin #FFF dashed;
@@ -197,9 +214,9 @@ input.markSubmit{
   -webkit-border-radius:5px; 
   background:none;
   font-weight:bold;
-  color:#FFF;
+  color:#333132;
   margin-top:50px;
-  border:2px solid #FFF;
+  border:2px solid #333132;
   transition:all 0.5s ease;
   -o-transition:all 0.5s ease;
   -ms-transition:all 0.5s ease;
@@ -227,30 +244,29 @@ select.edSelect{
 }
 
 #scoreUpdate{
-  width:60%;
   margin:auto;
   margin-top:20px;
-  color:#FFF;  
+  color:#333132;  
 }
 
 #header td{
   font-weight:900;
   text-align:center;
   padding:1%;
-  border:thin solid #FFF;
   height:auto;
+  color:#FFF;
 }
 
 .content td{
   font-weight:500;
-  margin-bottom:3px;
+  margin-bottom:3px;g
   padding:1%;
   border:thin solid #EEE;
 }
 
 p.title{
   text-align:center;
-  color:#FFF;
+  color:#333132;
   font-weight:900;
   height:35px;
 }
@@ -263,7 +279,7 @@ option{
 }
 
 input.totalMarks{
-  color:#FFF;
+  color:#333132;
   font-weight:bold;
   border:none;
   background:none;
@@ -274,7 +290,7 @@ input.totalMarks{
 }	
 
 .footable-row-detail-cell{
-  border:thin solid #FFF;  
+  border:thin solid #333132;  
   width:95%;
   padding:2.5%;
 }

@@ -5,10 +5,13 @@
     <link href="{{{URL::to('/')}}}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{{URL::to('/')}}}/css/footable.core.css" rel="stylesheet " type="text/css">
     <link href="{{{URL::to('/')}}}/css/custom.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{{URL::to('/')}}}/js/jquery-1.9.0.js"></script>
     <script src="{{{URL::to('/')}}}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="{{{URL::to('/')}}}/js/footable.min.js"></script>
 <!--     <script src="{{{URL::to('/')}}}/js/footable.filter.min.js"></script> -->
     <script src="{{{URL::to('/')}}}/js/footable.paginate.min.js"></script>
@@ -33,12 +36,6 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-	      <span class="sr-only">Toggle navigation</span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	  </button>
 	  <!--@section('navbar-header')-->
 	  <!--<a class="navbar-brand" href="{{{URL::to('/')}}}/../../../madapp/index.php/dashboard/dashboard_view">MADApp</a>-->
 	  @if(Route::currentRouteName() != "home")
