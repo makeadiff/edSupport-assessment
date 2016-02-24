@@ -1,9 +1,9 @@
 <?php
 
-  class ReportController extends BaseController{
+  class GradeController extends BaseController{
     
     public function index(){
-      return View::make('report.index');
+      return View::make('grade.index');
     }
   }
 

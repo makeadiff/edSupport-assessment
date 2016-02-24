@@ -17,7 +17,7 @@
 ?>
 	<p class="title">
 	  <?php
-		  echo 'Center Name: '.$centerName->name.' | Year: '.$year.'-'.($year+1);
+		  echo 'Center Name: '.ucwords($centerName->name).' | Year: '.$year.'-'.($year+1);
 	  ?>
 	</p>
 	<div class="row" id="scoreUpdate">
@@ -57,6 +57,9 @@
 		Fetching the data for all the students in the mentioned center.
 	 -->
 	<div class="row center">
+		<div class="container" id="updateSuccess">
+		    
+		</div>
 		<div class="btn-group" role="group" aria-label="...">
 		  <p>
 		  	Select Grade
@@ -70,7 +73,7 @@
 		</div>	
 	</div>
 
-	<form name="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
+	<form name="updateScores" id="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
 	      echo '<input type="hidden" name="year" value="'.$year.'"/>';
 	      echo '<br/>';
@@ -113,11 +116,11 @@
 			      '<td><strong>'.ucwords(strtolower($class->name)).'</strong></td>';
 			      echo '<td>'.
 				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
-				  '<input class="markInput secured math" type="text" value="" name="engScore'.$i.'"/>/'.
+				  '<input class="markInput secured " type="text" value="" name="engScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalEng'.$i.'"/></td>'.
-				  '<td><input class="markInput secured sci" type="text" value="" name="mathScore'.$i.'"/>/'.
+				  '<td><input class="markInput secured " type="text" value="" name="mathScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalMath'.$i.'"/></td>'.
-				  '<td><input class="markInput secured eng" type="text" value="" name="sciScore'.$i.'"/>/'.
+				  '<td><input class="markInput secured " type="text" value="" name="sciScore'.$i.'"/>/'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" name="totalSci'.$i.'"/></td>'.
 				'</tr>';
 			      $i++;
@@ -165,7 +168,7 @@
 		      		if($class->id != $studentId){
 					  $i++;
 					  echo '<tr class="content">'.'<td>'.ucwords(strtolower($class->name)).'</td>';
-					  echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
+					  echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'"/>';		      
 					}
 					if($class->subject_id == 8){
 					  if($class->marks == '-1' ) $class->marks='';
@@ -173,7 +176,7 @@
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
 
-					  echo '<input class="markInput secured math" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
+					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
 					}
 					else if($class->subject_id == 9){
 					  if($class->marks == '-1') $class->marks='';
@@ -181,7 +184,7 @@
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
 					  
-					  echo '<td><input class="markInput secured sci" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
+					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
 					}
 					else if($class->subject_id == 10){
 					  if($class->marks == '-1' ) $class->marks='';
@@ -189,7 +192,7 @@
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
 					  
-					  echo '<td><input class="markInput secured eng" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
+					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
 					}
 					$studentId=$class->id;
 					$lastGrade = $grade;
@@ -207,12 +210,14 @@
 			</tfoot>-->
 		</table>
 		    <br/>
+		    <!--<noscript>-->
 		    <div class="row">
 			    <div class="col s12 m12 text-center">
 			      <button class="btn" type="submit" class="markSubmit" name="submit" >Update Scores</button>
 			    </div>
 			    <br/><br/>
 			</div>
+			<!--</noscript>-->
 		</form>
 	</div>
 @stop

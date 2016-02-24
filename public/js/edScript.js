@@ -68,7 +68,23 @@ $(document).ready(function(){
       $('#select-class-list').html(string2);
     });
   });
-   
+  
+  $('.markInput').change(function(e){
+    var data = $('#updateScores').serialize();
+    document.getElementById('updateSuccess').innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
+    var base_url = window.location;
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: base_url + "/update",
+      data: data,
+      success: function(data){
+        document.getElementById('updateSuccess').innerHTML = '<div class="chip">'+data+'<i class="material-icons">close</i></div>';
+      }
+    });
+    //$('#updateScores').submit();
+});
+
 });
 
 
