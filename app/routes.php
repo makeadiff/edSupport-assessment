@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      //$_SESSION['user_id']=46174;//;//57184;
+      //$_SESSION['user_id']=57184;//46174;//;//57184;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -21,19 +21,14 @@
     $user_id = $_SESSION['user_id'];
     $user = DB::table('User')->find($user_id);
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
-    //$_SESSION['original_city_id']=$_SESSION['city_id'];
 
     $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
-
-    $cityId = $cityId->city_id;
-    $_SESSION['city_id']=$cityId;
-    $_SESSION['original_city_id']=$cityId;
-      
-
+    //$_SESSION['city_id']=$cityId->city_id;
+    
     $flag = false;
   
-    $_SESSION['group_id']=0;
+    //$_SESSION['group_id']=0;
     
     foreach($groups as $group) {
       if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8) {
