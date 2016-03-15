@@ -1,8 +1,9 @@
 @extends('master.report')
 
 @section('content')
-	<div id="childForm">	
-	<div class="col-md-12 col-sm-6 text-center"><p class="title">Select the city, center, and class to generate the academic report</p></div>
+	<div id="childForm">
+	<div class="row">	
+	<div class="col m4 s12 text-center"><p class="title">Select the city, center, and class to generate the academic report</p></div>
 	  <form id="select-class" name="getReport" role="form" method="post" enctype="multipart/form-data" action="{{{URL::to('manage/report/class-progress/check-report')}}}">
 		  <div class="col-md-4 col-sm-6 text-center">
 		  <p class="title">City</p>

@@ -1,3 +1,5 @@
+var count;
+
 $(document).ready(function(){
 
   //Working Script ----- alert('Hi');
@@ -82,11 +84,54 @@ $(document).ready(function(){
         document.getElementById('updateSuccess').innerHTML = '<div class="chip">'+data+'<i class="material-icons">close</i></div>';
       }
     });
-    //$('#updateScores').submit();
-});
+  });
+
+  $('#centerName').change(function(){
+    var centerName = document.getElementById('centerName').value;
+    //alert(centerName);  
+    var data = centerName;
+    var base_url = window.location;
+    $.post('suggestions',{centerName: centerName},function(data){
+      console.log(data);
+      var obj = JSON.parse(data);
+      var string_data = "";
+      for (i=0;i<obj.class.length;i++){
+        string_data += ''  
+      }
+    });
+  });
+
+  count = 1;  
+
+  $('#addMoreRows').click(function(e){
+    var string = '<td><input type="number" name="lower'+count+'" value="" placeholder="90" min="0" required></td><td><input type="number" name="upper'+count+'" value="" placeholder="100" min="0" required></td><td><input type="text" name="grade'+count+'" maxlength="2" required></td>';
+
+    //var tableBody = document.getElementById('tableBody');
+    //tableBody.innerHTML += string;
+
+    var table = document.getElementById('gradeTable');
+    var row = table.insertRow(-1);
+    row.className = 'content';
+    row.innerHTML = string;
+    e.preventDefault;
+    count++;
+    document.getElementById('input_count').value=count;
+  });
+
+  $('#removeRows').click(function(e){
+    var string = '<td><input type="number" name="lower'+count+'" value="" placeholder="90" min="0" required></td><td><input type="number" name="upper'+count+'" value="" placeholder="100" min="0" required></td><td><input type="text" name="grade'+count+'" maxlength="2" required></td>';
+
+    //var tableBody = document.getElementById('tableBody');
+    //tableBody.innerHTML += string;
+
+    var table = document.getElementById('gradeTable');
+    var row = table.deleteRow(-1);
+    e.preventDefault;
+    count--;
+    document.getElementById('input_count').value=count;
+  });
 
 });
-
 
 function ValidateMarkForm(){
   var subjects = 3;
@@ -106,3 +151,19 @@ function ValidateMarkForm(){
     return true;
 }
   
+function concat(){
+  var centerName = document.getElementById('centerName').value;
+  var boardName = document.getElementById('boardName').value;
+  var gradeName = document.getElementById('gradeName').value;
+
+  var concat = centerName+' '+boardName+' '+gradeName;
+  document.getElementById('gradeNameConcated').value = concat;
+}
+
+function validate(){
+
+  alert(count);
+
+  //return false;
+
+}

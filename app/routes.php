@@ -57,6 +57,9 @@
     Route::get('/manage/assessment/update','EditController@index');
     Route::get('/manage/report','ReportController@index');
     Route::get('/manage/grading','GradeController@index');
+    Route::get('/manage/grading/create','GradeController@createTemplate');
+    Route::post('/manage/grading/createTemplate','GradeController@create');
+    Route::post('/manage/grading/suggestions','GradeController@findSimilarTemplates');
     Route::get('/manage/report/class-progress','ReportController@classProgress');
     Route::post('/manage/report/fetchListOfCentres', 'ReportController@cityList');
     Route::post('/manage/report/fetchYear', 'ReportController@fetchYear');
