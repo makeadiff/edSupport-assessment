@@ -1,3 +1,0 @@
-@section('indexContent')
-	<p>Hello, Soothing</p>
-@stop
