@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      $_SESSION['user_id']=57184;//46174;//;//57184;
+      //$_SESSION['user_id']=57184;//46174;//;//57184;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -24,7 +24,7 @@
 
     $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
-    $_SESSION['city_id']=$cityId->city_id;
+    //$_SESSION['city_id']=$cityId->city_id;
     
     $flag = false;
   
