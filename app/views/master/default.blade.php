@@ -66,7 +66,7 @@
               $id = $_SESSION['user_id'];
               $name = DB::table('User')->select('name')->where('id',$id)->first();
               echo $name->name.' (';  
-              $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$id)->get();
+              $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name')->where('user_id',$id)->where('status',1)->get();
               $result = array(); 
               foreach ($groups as $group){
                   $result[$i]=$group->name;

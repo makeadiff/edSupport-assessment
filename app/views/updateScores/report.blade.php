@@ -15,6 +15,7 @@
 	$tableFooter = '</tbody></table></div>'; 
 
 ?>
+
 	<p class="title">
 	  <?php
 		  echo 'Center Name: '.$centerName->name.' | Year: '.$year.'-'.($year+1);
@@ -57,6 +58,9 @@
 		Fetching the data for all the students in the mentioned center.
 	 -->
 	<div class="row center">
+		<div class="container" id="updateSuccess">
+		    
+		</div>
 		<div class="btn-group" role="group" aria-label="...">
 		  <p>
 		  	Select Grade
