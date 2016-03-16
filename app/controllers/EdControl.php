@@ -34,13 +34,13 @@
 	  
 	  public function fetchYear(){
 	      if(Request::ajax()){
-		$centerId =  (int)Input::get('centerId');
-// 		$yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$centerId)->first();
-		$year = date('Y');
-		$classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->orderby('grade','ASC')->get();
-		$data = array('class'=>$classList);
-		return json_encode($data);
-		}
+			$centerId =  (int)Input::get('centerId');
+	// 		$yearFirst = DB::table('Level')->select('year')->distinct()->where('center_id',$centerId)->first();
+			$year = date('Y');
+			$classList = DB::table('Level')->select('id','name','grade')->where('center_id',$idFirst)->where('year',$year)->orderby('grade','ASC')->get();
+			$data = array('class'=>$classList);
+			return json_encode($data);
+			}
 	  }
 	  
  	  /*public function fetchLevel(){

@@ -72,7 +72,10 @@ $(document).ready(function(){
   });
   
   $('.markInput').change(function(e){
+<<<<<<< HEAD
     //alert('name');
+=======
+>>>>>>> 72ff02a
     var data = $('#updateScores').serialize();
     document.getElementById('updateSuccess').innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
     var base_url = window.location;
@@ -97,7 +100,11 @@ $(document).ready(function(){
       var obj = JSON.parse(data);
       var string_data = "";
       for (i=0;i<obj.class.length;i++){
+<<<<<<< HEAD
         string_data += '<a href="">'+obj.class[i].id;
+=======
+        string_data += ''  
+>>>>>>> 72ff02a
       }
     });
   });
