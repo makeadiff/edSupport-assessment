@@ -35,7 +35,7 @@
               if (target.length) {
                 $('html, body').animate({
                   scrollTop: target.offset().top - 60
-                }, 2000);
+                }, 0);
                 return false;
               }
             }
@@ -97,6 +97,7 @@
       </div>
     </div>
   </nav>
+  
 </div>
   <div class="container">
       <h1 class='title' style="text-align:center">Assessment Reports</h1>

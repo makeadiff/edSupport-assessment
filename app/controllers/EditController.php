@@ -20,7 +20,9 @@ class EditController extends BaseController{
       
       	$cityId = $_SESSION['city_id'];
 	  	$centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
-		  
+
+		$grading_templates = DB::table('Grade_Template')->select('id','name')->where('status',1)->get(); 
+	    		  
 
       	//return $marks;
 
@@ -33,12 +35,12 @@ class EditController extends BaseController{
       
       if(empty($marks)){
 		$flag = 0;
-		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$classList,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList]);
+		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$classList,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates]);
 	  }
 	  
 	  else{
 		$flag = 1;
-		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$marks,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList]);
+		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$marks,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates]);
 	  }
 	     
     }

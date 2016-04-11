@@ -3,7 +3,22 @@ var count;
 $(document).ready(function(){
 
   //Working Script ----- alert('Hi');
-  
+  var window_width = $(window).width();
+  var container_width = $('.container').width();
+  $('#fixed-top-div').css({
+    width: container_width,
+    left: (window_width/2) - (container_width/2) + 12,
+  });
+
+  $(window).resize(function(){
+    var window_width = $(window).width();
+    var container_width = $('.container').width();
+    $('#fixed-top-div').css({
+      width: container_width,
+      left: (window_width/2) - (container_width/2) + 12,
+    });
+  });
+
   var height = $(window).height();
   $('.blue-red').css({
     minHeight:height    
@@ -72,12 +87,8 @@ $(document).ready(function(){
   });
   
   $('.markInput').change(function(e){
-<<<<<<< HEAD
-    //alert('name');
-=======
->>>>>>> 72ff02a
     var data = $('#updateScores').serialize();
-    document.getElementById('updateSuccess').innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
+    document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
     var base_url = window.location;
     e.preventDefault();
     $.ajax({
@@ -85,10 +96,12 @@ $(document).ready(function(){
       url: base_url + "/update",
       data: data,
       success: function(data){
-        document.getElementById('updateSuccess').innerHTML = '<div class="chip">'+data+'<i class="material-icons">close</i></div>';
+        document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip">'+data+'<i class="material-icons">close</i></div>';
       }
     });
   });
+  
+  //Grade Template Suggestion
 
   $('#centerName').change(function(){
     var centerName = document.getElementById('centerName').value;
@@ -100,33 +113,30 @@ $(document).ready(function(){
       var obj = JSON.parse(data);
       var string_data = "";
       for (i=0;i<obj.class.length;i++){
-<<<<<<< HEAD
         string_data += '<a href="">'+obj.class[i].id;
-=======
-        string_data += ''  
->>>>>>> 72ff02a
       }
     });
   });
 
-  count = 1;  
+    
 
   $('#addMoreRows').click(function(e){
+    var count = document.getElementById('count').value;
     var string = '<td><input type="number" name="lower'+count+'" value="" placeholder="90" min="0" required></td><td><input type="number" name="upper'+count+'" value="" placeholder="100" min="0" required></td><td><input type="text" name="grade'+count+'" maxlength="2" required></td>';
 
     //var tableBody = document.getElementById('tableBody');
     //tableBody.innerHTML += string;
-
     var table = document.getElementById('gradeTable');
     var row = table.insertRow(-1);
     row.className = 'content';
     row.innerHTML = string;
     e.preventDefault;
     count++;
-    document.getElementById('input_count').value=count;
+    document.getElementById('count').value=count;
   });
 
   $('#removeRows').click(function(e){
+    var count = document.getElementById('count').value;
     var string = '<td><input type="number" name="lower'+count+'" value="" placeholder="90" min="0" required></td><td><input type="number" name="upper'+count+'" value="" placeholder="100" min="0" required></td><td><input type="text" name="grade'+count+'" maxlength="2" required></td>';
 
     //var tableBody = document.getElementById('tableBody');
@@ -136,7 +146,12 @@ $(document).ready(function(){
     var row = table.deleteRow(-1);
     e.preventDefault;
     count--;
-    document.getElementById('input_count').value=count;
+    document.getElementById('count').value=count;
+  });
+
+
+  $('.fancybox').click(function(){
+    
   });
 
 });
@@ -170,7 +185,7 @@ function concat(){
 
 function validate(){
 
-  alert(count);
+  //alert(count);
 
   //return false;
 

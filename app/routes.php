@@ -59,6 +59,11 @@
     Route::get('/manage/grading','GradeController@index');
     Route::get('/manage/grading/create','GradeController@createTemplate');
     Route::post('/manage/grading/createTemplate','GradeController@create');
+    Route::post('/manage/grading/editTemplate','GradeController@edit');
+    Route::get('/manage/grading/modify','GradeController@showList');
+    Route::get('/manage/grading/view/{template_id}','GradeController@viewTemplate');
+    Route::get('/manage/grading/modify/{template_id}','GradeController@viewTemplate');
+    Route::get('/manage/grading/modify/delete/{template_id}','GradeController@deleteTemplate');
     Route::post('/manage/grading/suggestions','GradeController@findSimilarTemplates');
     Route::get('/manage/report/class-progress','ReportController@classProgress');
     Route::post('/manage/report/fetchListOfCentres', 'ReportController@cityList');

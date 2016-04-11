@@ -1,4 +1,6 @@
+
 @extends('master.update')
+
 @section('content')
 
 
@@ -16,13 +18,28 @@
 
 ?>
 
-	<p class="title">
-	  <?php
-		  echo 'Center Name: '.ucwords($centerName->name).' | Year: '.$year.'-'.($year+1);
-	  ?>
-	</p>
+	<div class="row center" id="fixed-top-div">
+		
+		<p class="title">
+		  <?php
+			  echo 'Center Name: '.ucwords($centerName->name).' | Year: '.$year.'-'.($year+1);
+		  ?>
+		</p>
+		<div class="btn-group" role="group" aria-label="...">
+		  <p>
+		  	Select Grade
+		  </p>
+		  <?php
 
-	<div class="row">  
+		  	foreach ($className as $grade) {
+		  	  echo '<a href="#'.$grade->grade.'"><button type="button" class="btn cyan btn-default">'.$grade->grade.'</button></a>';
+			}
+		  ?>
+		</div>	
+		<div class="container center" id="updateSuccess"></div>
+	</div>
+
+	<div class="row" style="padding-top:50px;">  
 	    <form id="select-class" name="selectClass" role="form" method="post" enctype="multipart/form-data" action="{{{URL::to('manage/assessment/')}}}">
 	    <div class="input-field col s12 m6 text-center">
 	    	<p class="title">Center</p>
@@ -48,6 +65,10 @@
 		<div class="col s12 m12 text-center"><p><button class="btn light-waves" type="submit" class="markSubmit">Proceed</button></p></div>
 	</form>
 	
+
+	
+
+
 	<div class="row" id="scoreUpdate">
 	  <!-- <div class="col-md-12 col-sm-6 text-center">
 	    <p class="title">Change Total for all: <input class="markInput total-all" type="number" value="100" max="100" min="0"/></p>
@@ -65,15 +86,11 @@
 					  </tr>
 					  <tr id="header">
 					    <td width="10%">NA</td>
-					    <td width="10%">Not Applicable</td>
+					    <td width="10%">Not Available</td>
 					  </tr>
 					  <tr id="header">
 					    <td width="10%">OT</td>
 					    <td width="10%">Other Reasons</td>
-					  </tr>
-					  <tr id="header">
-					    <td width="10%">NU</td>
-					    <td width="10%">Not Updated</td>
 					  </tr>
 					</table>
 				</div>
@@ -84,22 +101,8 @@
 	<!--
 		Fetching the data for all the students in the mentioned center.
 	 -->
-	<div class="row center">
-		<div class="container" id="updateSuccess">
-		    
-		</div>
-		<div class="btn-group" role="group" aria-label="...">
-		  <p>
-		  	Select Grade
-		  </p>
-		  <?php
-
-		  	foreach ($className as $grade) {
-		  	  echo '<a href="#'.$grade->grade.'"><button type="button" class="btn cyan btn-default">'.$grade->grade.'</button></a>';
-			}
-		  ?>
-		</div>	
-	</div>
+	
+	<div class="container center" id="updateSuccess"></div>
 
 	<form name="updateScores" id="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
 	    <?php
@@ -123,7 +126,17 @@
 					          .$grade.
 					          '</span>
 					        </div>
+				        </div>'.
+				        '<div class="col s12 m4">
+				        	<br/>
+				        	<select name="grade_template'.$grade.'">
+				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	foreach ($grading_templates as $template) { 
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	}
+				        	echo '</select>
 				        </div>';
+
 		      			echo $tableHeaders;
 		      		} 
 		      		elseif ($grade > $lastGrade) {
@@ -136,6 +149,15 @@
 					          .$grade.
 					          '</span>
 					        </div>
+				        </div>'.
+				        '<div class="col s12 m4">
+				        	<br/>
+				        	<select name="grade_template'.$grade.'">
+				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	foreach ($grading_templates as $template) { 
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	}
+				        	echo '</select>
 				        </div>';
 		      			echo $tableHeaders;
 		      	  }
@@ -176,6 +198,15 @@
 					          .$grade.
 					          '</span>
 					        </div>
+				        </div>'.
+				         '<div class="col s12 m4">
+				        	<br/>
+				        	<select name="grade_template'.$grade.'">
+				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	foreach ($grading_templates as $template) { 
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	}
+				        	echo '</select>
 				        </div>';
 		      			echo $tableHeaders;
 		      		} 
@@ -189,6 +220,15 @@
 					          .$grade.
 					          '</span>
 					        </div>
+				        </div>'.
+				         '<div class="col s12 m4">
+				        	<br/>
+				        	<select name="grade_template'.$grade.'">
+				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	foreach ($grading_templates as $template) { 
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	}
+				        	echo '</select>
 				        </div>';
 		      			echo $tableHeaders;
 		      		}
@@ -238,7 +278,7 @@
 			</tfoot>-->
 		</table>
 		    <br/>
-		    <!--<noscript>-->
+		    <noscript>
 		    <div class="row">
 			    <div class="col s12 m12 text-center">
 			      <input type="hidden" name="count" id="input_count" value="1"/>
@@ -246,7 +286,7 @@
 			    </div>
 			    <br/><br/>
 			</div>
-			<!--</noscript>-->
+			</noscript>
 		</form>
 	</div>
 @stop

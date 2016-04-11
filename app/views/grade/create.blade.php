@@ -11,12 +11,12 @@
       <div class="row">
         <p class="title center">Create Grading Template</p>
         <div class="input-field col s12 m4 text-center">
-          <p class="title">Center</p>
+          <p class="title">State</p>
           <select name="centerName" id="centerName" class="assessmentInput" onchange="concat()">
             <option value="" disabled selected>--Select--</option>
             <?php 
-              foreach ($centers as $center){
-                echo '<option value="'.$center->name.'">'.$center->name.'</option>';
+              foreach ($states as $state){ //Populating List of States.
+                echo '<option value="'.$state->name.'">'.$state->name.'</option>';
               }
             ?>
           </select>
@@ -27,7 +27,7 @@
         </div>
         <div class="input-field col s12 m4 text-center">
             <p class="title">Grade</p>
-            <input class="assessmentInput" placeholder="7-10" onchange="concat()" id="gradeName" required="required" />
+            <input class="assessmentInput" placeholder="7 to 10" onchange="concat()" id="gradeName" required="required" />
         </div>
       </div>
 
@@ -60,11 +60,10 @@
         <div class="row">
           <div class="col s12 m12 text-center">
             <br/>
-              <input type="hidden" name="count" id="input_count" value="1"/>
-              
+              <input type="hidden" value="1" name="count" id="count">
               <button class="btn cyan" type="button" id="addMoreRows">Add more rows</button>
               <button class="btn cyan" type="button" id="removeRows">Remove rows</button>
-              <button class="btn teal" type="submit" class="markSubmit" name="submit" >Update Scores</button>
+              <button class="btn teal" type="submit" class="markSubmit" name="submit" >Create Template</button>
           </div>
           <br/><br/>
         </div>
