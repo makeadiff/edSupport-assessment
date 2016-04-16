@@ -127,15 +127,15 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<div class="col s12 m4">
+				        '<!--<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	<option value="0" disabled selected>--Select Grading Template--</option>';
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>';
+				        </div>-->';
 
 		      			echo $tableHeaders;
 		      		} 
@@ -163,7 +163,13 @@
 		      	  }
 
 			      echo '<tr class="content">'.
-			      '<td><strong>'.ucwords(strtolower($class->name)).'</strong></td>';
+			      '<td><strong>'.ucwords(strtolower($class->name)).''.
+			      '<select name="grade_template'.$grade.'" id="template'.$i.'">
+				        	<option value="0" disabled selected>--Select Grading Template--</option>';
+				        	foreach ($grading_templates as $template) { 
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	}
+				        	echo '</select>'.'</strong></td>';
 			      echo '<td>'.
 				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
 				  '<input class="markInput secured " type="text" value="" name="engScore'.$i.'"/>/'.
