@@ -46,7 +46,7 @@
 	      	<select name="centerId">
 			<?php 
 		  	foreach ($centerList as $center){
-			    echo '<option value="'.$center->id.'">'.$center->name.'</option>';
+			    echo '<option value="'.$center->id.'" '.($centerName->id == $center->id?'selected':'').'>'.$center->name.'</option>';
 		  	}
 			?>
 	      	</select>
@@ -150,7 +150,7 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<div class="col s12 m4">
+				        '<!--<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>';
@@ -158,16 +158,16 @@
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>';
+				        </div>-->';
 		      			echo $tableHeaders;
 		      	  }
 
 			      echo '<tr class="content">'.
-			      '<td><strong>'.ucwords(strtolower($class->name)).''.
-			      '<select name="grade_template'.$grade.'" id="template'.$i.'">
-				        	<option value="0" disabled selected>--Select Grading Template--</option>';
+			      '<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
+			      '<select class="gradeSelect" name="grade_template'.$grade.'" id="template'.$i.'">'.PHP_EOL.
+				        	'<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL;
 				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        		echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
 				        	}
 				        	echo '</select>'.'</strong></td>';
 			      echo '<td>'.
@@ -205,7 +205,7 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				         '<div class="col s12 m4">
+				        '<!--<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>';
@@ -213,7 +213,7 @@
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>';
+				        </div>-->';
 		      			echo $tableHeaders;
 		      		} 
 		      		elseif ($grade > $lastGrade) {
@@ -227,7 +227,7 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				         '<div class="col s12 m4">
+				        '<!--<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>';
@@ -235,13 +235,21 @@
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>';
+				        </div>-->';
 		      			echo $tableHeaders;
 		      		}
 
 		      		if($class->id != $studentId){
 					  $i++;
-					  echo '<tr class="content">'.'<td>'.ucwords(strtolower($class->name)).'</td>';
+					  echo '<tr class="content">'.
+			      		'<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
+			      		'<select class="gradeSelect" name="grade_template'.$grade.'" id="template'.$i.'">'.PHP_EOL.
+				        '<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL;
+				        foreach ($grading_templates as $template) { 
+				        	echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
+				        }
+				        	
+				      echo '</select>'.'</strong></td>';
 					  echo '<td>'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'"/>';		      
 					}
 					if($class->subject_id == 8){

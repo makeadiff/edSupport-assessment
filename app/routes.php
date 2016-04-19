@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-      //$_SESSION['user_id']=9006;//57184;//46174;//;//57184;
+      //$_SESSION['user_id']=5828; //9006;//57184;//46174;//;//57184;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -31,10 +31,10 @@
     //$_SESSION['group_id']=0;
     
     foreach($groups as $group) {
-      if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8) {
+      if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8 || $group->id == 350) {
 	  $flag = true;
       }
-      if($group->id == 1 || $group->id == 3) $_SESSION['group_id']=1;
+      if($group->id == 1 || $group->id == 3 || $group->id == 358 || $group->id == 350) $_SESSION['group_id']=1;
     }
 
     if($flag == false)

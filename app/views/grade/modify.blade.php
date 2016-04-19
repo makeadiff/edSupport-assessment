@@ -38,10 +38,10 @@
   <div class="row">
     <div class="col s12 m12 text-center">
       <br/>
-        <input type="text" style="color:#000;" class="center" readonly="readonly" id="gradeNameConcated" name="gradeNameConcated" value="{{$templateName->name}}">
+        <input type="hidden" style="color:#000;" class="center" readonly="readonly" id="gradeNameConcated" name="gradeNameConcated" value="{{$templateName->name}}">
         <button class="btn cyan" type="button" id="addMoreRows">Add more rows</button>
         <button class="btn cyan" type="button" id="removeRows">Remove rows</button>
-        <button class="btn teal" type="submit" class="markSubmit" name="submit" >Create Template</button>
+        <button class="btn teal" type="submit" class="markSubmit" name="submit" >Update Template</button>
     </div>
     </form>
     <br/><br/>

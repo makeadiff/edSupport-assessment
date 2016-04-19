@@ -7,7 +7,7 @@ class EditController extends BaseController{
       	$year = Input::get('year');
       	$exam_id = DB::select(DB::raw("select id,exam_type_id from Exam where EXTRACT(year from Exam_on)='$year' and status='1' limit 1"));
       	$exam_id =  $exam_id[0]->id;
-      	$centerName = DB::table('Center')->select('name')->where('id',$centerId)->first();
+      	$centerName = DB::table('Center')->select('id','name')->where('id',$centerId)->first();
       	$dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
       	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year);
       	$classList = $dataSelect->get();

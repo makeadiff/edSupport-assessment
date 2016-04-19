@@ -314,6 +314,17 @@ input.totalMarks{
   box-shadow: #CCC 0 0 5px;
 }
 
+.gradeSelect{
+  font-size: 12px;
+  font-weight: 200;
+  background: none;
+  border: thin solid #EEE;
+  outline:0;
+  width: 50%;
+  float: right;
+  height: 30px;
+}
+
 @media only screen and (min-width:150px) and (max-width:500px){
   #scoreUpdate{
     width:95%;
