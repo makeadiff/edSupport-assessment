@@ -52,12 +52,13 @@ class EditController extends BaseController{
    public function updateData(){
 	  if(Request::ajax()){
 	  	$data = Input::all();
+	  	//return $data;
 	    $year = Input::get('year');
 	    $exam_id = DB::select(DB::raw("select id,exam_type_id from Exam where EXTRACT(year from Exam_on)='$year' and status='1' limit 1"));
 	    $exam_id =  $exam_id[0]->id;
 	    $size = sizeof(Input::all());
 	    $j = 0;
-	    for ($i=2;$i<($size-1);$i+= 7){
+	    for ($i=3;$i<($size-8);$i+= 7){
 			$e = 'engScore'.$j;
 			$m = 'mathScore'.$j;
 			$s = 'sciScore'.$j;
@@ -72,6 +73,7 @@ class EditController extends BaseController{
 			$totalMath = Input::get($tm);
 			$totalEng = Input::get($te);
 			$totalSci = Input::get($ts);
+			
 			$statusEng = 'updated';
 			$statusMath = 'updated';
 			$statusSci = 'updated';
@@ -167,6 +169,8 @@ class EditController extends BaseController{
 			$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();
 			$value2 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',9)->where('exam_id',$exam_id)->get();
 			$value3 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',10)->where('exam_id',$exam_id)->get();
+
+
 		    
 		  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones
 

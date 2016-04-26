@@ -142,7 +142,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select name="grade_template'.$grade.'">
+				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0" disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -167,7 +167,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select name="grade_template'.$grade.'">
+				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -226,7 +226,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select name="grade_template'.$grade.'">
+				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -250,7 +250,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select name="grade_template'.$grade.'">
+				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -282,6 +282,9 @@
 					  if($class->marks == '-2' ) $class->marks='AB';
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
+					  if($class->marks == '-5' ) $class->marks='P';
+					  if($class->marks == '-6' ) $class->marks='F';
+					  if($class->marks == '-7' ) $class->marks='RE';
 
 					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalEng'.$i.'"/></td>';
 					}
@@ -290,6 +293,9 @@
 					  if($class->marks == '-2' ) $class->marks='AB';
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
+					  if($class->marks == '-5' ) $class->marks='P';
+					  if($class->marks == '-6' ) $class->marks='F';
+					  if($class->marks == '-7' ) $class->marks='RE';
 					  
 					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalMath'.$i.'"/></td>';
 					}
@@ -298,6 +304,9 @@
 					  if($class->marks == '-2' ) $class->marks='AB';
 					  if($class->marks == '-3' ) $class->marks='NA';
 					  if($class->marks == '-4' ) $class->marks='OT';
+					  if($class->marks == '-5' ) $class->marks='P';
+					  if($class->marks == '-6' ) $class->marks='F';
+					  if($class->marks == '-7' ) $class->marks='RE';
 					  
 					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/>/'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" name="totalSci'.$i.'"/></td>'.'</tr>';
 					}
@@ -322,6 +331,8 @@
 					</td>
 				</tr>
 			</tfoot>-->
+
+			<button class="btn" type="submit" class="markSubmit" name="submit" >Update Scores</button>
 		</table>
 		    <br/>
 		    <noscript>

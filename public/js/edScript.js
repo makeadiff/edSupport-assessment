@@ -118,7 +118,9 @@ $(document).ready(function(){
     });
   });
 
-  
+  $('gradeSelect').change(function(e) {
+    
+  })
 
   $('#addMoreRows').click(function(e){
     var count = document.getElementById('count').value;
