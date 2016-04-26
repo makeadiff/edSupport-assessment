@@ -332,7 +332,7 @@
 				</tr>
 			</tfoot>-->
 
-			<button class="btn" type="submit" class="markSubmit" name="submit" >Update Scores</button>
+			
 		</table>
 		    <br/>
 		    <noscript>
