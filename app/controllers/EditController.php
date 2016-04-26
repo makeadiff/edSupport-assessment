@@ -92,6 +92,18 @@ class EditController extends BaseController{
 			  $marksEng = -4;
 			  $statusEng = 'others';
 			}
+			else if($marksEng == "P" || $marksEng == "p"){
+			  $marksEng = -5;
+			  $statusEng = 'pass';
+			}
+			else if($marksEng == "F" || $marksEng == "f"){
+			  $marksEng = -6;
+			  $statusEng = 'fail';
+			}
+			else if($marksEng == "RE" || $marksEng == "re"){
+			  $marksEng = -7;
+			  $statusEng = 're-exam';
+			}
 			 
 			if(empty($marksMath)){
 			  $marksMath = -1;
@@ -109,7 +121,20 @@ class EditController extends BaseController{
 			  $marksMath = -4;
 			  $statusMath = 'others';
 			}
-			
+			else if($marksMath == "P" || $marksMath == "p"){
+			  $marksMath = -5;
+			  $statusMath = 'pass';
+			}
+			else if($marksMath == "F" || $marksMath == "f"){
+			  $marksMath = -6;
+			  $statusMath = 'fail';
+			}
+			else if($marksMath == "RE" || $marksMath == "re"){
+			  $marksMath = -7;
+			  $statusMath = 're-exam';
+			}
+
+
 			if(empty($marksSci)){
 			  $marksSci = -1;
 			  $statusSci = 'not updated';
@@ -125,6 +150,18 @@ class EditController extends BaseController{
 			else if($marksSci == "OT" || $marksSci == "ot"){
 			  $marksSci = -4;
 			  $statusSci = 'others';
+			}
+			else if($marksSci == "P" || $marksSci == "p"){
+			  $marksSci = -5;
+			  $statusSci = 'pass';
+			}
+			else if($marksSci == "F" || $marksSci == "f"){
+			  $marksSci = -6;
+			  $statusSci = 'fail';
+			}
+			else if($marksSci == "RE" || $marksSci == "re"){
+			  $marksSci = -7;
+			  $statusSci = 're-exam';
 			}
 			
 			$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();

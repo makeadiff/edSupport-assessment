@@ -20,11 +20,6 @@
 
 	<div class="row center" id="fixed-top-div">
 		
-		<p class="title">
-		  <?php
-			  echo 'Center Name: '.ucwords($centerName->name).' | Year: '.$year.'-'.($year+1);
-		  ?>
-		</p>
 		<div class="btn-group" role="group" aria-label="...">
 		  <p>
 		  	Select Grade
@@ -41,8 +36,14 @@
 
 	<div class="row" style="padding-top:50px;">  
 	    <form id="select-class" name="selectClass" role="form" method="post" enctype="multipart/form-data" action="{{{URL::to('manage/assessment/')}}}">
+	    <p class="title">
+			  <?php
+				  echo 'Center Name: '.ucwords($centerName->name).' | Year: '.$year.'-'.($year+1);
+			  ?>
+		</p>
+
 	    <div class="input-field col s12 m6 text-center">
-	    	<p class="title">Center</p>
+		    <p class="title">Center</p>
 	      	<select name="centerId">
 			<?php 
 		  	foreach ($centerList as $center){
@@ -92,6 +93,18 @@
 					    <td width="10%">OT</td>
 					    <td width="10%">Other Reasons</td>
 					  </tr>
+					  <tr id="header">
+					    <td width="10%">P</td>
+					    <td width="10%">Pass</td>
+					  </tr>
+					  <tr id="header">
+					    <td width="10%">F</td>
+					    <td width="10%">Fail</td>
+					  </tr>
+					  <tr id="header">
+					    <td width="10%">RE</td>
+					    <td width="10%">Re-Exams</td>
+					  </tr>
 					</table>
 				</div>
 			</div>
@@ -127,15 +140,17 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<!--<div class="col s12 m4">
+				        '<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
-				        	<option value="0" disabled selected>--Select Grading Template--</option>';
+				        	<option value="0" disabled selected>--Select Grading Template--</option>'
+				        	.'<option value="-1" selected>Marks</option>'
+				        	.'<option value="-2">GPA</option>';
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>-->';
+				        </div>';
 
 		      			echo $tableHeaders;
 		      		} 
@@ -150,22 +165,26 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<!--<div class="col s12 m4">
+				        '<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	<option value="0"disabled selected>--Select Grading Template--</option>'
+				        	.'<option value="-1" selected>Marks</option>'
+				        	.'<option value="-2">GPA</option>';
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>-->';
+				        </div>';
 		      			echo $tableHeaders;
 		      	  }
 
 			      echo '<tr class="content">'.
 			      '<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
 			      '<select class="gradeSelect" name="grade_template'.$grade.'" id="template'.$i.'">'.PHP_EOL.
-				        	'<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL;
+				        	'<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL
+				        	.'<option value="-1" selected>Marks</option>'.PHP_EOL
+				        	.'<option value="-2">GPA</option>'.PHP_EOL;
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
 				        	}
@@ -205,15 +224,17 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<!--<div class="col s12 m4">
+				        '<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	<option value="0"disabled selected>--Select Grading Template--</option>'
+				        	.'<option value="-1" selected>Marks</option>'
+				        	.'<option value="-2">GPA</option>';
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>-->';
+				        </div>';
 		      			echo $tableHeaders;
 		      		} 
 		      		elseif ($grade > $lastGrade) {
@@ -227,15 +248,17 @@
 					          '</span>
 					        </div>
 				        </div>'.
-				        '<!--<div class="col s12 m4">
+				        '<div class="col s12 m4">
 				        	<br/>
 				        	<select name="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>';
+				        	<option value="0"disabled selected>--Select Grading Template--</option>'
+				        	.'<option value="-1" selected>Marks</option>'
+				        	.'<option value="-2">GPA</option>';
 				        	foreach ($grading_templates as $template) { 
 				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
-				        </div>-->';
+				        </div>';
 		      			echo $tableHeaders;
 		      		}
 
@@ -244,7 +267,9 @@
 					  echo '<tr class="content">'.
 			      		'<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
 			      		'<select class="gradeSelect" name="grade_template'.$grade.'" id="template'.$i.'">'.PHP_EOL.
-				        '<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL;
+				        '<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL
+				        .'<option value="-1" selected>Marks</option>'.PHP_EOL
+				        .'<option value="-2">GPA</option>'.PHP_EOL;
 				        foreach ($grading_templates as $template) { 
 				        	echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
 				        }
@@ -283,6 +308,13 @@
 		    }
 		    
 	    ?>
+
+	    <div class="row">
+	    <br/><br/>
+	    	<p class="center">Incase of unavailability of marks, please update a detailed reason here.</p>
+	    	<textarea name="reason" placeholder="Reason" rows="5"></textarea>
+	    </div>
+
 		<!--	    <tfoot class="hide-if-no-paging">
 				<tr>
 					<td colspan="4">

@@ -24,7 +24,7 @@
 
     $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
-    //$_SESSION['city_id']=$cityId->city_id;
+    $_SESSION['city_id']=$cityId->city_id;
     
     $flag = false;
   
