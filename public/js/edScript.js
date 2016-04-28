@@ -120,7 +120,27 @@ $(document).ready(function(){
 
   $('gradeSelect').change(function(e) {
     
-  })
+  });
+
+  $('.studentGrade').change(function(e){
+    var id = this.id;
+    var temp_count = id.substring(8,10);
+    var value = document.getElementById(id).value;
+    //alert(value);
+    
+    if(value==-1){
+      $('#totalEng'+temp_count).show();
+      $('#totalMath'+temp_count).show();
+      $('#totalSci'+temp_count).show();
+      $('.total'+temp_count).show();
+    }
+    else{
+      $('#totalEng'+temp_count).hide();
+      $('#totalMath'+temp_count).hide();
+      $('#totalSci'+temp_count).hide(); 
+      $('.total'+temp_count).hide();
+    }
+  });
 
   $('#addMoreRows').click(function(e){
     var count = document.getElementById('count').value;
