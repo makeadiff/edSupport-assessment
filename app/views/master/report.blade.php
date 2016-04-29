@@ -56,6 +56,7 @@
       <a class="brand-logo" href="{{{URL::to('/manage')}}}">&nbsp; &nbsp;Ed Support</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
+          @if(isset($_SESSION['group_id']))
           @if($_SESSION['group_id']=='1')
           <form class="form-nav" method="post" action="{{{URL::to('/selectCity')}}}">  
           <?php
@@ -71,6 +72,7 @@
             echo '</select></div><div class="col 6"><button class="waves-effect waves-light btn submit" type="submit" name="action">Submit</button></div></div> ';
           ?>
         </form>
+        @endif
         @endif
       </li>
       <li>
