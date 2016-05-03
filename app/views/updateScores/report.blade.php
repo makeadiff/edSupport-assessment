@@ -308,7 +308,7 @@
 					  if($class->marks == '-6' ) $class->marks='F';
 					  if($class->marks == '-7' ) $class->marks='RE';
 					  
-					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/><'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.'</tr>';
+					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.'</tr>';
 					}
 					$studentId=$class->id;
 					$lastGrade = $grade;
