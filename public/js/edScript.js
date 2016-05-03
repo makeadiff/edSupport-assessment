@@ -118,8 +118,9 @@ $(document).ready(function(){
     });
   });
 
-  $('gradeSelect').change(function(e) {
-    
+  $('.masterSelect').change(function(e) {
+    id = this.id;
+    alert(id);
   });
 
   $('.studentGrade').change(function(e){

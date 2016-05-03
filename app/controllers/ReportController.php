@@ -9,6 +9,7 @@
 //     select Student.Name,Center.name,City.name,Mark.marks,Subject.name,Mark.Total,EXTRACT(year from Exam.Exam_on) from Mark inner join Student on Student.id = Mark.student_id inner join Subject on Subject.id = Mark.subject_id inner join Exam on Exam.id = Mark.exam_id inner join Center on Student.center_id = Center.id inner join City on City.id = Center.city_id where marks > 0;
     
     public function generateRawDump(){
+
       $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.name as Student_Name','Student.sex as Sex','Level.grade as Class','Center.name as Center_Name','City.name as City_Name','Mark.marks as Marks','Subject.name as Subject_Name','Mark.Total as Total','Exam.Exam_on as Year','Mark.status as status')->get();
       
       
@@ -19,15 +20,15 @@
       $header = 'Student Name,Sex,Class,Center,City,Marks,Subject,Total,Year,Grade'.PHP_EOL;
       fwrite($file,$header);
       foreach($datas as $data){
-	$value = (float)$data->Marks/$data->Total*100;
-	$grade = getGrade($value);
-	$marks = $data->Marks;
-	if($marks<0){
-	  $marks = $data->status;
-	}
-	$year = strstr($data->Year, '-', true);
-	$string = $data->Student_Name.','.$data->Sex.','.$data->Class.','.str_replace(",","-",$data->Center_Name).','.$data->City_Name.','.$marks.','.str_replace(",","-",$data->Subject_Name).','.$data->Total.','.$year.','.$grade.PHP_EOL;
-	fwrite($file,$string);
+  	    $value = (float)$data->Marks/$data->Total*100;
+  	    $grade = getGrade($value);
+  	    $marks = $data->Marks;
+  	    if($marks<0){
+  	       $marks = $data->status;
+  	    }
+        $year = strstr($data->Year, '-', true);
+  	    $string = $data->Student_Name.','.$data->Sex.','.$data->Class.','.str_replace(",","-",$data->Center_Name).','.$data->City_Name.','.$marks.','.str_replace(",","-",$data->Subject_Name).','.$data->Total.','.$year.','.$grade.PHP_EOL;
+  	    fwrite($file,$string);
       }
       
       fclose($file);
@@ -236,6 +237,279 @@
     return View::make('report.annualImpact');
    }    
    
+   public function getCSV(){
+
+      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->get();
+       
+      //return $datas;
+      $i = -1;
+      $prev_student = 0;
+
+      $data_array = array();      
+
+      foreach ($datas as $data) {
+
+        $patternMath = '/^Math/';
+        $patternEng = '/^English/';
+        $patternSci = '/^Science/';
+
+      //------------- general data -------------------------------
+        $student_id = $data->student_id;
+        $center_name = $data->center_name;
+        $city_name = $data->city_name;
+        $class = $data->class;
+        $student_name = $data->student_name;
+        $student_sex = $data->sex;
+        $subject_id = $data->subject_id;
+        $subject_name = $data->subjects;
+        $subject_name_mark = $data->subject_name;
+        $subject_id_mark = $data->subject_id_mark;
+        $mark = $data->marks;
+        $total = $data->total;
+
+
+        if($student_id != $prev_student){
+          $i++;
+          $prev_student = $student_id;
+        }
+      //----------------------------------------------------------
+        $data_array[$i]['student_id'] = $student_id;
+        $data_array[$i]['student_name'] = $student_name;
+        $data_array[$i]['city'] = $city_name;
+        $data_array[$i]['center'] = str_replace(',','',$center_name);
+        $data_array[$i]['student_grade'] = $class;
+      //----------------------------------------------------------
+        if($subject_id==2 || $subject_id==5 ||$subject_id==8){
+          $data_array[$i]['english'] = 1;
+          if($mark>=0){
+            $data_array[$i]['english_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['english_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==3 || $subject_id==6 ||$subject_id==9){
+          $data_array[$i]['math'] = 1; 
+          if($mark>=0){
+            $data_array[$i]['math_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['math_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==4 || $subject_id==7 || $subject_id==10){
+          $data_array[$i]['science'] = 1; 
+          if($mark>=0){
+            $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['science_mark'] = $data->status;
+          }
+        }
+        
+        if(!isset($data_array[$i]['english'])){
+          $data_array[$i]['english'] = 0;
+        }
+        if(!isset($data_array[$i]['math'])){
+          $data_array[$i]['math'] = 0;
+        }
+        if(!isset($data_array[$i]['science'])){
+          $data_array[$i]['science'] = 0;
+        }
+
+        if(!isset($data_array[$i]['english_mark'])){
+          $data_array[$i]['english_mark'] = 'NULL';
+        }
+        if(!isset($data_array[$i]['math_mark'])){
+          $data_array[$i]['math_mark'] = 'NULL';
+        }
+        if(!isset($data_array[$i]['science_mark'])){
+          $data_array[$i]['science_mark'] = 'NULL';
+        }
+
+        /*
+        if($subject_id==8){
+          if($mark>=0){
+            $data_array[$i]['english_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['english_mark'] = $data->status;
+          }
+
+        }
+        else if($subject_id==9){
+          if($mark>=0){
+            $data_array[$i]['math_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['math_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==10){
+          if($mark>=0){
+            $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['science_mark'] = $data->status;
+          }
+        }
+        */
+                
+    }
+
+      //var_dump($data_array);
+      //return 'Hi';
+      $file = fopen('AssessmentReport.csv','w');
+      $header = 'Student ID,Student Name,City,Center,Child,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science'.PHP_EOL;
+      print ($header);
+      fwrite($file,$header);
+      foreach($data_array as $data){
+        $string = $data['student_id'].','.$data['student_name'].','.$data['city'].','.$data['center'].','.$data['student_grade'].','.$data['math'].','.$data['english'].','.$data['science'].','.$data['math_mark'].','.$data['english_mark'].','.$data['science_mark'].PHP_EOL;
+        fwrite($file,$string);
+        print($string);
+      }
+
+      fclose($file);
+   }
+
+
+   public function downloadCSV(){
+
+      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->get();
+       
+      //return $datas;
+      $i = -1;
+      $prev_student = 0;
+
+      $data_array = array();      
+
+      foreach ($datas as $data) {
+
+        $patternMath = '/^Math/';
+        $patternEng = '/^English/';
+        $patternSci = '/^Science/';
+
+      //------------- general data -------------------------------
+        $student_id = $data->student_id;
+        $center_name = $data->center_name;
+        $city_name = $data->city_name;
+        $class = $data->class;
+        $student_name = $data->student_name;
+        $student_sex = $data->sex;
+        $subject_id = $data->subject_id;
+        $subject_name = $data->subjects;
+        $subject_name_mark = $data->subject_name;
+        $subject_id_mark = $data->subject_id_mark;
+        $mark = $data->marks;
+        $total = $data->total;
+
+
+        if($student_id != $prev_student){
+          $i++;
+          $prev_student = $student_id;
+        }
+      //----------------------------------------------------------
+        $data_array[$i]['student_id'] = $student_id;
+        $data_array[$i]['student_name'] = $student_name;
+        $data_array[$i]['city'] = $city_name;
+        $data_array[$i]['center'] = str_replace(',','',$center_name);
+        $data_array[$i]['student_grade'] = $class;
+      //----------------------------------------------------------
+        if($subject_id==2 || $subject_id==5 ||$subject_id==8){
+          $data_array[$i]['english'] = 1;
+          if($mark>=0){
+            $data_array[$i]['english_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['english_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==3 || $subject_id==6 ||$subject_id==9){
+          $data_array[$i]['math'] = 1; 
+          if($mark>=0){
+            $data_array[$i]['math_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['math_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==4 || $subject_id==7 || $subject_id==10){
+          $data_array[$i]['science'] = 1; 
+          if($mark>=0){
+            $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['science_mark'] = $data->status;
+          }
+        }
+        
+        if(!isset($data_array[$i]['english'])){
+          $data_array[$i]['english'] = 0;
+        }
+        if(!isset($data_array[$i]['math'])){
+          $data_array[$i]['math'] = 0;
+        }
+        if(!isset($data_array[$i]['science'])){
+          $data_array[$i]['science'] = 0;
+        }
+
+        if(!isset($data_array[$i]['english_mark'])){
+          $data_array[$i]['english_mark'] = 'NULL';
+        }
+        if(!isset($data_array[$i]['math_mark'])){
+          $data_array[$i]['math_mark'] = 'NULL';
+        }
+        if(!isset($data_array[$i]['science_mark'])){
+          $data_array[$i]['science_mark'] = 'NULL';
+        }
+
+        /*
+        if($subject_id==8){
+          if($mark>=0){
+            $data_array[$i]['english_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['english_mark'] = $data->status;
+          }
+
+        }
+        else if($subject_id==9){
+          if($mark>=0){
+            $data_array[$i]['math_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['math_mark'] = $data->status;
+          }
+        }
+        else if($subject_id==10){
+          if($mark>=0){
+            $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          else{
+            $data_array[$i]['science_mark'] = $data->status;
+          }
+        }
+        */
+                
+    }
+
+      //var_dump($data_array);
+      //return 'Hi';
+      $file = fopen('AssessmentReport.csv','w');
+      $header = 'Student ID,Student Name,City,Center,Child,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science'.PHP_EOL;
+      fwrite($file,$header);
+      foreach($data_array as $data){
+        $string = $data['student_id'].','.$data['student_name'].','.$data['city'].','.$data['center'].','.$data['student_grade'].','.$data['math'].','.$data['english'].','.$data['science'].','.$data['math_mark'].','.$data['english_mark'].','.$data['science_mark'].PHP_EOL;
+        fwrite($file,$string);
+      }
+
+      fclose($file);
+      $file='AssessmentReport.csv';
+      $headers = array(
+              'Content-Type: application/csv',
+            );
+      return Response::download($file,'Annual_Assessment_Report_Data.csv',$headers);
+   }
    
   }
   

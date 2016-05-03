@@ -142,7 +142,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0" disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -167,7 +167,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">GPA</option>';
@@ -191,11 +191,11 @@
 				        	echo '</select>'.'</strong></td>';
 			      echo '<td>'.
 				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
-				  '<input class="markInput secured " type="text" value="" name="engScore'.$i.'"/><snap class="total'.$i.'">/</snap>'.
+				  '<input class="markInput secured " type="text" value="" name="engScore'.$i.'"/><span class="total'.$i.'">/</span>'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>'.
-				  '<td><input class="markInput secured " type="text" value="" name="mathScore'.$i.'"/><snap class="total'.$i.'">/</snap>'.
+				  '<td><input class="markInput secured " type="text" value="" name="mathScore'.$i.'"/><span class="total'.$i.'">/</span>'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>'.
-				  '<td><input class="markInput secured " type="text" value="" name="sciScore'.$i.'"/><snap class="total'.$i.'">/</sn'.
+				  '<td><input class="markInput secured " type="text" value="" name="sciScore'.$i.'"/><span class="total'.$i.'">/</span>'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.
 				'</tr>';
 			      $i++;
@@ -286,7 +286,7 @@
 					  if($class->marks == '-6' ) $class->marks='F';
 					  if($class->marks == '-7' ) $class->marks='RE';
 
-					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/><snap class="total'.$i.'">/</snap>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>';
+					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" name="engScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>';
 					}
 					else if($class->subject_id == 9){
 					  if($class->marks == '-1') $class->marks='';
@@ -297,7 +297,7 @@
 					  if($class->marks == '-6' ) $class->marks='F';
 					  if($class->marks == '-7' ) $class->marks='RE';
 					  
-					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/><snap class="total'.$i.'">/</snap>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>';
+					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>';
 					}
 					else if($class->subject_id == 10){
 					  if($class->marks == '-1' ) $class->marks='';
@@ -308,7 +308,7 @@
 					  if($class->marks == '-6' ) $class->marks='F';
 					  if($class->marks == '-7' ) $class->marks='RE';
 					  
-					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/><'.$i.'">/</snap>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.'</tr>';
+					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" maxlength="3"/><'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.'</tr>';
 					}
 					$studentId=$class->id;
 					$lastGrade = $grade;
