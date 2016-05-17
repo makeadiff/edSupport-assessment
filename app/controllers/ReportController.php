@@ -283,7 +283,7 @@
         $data_array[$i]['center'] = str_replace(',','',$center_name);
         $data_array[$i]['student_grade'] = $class;
       //----------------------------------------------------------
-        if($subject_id==2 || $subject_id==5 ||$subject_id==8){
+        if($subject_id==2 || $subject_id==5 || $subject_id==8 ||$subject_id_mark==8){
           $data_array[$i]['english'] = 1;
           if($mark>=0){
             $data_array[$i]['english_mark'] = $mark/$total*100;
@@ -295,7 +295,7 @@
             $data_array[$i]['english_mark'] = $data->status;
           }
         }
-        else if($subject_id==3 || $subject_id==6 ||$subject_id==9){
+        else if($subject_id==3 || $subject_id==6 ||$subject_id==9 || $subject_id_mark==9){
           $data_array[$i]['math'] = 1; 
           if($mark>=0){
             $data_array[$i]['math_mark'] = $mark/$total*100;
@@ -307,7 +307,7 @@
             $data_array[$i]['math_mark'] = $data->status;
           }
         }
-        else if($subject_id==4 || $subject_id==7 || $subject_id==10){
+        else if($subject_id==4 || $subject_id==7 || $subject_id==10 || $subject_id_mark == 10){
           $data_array[$i]['science'] = 1; 
           if($mark>=0){
             $data_array[$i]['science_mark'] = $mark/$total*100;
