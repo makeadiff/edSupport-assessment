@@ -239,9 +239,10 @@
    
    public function getCSV(){
 
-      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->get();
-       
-      //return $datas;
+      $datas = DB::table('Student')->leftJoin('Mark','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->leftJoin('Subject','Subject.id','=','Mark.subject_id')->leftJoin('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->distinct()->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->where('Student.status','=',1)->get();
+
+      $datas = DB::table('Student')->join('Mark','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->join('Subject','Subject.id','=','Mark.subject_id')->Join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->distinct()->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->where('Student.status','=',1)->get();
+
       $i = -1;
       $prev_student = 0;
 
@@ -267,6 +268,7 @@
         $mark = $data->marks;
         $total = $data->total;
 
+        //var_dump($data);
 
         if($student_id != $prev_student){
           $i++;
@@ -284,6 +286,9 @@
           if($mark>=0){
             $data_array[$i]['english_mark'] = $mark/$total*100;
           }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['english_mark'] = 'NULL';
+          }
           else{
             $data_array[$i]['english_mark'] = $data->status;
           }
@@ -293,6 +298,9 @@
           if($mark>=0){
             $data_array[$i]['math_mark'] = $mark/$total*100;
           }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['math_mark'] = 'NULL';
+          }
           else{
             $data_array[$i]['math_mark'] = $data->status;
           }
@@ -301,6 +309,9 @@
           $data_array[$i]['science'] = 1; 
           if($mark>=0){
             $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['science_mark'] = 'NULL';
           }
           else{
             $data_array[$i]['science_mark'] = $data->status;
@@ -368,6 +379,9 @@
         fwrite($file,$string);
         print($string);
       }
+      //$mime = i($QUERY, 'mime', 'csv');
+      //header("Content-type: text/csv");
+      //echo array2csv($data_array);
 
       fclose($file);
    }
@@ -543,4 +557,19 @@ function getGrade($value){
     else if($value>=0&&$value<=20){
       return("E2");
     }
+  }
+
+function array2csv(array &$array)
+  {
+   if (count($array) == 0) {
+     return null;
+   }
+   ob_start();
+   $df = fopen("php://output", 'w');
+   fputcsv($df, array_keys(reset($array)));
+   foreach ($array as $row) {
+      fputcsv($df, $row);
+   }
+   fclose($df);
+   return ob_get_clean();
   }
