@@ -373,7 +373,7 @@
       //var_dump($data_array);
       //return 'Hi';
       //$file = fopen('AssessmentReport.csv','w');
-      $header = 'Student ID,Student Name,City,Center,Child,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science'.PHP_EOL;
+      $header = 'Student ID,Student Name,City,Center,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science'.PHP_EOL;
       
       print ($header);
       //fwrite($file,$header);
