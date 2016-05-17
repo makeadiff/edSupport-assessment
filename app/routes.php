@@ -71,9 +71,9 @@
     Route::post('/manage/report/class-progress/check-report','ReportController@generateReport');
     Route::get('/manage/report/generatecsv','ReportController@generateRawDump');
     Route::get('/manage/report/downloadcsv','ReportController@downloadCSV');
-    Route::get('/manage/report/getcsv','ReportController@getCSV');
     Route::get('/manage/report/annual-impact','ReportController@generateAnnualImpact');
   });
     
-  
+Route::get('/manage/report/getcsv','ReportController@getCSV');  
+
   
