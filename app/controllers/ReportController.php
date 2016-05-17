@@ -239,7 +239,7 @@
    
    public function getCSV(){
 
-      header("Content-type: text/csv");
+      header("Content-type: text/plain");
 
       $datas = DB::table('Student')->leftJoin('Mark','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->leftJoin('Subject','Subject.id','=','Mark.subject_id')->leftJoin('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->distinct()->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->where('Student.status','=',1)->get();
 
