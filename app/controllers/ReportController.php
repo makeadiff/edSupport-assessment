@@ -372,20 +372,21 @@
 
       //var_dump($data_array);
       //return 'Hi';
-      $file = fopen('AssessmentReport.csv','w');
-      $header = 'Student ID,Student Name,City,Center,Child,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science'.PHP_EOL;
+      //$file = fopen('AssessmentReport.csv','w');
+      $header = 'Student ID,Student Name,City,Center,Child,Grade,Math,English,Science,Marks_Math,Marks_English,Marks_Science';
+      
       print ($header);
-      fwrite($file,$header);
+      //fwrite($file,$header);
       foreach($data_array as $data){
-        $string = $data['student_id'].','.$data['student_name'].','.$data['city'].','.$data['center'].','.$data['student_grade'].','.$data['math'].','.$data['english'].','.$data['science'].','.$data['math_mark'].','.$data['english_mark'].','.$data['science_mark'].PHP_EOL;
-        fwrite($file,$string);
+        $string = $data['student_id'].','.$data['student_name'].','.$data['city'].','.$data['center'].','.$data['student_grade'].','.$data['math'].','.$data['english'].','.$data['science'].','.$data['math_mark'].','.$data['english_mark'].','.$data['science_mark'];
+        //fwrite($file,$string);
         print($string);
       }
       //$mime = i($QUERY, 'mime', 'csv');
-      //header("Content-type: text/csv");
+      //
       //echo array2csv($data_array);
 
-      fclose($file);
+      //fclose($file);
    }
 
 
