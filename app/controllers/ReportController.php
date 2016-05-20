@@ -310,7 +310,7 @@
             $data_array[$i]['english_mark'] = $mark/$total*100;
           }
           elseif ($mark=="NULL" || $mark == "null") {
-            $data_array[$i]['english_mark'] = 'NULL';
+            $data_array[$i]['english_mark'] = 'not updated';
           }
           else{
             $data_array[$i]['english_mark'] = $data->status;
@@ -321,7 +321,7 @@
             $data_array[$i]['math_mark'] = $mark/$total*100;
           }
           elseif ($mark=="NULL" || $mark == "null") {
-            $data_array[$i]['math_mark'] = 'NULL';
+            $data_array[$i]['math_mark'] = 'not updated';
           }
           else{
             $data_array[$i]['math_mark'] = $data->status;
@@ -332,7 +332,7 @@
             $data_array[$i]['science_mark'] = $mark/$total*100;
           }
           elseif ($mark=="NULL" || $mark == "null") {
-            $data_array[$i]['science_mark'] = 'NULL';
+            $data_array[$i]['science_mark'] = 'not updated';
           }
           else{
             $data_array[$i]['science_mark'] = $data->status;
@@ -341,13 +341,13 @@
         
         
         if(!isset($data_array[$i]['english_mark'])){
-          $data_array[$i]['english_mark'] = 'NULL';
+          $data_array[$i]['english_mark'] = 'not updated';
         }
         if(!isset($data_array[$i]['math_mark'])){
-          $data_array[$i]['math_mark'] = 'NULL';
+          $data_array[$i]['math_mark'] = 'not updated';
         }
         if(!isset($data_array[$i]['science_mark'])){
-          $data_array[$i]['science_mark'] = 'NULL';
+          $data_array[$i]['science_mark'] = 'not updated';
         }
 
         /*
@@ -402,9 +402,10 @@
 
    public function downloadCSV(){
 
-      $datas = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->join('Subject','Subject.id','=','Mark.subject_id')->join('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->get();
-       
+      $datas = DB::table('Student')->leftjoin('Mark','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('BatchLevel as B','B.level_id','=','Level.id')->join('UserBatch as C','C.batch_id','=','B.batch_id')->join('User','User.id','=','C.user_id')->join('Subject as D','D.id','=','User.subject_id')->leftJoin('Subject','Subject.id','=','Mark.subject_id')->leftJoin('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Student.sex as sex','Level.grade as class','Center.name as center_name','City.name as city_name','Mark.marks as marks','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year','Mark.status as status','D.name as subjects','D.id as subject_id')->distinct()->orderBy('City.name','ASC')->orderBy('Center.name','ASC')->orderBy('student_id','ASC')->where('Student.status','=',1)->get();
+
       //return $datas;
+
       $i = -1;
       $prev_student = 0;
 
@@ -430,6 +431,7 @@
         $mark = $data->marks;
         $total = $data->total;
 
+        //var_dump($data);
 
         if($student_id != $prev_student){
           $i++;
@@ -442,34 +444,17 @@
         $data_array[$i]['center'] = str_replace(',','',$center_name);
         $data_array[$i]['student_grade'] = $class;
       //----------------------------------------------------------
-        if($subject_id==2 || $subject_id==5 ||$subject_id==8){
+        
+        if($subject_id==2 || $subject_id==5 || $subject_id==8 ){
           $data_array[$i]['english'] = 1;
-          if($mark>=0){
-            $data_array[$i]['english_mark'] = $mark/$total*100;
-          }
-          else{
-            $data_array[$i]['english_mark'] = $data->status;
-          }
         }
         else if($subject_id==3 || $subject_id==6 ||$subject_id==9){
           $data_array[$i]['math'] = 1; 
-          if($mark>=0){
-            $data_array[$i]['math_mark'] = $mark/$total*100;
-          }
-          else{
-            $data_array[$i]['math_mark'] = $data->status;
-          }
         }
         else if($subject_id==4 || $subject_id==7 || $subject_id==10){
-          $data_array[$i]['science'] = 1; 
-          if($mark>=0){
-            $data_array[$i]['science_mark'] = $mark/$total*100;
-          }
-          else{
-            $data_array[$i]['science_mark'] = $data->status;
-          }
+          $data_array[$i]['science'] = 1;  
         }
-        
+
         if(!isset($data_array[$i]['english'])){
           $data_array[$i]['english'] = 0;
         }
@@ -480,14 +465,50 @@
           $data_array[$i]['science'] = 0;
         }
 
+
+        if($subject_id_mark==8){          
+          if($mark>=0){
+            $data_array[$i]['english_mark'] = $mark/$total*100;
+          }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['english_mark'] = 'not updated';
+          }
+          else{
+            $data_array[$i]['english_mark'] = $data->status;
+          }
+        }
+        else if($subject_id_mark==9){
+          if($mark>=0){
+            $data_array[$i]['math_mark'] = $mark/$total*100;
+          }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['math_mark'] = 'not updated';
+          }
+          else{
+            $data_array[$i]['math_mark'] = $data->status;
+          }
+        }
+        else if($subject_id_mark == 10){
+          if($mark>=0){
+            $data_array[$i]['science_mark'] = $mark/$total*100;
+          }
+          elseif ($mark=="NULL" || $mark == "null") {
+            $data_array[$i]['science_mark'] = 'not updated';
+          }
+          else{
+            $data_array[$i]['science_mark'] = $data->status;
+          }
+        }
+        
+        
         if(!isset($data_array[$i]['english_mark'])){
-          $data_array[$i]['english_mark'] = 'NULL';
+          $data_array[$i]['english_mark'] = 'not updated';
         }
         if(!isset($data_array[$i]['math_mark'])){
-          $data_array[$i]['math_mark'] = 'NULL';
+          $data_array[$i]['math_mark'] = 'not updated';
         }
         if(!isset($data_array[$i]['science_mark'])){
-          $data_array[$i]['science_mark'] = 'NULL';
+          $data_array[$i]['science_mark'] = 'not updated';
         }
 
         /*
