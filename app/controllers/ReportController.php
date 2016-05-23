@@ -295,13 +295,13 @@
         }
 
         if(!isset($data_array[$i]['english'])){
-          $data_array[$i]['english'] = 0;
+          $data_array[$i]['english'] = 1;
         }
         if(!isset($data_array[$i]['math'])){
-          $data_array[$i]['math'] = 0;
+          $data_array[$i]['math'] = 1;
         }
         if(!isset($data_array[$i]['science'])){
-          $data_array[$i]['science'] = 0;
+          $data_array[$i]['science'] = 1;
         }
 
 
