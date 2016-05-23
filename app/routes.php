@@ -74,6 +74,6 @@
     Route::get('/manage/report/annual-impact','ReportController@generateAnnualImpact');
   });
     
-Route::get('/manage/report/getcsv','ReportController@getCSV');  
+Route::get('/manage/report/getcsv/{year}','ReportController@getCSV');  
 
   
