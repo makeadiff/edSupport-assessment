@@ -54,6 +54,7 @@
     Route::post('/manage/assessment','EditController@getListOfStudents');
     Route::get('/manage/assessment','EditController@index');
     Route::post('/manage/assessment/update','EditController@updateData');
+    Route::post('/manage/assessment/fetchTemplate/{template_id}','GradeController@fetchTemplate');
     Route::get('/manage/assessment/update','EditController@index');
     Route::get('/manage/report','ReportController@index');
     Route::get('/manage/grading','GradeController@index');

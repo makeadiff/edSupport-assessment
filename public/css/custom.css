@@ -10,6 +10,10 @@
     text-align: center;
 }
 
+select.markInput{
+  background: #FAFAFA;
+}
+
 .form-nav select#selectCity, .form-nav button.submit{
   font-size: 14px;
 }
@@ -197,7 +201,12 @@ input.markInput{
   color:#333132;
   border:none;
   background:none;
-  border-bottom:thin #FFF dashed;
+  border-bottom:thin #000 dashed;
+  text-align: center;
+}
+
+.mark_data{
+  text-align: center;
 }
 
 input.markSubmit{

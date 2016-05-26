@@ -2,7 +2,6 @@
 <html lang="en">
 <head> 
  
-    <!--<link href="{{{URL::to('/')}}}/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="{{{URL::to('/')}}}/css/footable.core.css" rel="stylesheet " type="text/css">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
@@ -13,9 +12,6 @@
     <script src="{{{URL::to('/')}}}/js/bootstrap.min.js"></script>
     <script src="{{{URL::to('/')}}}/js/footable.min.js"></script>
     <script type="text/javascript" src="{{{URL::to('/')}}}/js/materialize.min.js"></script>
-<!--     <script src="{{{URL::to('/')}}}/js/footable.filter.min.js"></script> -->
-<!--     <script src="{{{URL::to('/')}}}/js/footable.paginate.min.js"></script> 
-<!--     <script src="{{{URL::to('/')}}}/js/footable.sort.min.js"><//script> -->
     <script src="{{{URL::to('/')}}}/js/uservoice.js"></script>
     <script src="{{{URL::to('/')}}}/js/edScript.js"></script>
     <script type="text/javascript">

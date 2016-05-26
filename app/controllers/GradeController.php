@@ -145,6 +145,18 @@
         return View::make('grade.modify')->with('template',$template)->with('templateName',$templateName);
       } 
     }
+
+    public function fetchTemplate($template_id){
+      if(Request::ajax()){
+        $templateName = DB::table('Grade_Template')->select('name')->where('id',$template_id)->first();
+
+        $grades = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.grade')->where('A.id',$template_id)->where('A.status',1)->get();
+
+        $data = array('grade'=>$grades);
+        return json_encode($data);
+      }
+    }
+
   }
 
 
