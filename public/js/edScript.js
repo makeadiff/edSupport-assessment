@@ -86,7 +86,7 @@ $(document).ready(function(){
     });
   });
   
-  $('.markInput').change(function(e){
+  $('form').change(function(e){
     var data = $('#updateScores').serialize();
     document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
     var base_url = window.location;
@@ -103,7 +103,7 @@ $(document).ready(function(){
   
   //Grade Template Suggestion
 
-  $('#centerName').change(function(){
+  /*$('#centerName').change(function(){
     var centerName = document.getElementById('centerName').value;
     //alert(centerName);  
     var data = centerName;
@@ -116,7 +116,7 @@ $(document).ready(function(){
         string_data += '<a href="">'+obj.class[i].id;
       }
     });
-  });
+  });*/
 
   $('.masterSelect').change(function(e) {
     var id = this.id;
@@ -135,7 +135,7 @@ $(document).ready(function(){
       e.preventDefault();
       $.ajax({
         type: "POST",
-        url: base_url + "/fetchTemplate/"+this.value,
+        url: base_url + "/fetchTemplate/"+this  .value,
         data: data,
         success: function(data){
 
@@ -303,23 +303,6 @@ $(document).ready(function(){
 
 });
 
-function ValidateMarkForm(){
-  var subjects = 3;
-  var length = $('.markInput').length;   
-  for (var i=1;i<length-1;i+=2){
-	 var markValue = parseInt(document.getElementsByClassName('markInput').item(i).value);	
-	 var marks = document.getElementsByClassName('markInput').item(i).value;
-	 if(marks == "AB" ||marks == "ab" || marks == "NA" || marks == "na" || marks == "OT" || marks == "ot" || (marks >= 0 && marks <=100)){
-	  }
-	  else{
-	    alert("Enter Marks or values from the Legend");
-	    return false;
-	  }
-	}
-
-    //}
-    return true;
-}
   
 function concat(){
   var centerName = document.getElementById('centerName').value;
