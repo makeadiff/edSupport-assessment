@@ -3,20 +3,23 @@
 class EditController extends BaseController{
     
     public function getListOfStudents(){
+    
     	$centerId = Input::get('centerId');
       	$year = Input::get('year');
       	$exam_id = DB::select(DB::raw("select id,exam_type_id from Exam where EXTRACT(year from Exam_on)='$year' and status='1' limit 1"));
       	$exam_id =  $exam_id[0]->id;
       	$centerName = DB::table('Center')->select('id','name')->where('id',$centerId)->first();
+    
       	$dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
-      	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year);
+      	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('status','=',1);
       	$classList = $dataSelect->get();
+      	
       	$className = $dataClass->select('Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->where('Level.grade','>','0')->groupby('Level.grade')->get();
 
       	//return $classList;
 	    //$className is fetching all the grades available in the selected Center.
       
-      	$marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Center','Center.id','=','Student.center_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total','Level.grade')->distinct()->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->orderby('Student.id','ASC')->orderby('Mark.subject_id','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->get();
+      	$marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Center','Center.id','=','Student.center_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total','Level.grade','Mark.template_id')->distinct()->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->orderby('Student.id','ASC')->orderby('Mark.subject_id','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->get();
       
       	$cityId = $_SESSION['city_id'];
 	  	$centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
@@ -85,13 +88,19 @@ class EditController extends BaseController{
 				if(empty($studentId)) break;
 
 				if($template==-2){
-					if (is_nan($marksEng)) $marksEng = $marksEng*9.5;
-					if (is_nan($marksMath)) $marksMath = $marksMath*9.5;
-					if (is_nan($marksSci)) $marksSci = $marksSci*9.5;
+					if (!is_nan((float)$marksEng)){ 
+						$marksEng = (float) $marksEng * 9.5;
+					}
+					if (!is_nan((float)$marksMath)){
+						$marksMath = (float)$marksMath*9.5;
+					}
+					if (!is_nan((float)$marksSci)){
+						$marksSci = (float)$marksSci*9.5;
+					}
 
 					$totalSci = $totalEng = $totalMath = 100;
 				}
-				elseif ($template>=0) {
+				elseif ($template>=0) { //Selecting Grades from Grading Template
 
 					$grades = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.grade as grade','C.id','C.from_mark as lower','C.to_mark as upper')->where('A.id',$template)->where('A.status',1)->get();
 
