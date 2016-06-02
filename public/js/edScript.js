@@ -74,29 +74,30 @@ $(document).ready(function(){
   });
 
   $('form').change(function(e){
-    //alert(this.value);
-    if(validate_form()){
-      var data = $('#updateScores').serialize();
-      document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
-      var base_url = window.location;
-      e.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: base_url + "/update",
-        data: data,
-        success: function(data){
-          document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip">'+data+'<i class="material-icons">close</i></div>';
-        }
-      });
-    }
-    else{
-      document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip error">Validation Error<i class="material-icons">close</i></div>';
+    var link = window.location.toString();
+    var n = link.indexOf('/assessment');
+    if(n>=0){
+      if(validate_form()){
+        var data = $('#updateScores').serialize();
+        document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
+        var base_url = window.location;
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: base_url + "/update",
+          data: data,
+          success: function(data){
+            document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip">'+data+'<i class="material-icons">close</i></div>';
+          }
+        });
+      }
+      else{
+        document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip error">Validation Error<i class="material-icons">close</i></div>';
+      }
     }
   });
 
-  $('form').submit(function(e){
-    return false;
-  }); 
+
 
   $('.masterSelect').change(function(e) {
     var id = this.id;
