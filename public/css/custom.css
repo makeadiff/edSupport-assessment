@@ -12,6 +12,7 @@
 
 select.markInput{
   background: #FAFAFA;
+  text-align: center;
 }
 
 .form-nav select#selectCity, .form-nav button.submit{

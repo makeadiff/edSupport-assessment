@@ -23,7 +23,7 @@
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
 
     $user_id = $_SESSION['user_id'];
-    $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
+    //$cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
     //$_SESSION['city_id']=$cityId->city_id;
     
     $flag = false;

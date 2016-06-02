@@ -255,6 +255,8 @@ class EditController extends BaseController{
 					$j++;
 			}
 
+			//Updating reason for not being able to update marks for Shelter.
+
 			$center_id = Input::get('center_id');
 			$reason = Input::get('reason');
 

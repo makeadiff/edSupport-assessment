@@ -49,7 +49,7 @@
 
 	    <div class="input-field col s12 m6 text-center">
 		    <p class="title">Center</p>
-	      	<select name="centerId">
+	      	<select name="centerId" id="centerId">
 			<?php 
 		  	foreach ($centerList as $center){
 			    echo '<option value="'.$center->id.'" '.($centerName->id == $center->id?'selected':'').'>'.$center->name.'</option>';
@@ -59,7 +59,7 @@
 	  	</div>
 	    <div class="input-field col s12 m6 text-center">
 	      	<p class="title">Year</p>
-	      	<select name="year">
+	      	<select name="year" id="year">
 				<option value="2015">2015-2016</option>
 				<option value="2014">2014-2015</option>
 				<option value="2013">2013-2014</option>
@@ -150,7 +150,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0" disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">CGPA</option>';
@@ -175,7 +175,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">CGPA</option>';
@@ -190,11 +190,11 @@
 			      echo '<tr class="content">'.
 			      '<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
 			      '<select class="gradeSelect studentGrade grade_template'.$grade.'" name="template'.$i.'" id="template'.$i.'">'.PHP_EOL.
-				        	'<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL
+				        	'<option value="0" disabled>--Select Grading Template--</option>'.PHP_EOL
 				        	.'<option value="-1" selected>Marks</option>'.PHP_EOL
 				        	.'<option value="-2">CGPA</option>'.PHP_EOL;
 				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
+				        		echo '<option value="'.$template->id.'">'.$template->name.'</option>'.PHP_EOL;
 				        	}
 				        	echo '</select>'.'</strong></td>';
 			      echo '<td class="mark_data">'.
@@ -234,7 +234,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">CGPA</option>';
@@ -258,7 +258,7 @@
 				        </div>'.
 				        '<div class="col s12 m4">
 				        	<br/>
-				        	<select class="gradeSelect masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
+				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
 				        	<option value="0"disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">CGPA</option>';
@@ -274,12 +274,12 @@
 					  $i++;
 					  echo '<tr class="content">'.
 			      		'<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
-			      		'<select class="gradeSelect studentGrade grade_template'.$grade.'" name="template'.$i.'" id="template'.$i.'">'.PHP_EOL.
-				        '<option value="0" disabled selected>--Select Grading Template--</option>'.PHP_EOL
-				        .'<option value="-1" selected>Marks</option>'.PHP_EOL
-				        .'<option value="-2">CGPA</option>'.PHP_EOL;
+			      		'<select class="gradeSelect studentGrade grade_template'.$grade.'" name="template'.$i.'" id="template'.$i.'">'.PHP_EOL
+				        .'<option value="0" disabled>--Select Grading Template--</option>'.PHP_EOL
+			        	.'<option value="-1" '.($class->template_id==-1?'selected':'').'>Marks</option>'.PHP_EOL
+				        .'<option value="-2"'.($class->template_id==-2?'selected':'').'>CGPA</option>'.PHP_EOL;
 				        foreach ($grading_templates as $template) { 
-				        	echo '<option value='.$template->id.'>'.$template->name.'</option>'.PHP_EOL;
+				        	echo '<option value="'.$template->id.'"'.($class->template_id==$template->id?'selected':'').'>'.$template->name.'</option>'.PHP_EOL;
 				        }
 				        	
 				      echo '</select>'.'</strong></td>';
