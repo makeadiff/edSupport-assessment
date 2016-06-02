@@ -378,7 +378,7 @@
 			
 		</table>
 		    <br/>
-		    <noscript>
+		    <!--<noscript>-->
 		    <div class="row">
 			    <div class="col s12 m12 text-center">
 			      <input type="hidden" name="count" id="input_count" value="1"/>
@@ -386,7 +386,7 @@
 			    </div>
 			    <br/><br/>
 			</div>
-			</noscript>
+			<!--</noscript>-->
 		</form>
 	</div>
 @stop

@@ -16,7 +16,8 @@ class HomeController extends BaseController {
 	  	
 	  	$_SESSION['city_id']=$city_id;
 	  	//return Redirect::to($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-	  	return Redirect::back();
+	  	//return $_SERVER['HTTP_REFERER'];
+	  	return Redirect::to('/manage/update');
   	}
 
   	public function get_year() { /* Function get_year(): Source: madapp/system/helper/misc_helper.php Line 123 */

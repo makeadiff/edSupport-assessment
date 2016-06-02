@@ -190,13 +190,10 @@ $('form').not('#selectCity,#centerId,#year').change(function(e){
     document.getElementById('count').value=count;
   });
 
-
-  $('.fancybox').click(function(){
-    
-  });
+  
 
 });
-
+  
   
 function concat(){
   var centerName = document.getElementById('centerName').value;
