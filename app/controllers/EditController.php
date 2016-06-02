@@ -55,7 +55,7 @@ class EditController extends BaseController{
     }
     
     public function updateData(){
-   		if(Request::ajax()){
+   		//if(Request::ajax()){
 		  	$data = Input::all();
 		  	//return $data;
 		    $year = Input::get('year');
@@ -272,6 +272,6 @@ class EditController extends BaseController{
 
 		    return 'Changes updated successful in the Database';
 		}
-	}
+	//}
 }
 

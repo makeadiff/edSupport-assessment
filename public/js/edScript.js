@@ -51,7 +51,30 @@ $(document).ready(function(){
 
   });
 
-$('form').not('#selectCity,#centerId,#year').change(function(e){
+  $("a").on('click', function(event) {
+    var location = window.location;
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top - 180
+      }, 200, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+      });
+    } // End if
+  });
+
+  $('form').change(function(e){
+    //alert(this.value);
     var data = $('#updateScores').serialize();
     document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
     var base_url = window.location;
@@ -66,10 +89,12 @@ $('form').not('#selectCity,#centerId,#year').change(function(e){
     });
   });
 
+  $('form').submit(function(e){
+    //return false;
+  }); 
+
   $('.masterSelect').change(function(e) {
     var id = this.id;
-    
-    //Changing Value for All the select values for the selected Grade.
     
     $('.'+id).val(this.value);
 
@@ -243,9 +268,9 @@ function getGrades(template){
         sciScore = document.getElementById('sciScore'+temp_count).value;
         mathScore = document.getElementById('mathScore'+temp_count).value;
         
-        if(engScore=="" || mathScore=="" || sciScore==""){
-          //var confirm = confirm('This will clear the exisiting data. Press OK to continue');
-          //alert(confirm);
+        if(engScore!="" || mathScore!="" || sciScore!=""){
+          var confirm = window.confirm('This will clear the exisiting data. Press OK to continue');
+          alert(confirm);
         }  
 
         $('#engScore'+temp_count).replaceWith('<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'"></select>');
@@ -265,78 +290,3 @@ function getGrades(template){
     $('#sciScore'+temp_count).replaceWith('<input class="markInput secured" id="sciScore'+temp_count+'" name="sciScore'+temp_count+'" value=""/>');
   }
 }
-
-
-  
-
-  /*$('#select-center').change(function(e){
-    var centerId = selectClass.centerId.value;
-    var year = selectClass.year.value;
-    e.preventDefault();
-    
-    $.post('fetchYear',{centerId: centerId,year: year},function(data){
-  console.log(data);
-  var obj = JSON.parse(data);
-  var string="";
-  var string2="";
-  for(i=0;i<obj.class.length;i++){  
-    string2 += '<option value="'+ obj.class[i].id+'">'+obj.class[i].name+'</option>'; 
-  }
-  $('#classSelected').html(string2);
-  console.log(string);
-    });
-  });*/
-  
-  /*$('#select-city').change(function(e){
-    var cityId = getReport.cityId.value;
-    e.preventDefault();
-      
-    $.post('fetchListOfCentres',{cityId: cityId},function(data){
-      var obj = JSON.parse(data);
-      console.log(data);
-      var string1="";
-      var string2="";
-      for(i=0;i<obj.center.length;i++){
-  string1 += '<option value="'+obj.center[i].id+'">'+obj.center[i].name+'</option>';  
-      }
-      $('#select-center-report').html(string1);
-      for(i=0;i<obj.classList.length;i++){
-  string2 += '<option value="'+obj.classList[i].id+'">'+obj.classList[i].name+'</option>';  
-      }
-      $('#select-class-list').html(string2);
-    });
-  });*/
-  
-  /*$('#select-center-report').change(function(e){
-    var centerId = getReport.centerId.value;
-    e.preventDefault();
-    
-    $.post('fetchYear',{centerId: centerId},function(data){
-      console.log(data);
-      var obj = JSON.parse(data);
-      var string2="";
-      for(i=0;i<obj.class.length;i++){  
-  string2 += '<option value="'+ obj.class[i].id+'">'+obj.class[i].name+'</option>'; 
-      }
-      $('#select-class-list').html(string2);
-    });
-  });*/
-  
-    
-  //Grade Template Suggestion
-
-  /*$('#centerName').change(function(){
-    var centerName = document.getElementById('centerName').value;
-    //alert(centerName);  
-    var data = centerName;
-    var base_url = window.location;
-    $.post('suggestions',{centerName: centerName},function(data){
-      console.log(data);
-      var obj = JSON.parse(data);
-      var string_data = "";
-      for (i=0;i<obj.class.length;i++){
-        string_data += '<a href="">'+obj.class[i].id;
-      }
-    });
-  });*/
-

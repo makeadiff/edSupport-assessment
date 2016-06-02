@@ -123,7 +123,7 @@
 	
 	<div class="container center" id="updateSuccess"></div>
 
-	<form name="updateScores" id="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form" onsubmit="return ValidateMarkForm()">
+	<form name="updateScores" id="updateScores" action="{{{URL::to('/manage/assessment/update')}}}" method="post" role="form">
 	    <?php
 	      echo '<input type="hidden" name="year" value="'.$year.'"/>';
 	      echo '<br/>';
