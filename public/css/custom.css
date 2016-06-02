@@ -71,7 +71,7 @@ nav a.hover{
     {
         font-family: 'Oswald',sans-serif;
         color:#333132;
-        text-transform: ;
+        text-transform: ;,
         font-size: 200%;
     }
     
@@ -205,6 +205,29 @@ input.markInput{
   border-bottom:thin #000 dashed;
   text-align: center;
 }
+
+input.markInput.error{
+  width:45%;
+  background:#F00;
+  text-align:center;
+  color:#FFF;
+  border:none;
+  border-bottom:thin #F00 dashed;
+  text-align: center;
+}
+
+.error{
+  background:#F00;
+  text-align:center;
+  color:#FFF;
+}
+
+.success{
+  background:#084;
+  text-align:center;
+  color:#FFF;
+}
+
 
 .mark_data{
   text-align: center;

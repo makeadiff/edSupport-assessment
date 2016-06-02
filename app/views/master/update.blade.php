@@ -92,7 +92,7 @@
               echo $value.')';
             ?></a>
           </li>
-          <li><a href="{{{URL::to('/manage')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
+          <li><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
         </ul>
       </div>
     </div>

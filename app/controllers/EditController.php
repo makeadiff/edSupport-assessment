@@ -20,7 +20,7 @@ class EditController extends BaseController{
       	//return $classList;
 	    //$className is fetching all the grades available in the selected Center.
       
-      	$marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Center','Center.id','=','Student.center_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.marks','Mark.subject_id','Mark.total','Level.grade','Mark.template_id')->distinct()->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->orderby('Student.id','ASC')->orderby('Mark.subject_id','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->where('Student.status','=',1)->get();
+      	$marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Center','Center.id','=','Student.center_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.input_data as marks','Mark.subject_id','Mark.total','Level.grade','Mark.template_id')->distinct()->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->orderby('Student.id','ASC')->orderby('Mark.subject_id','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->where('Student.status','=',1)->get();
       
       	$cityId = $_SESSION['city_id'];
 	  	$centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
@@ -55,7 +55,7 @@ class EditController extends BaseController{
     }
     
     public function updateData(){
-   		//if(Request::ajax()){
+   		if(Request::ajax()){
 		  	$data = Input::all();
 		  	//return $data;
 		    $year = Input::get('year');
@@ -81,44 +81,11 @@ class EditController extends BaseController{
 				$totalEng = Input::get($te);
 				$totalSci = Input::get($ts);
 				$template = Input::get($templateID);
-
+				
 				$statusEng = 'updated';
 				$statusMath = 'updated';
 				$statusSci = 'updated';
 
-				if(empty($studentId)) break;
-
-				if($template==-2){
-					if (!is_nan((float)$marksEng)){ 
-						$marksEng = (float) $marksEng * 9.5;
-					}
-					if (!is_nan((float)$marksMath)){
-						$marksMath = (float)$marksMath*9.5;
-					}
-					if (!is_nan((float)$marksSci)){
-						$marksSci = (float)$marksSci*9.5;
-					}
-
-					$totalSci = $totalEng = $totalMath = 100;
-				}
-				elseif ($template>=0) { //Selecting Grades from Grading Template
-
-					$grades = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.grade as grade','C.id','C.from_mark as lower','C.to_mark as upper')->where('A.id',$template)->where('A.status',1)->get();
-
-					foreach ($grades as $grade) {
-						if($grade->grade == $marksEng){
-							$marksEng = (float)((float)$grade->upper + (float)$grade->lower)/2;
-						}
-						if($grade->grade == $marksMath){
-							$marksMath = (float)((float)$grade->upper + (float)$grade->lower)/2;
-						}
-						if($grade->grade == $marksSci){
-							$marksSci = (float)((float)$grade->upper + (float)$grade->lower)/2;
-						}
-					}
-
-				}		
-				
 				if(empty($marksEng)){
 				  $marksEng = -1;
 				  $statusEng = 'not updated';
@@ -206,9 +173,59 @@ class EditController extends BaseController{
 				  $marksSci = -7;
 				  $statusSci = 're-exam';
 				}
-				
+
+				$inputMath = $marksMath;
+				$inputEng = $marksEng;
+				$inputSci = $marksSci;
 
 
+				if(empty($studentId)) break;
+
+				if($template==-2){
+					if (!is_nan((float)$marksEng)){ 
+						if((float)$marksEng <= 10){
+							$marksEng = (float) $marksEng * 9.5;
+						}
+						else{
+							$marksEng = (float)$marksEng;
+						}
+					}
+					if (!is_nan((float)$marksMath)){
+						if((float)$marksMath <= 10){
+							$marksMath = (float)$marksMath*9.5;
+						}
+						else{
+							$marksMath = (float)$marksMath;
+						}
+					}
+					if (!is_nan((float)$marksSci)){
+						if((float)$marksSci <= 10){
+							$marksSci = (float)$marksSci*9.5;
+						}
+						else{
+							$marksSci = (float)$marksSci;
+						}
+					}
+
+					$totalSci = $totalEng = $totalMath = 100;
+				}
+				elseif ($template>=0) { //Selecting Grades from Grading Template
+
+					$grades = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.grade as grade','C.id','C.from_mark as lower','C.to_mark as upper')->where('A.id',$template)->where('A.status',1)->get();
+
+					foreach ($grades as $grade) {
+						if($grade->grade == $marksEng){
+							$marksEng = (float)((float)$grade->upper + (float)$grade->lower)/2;
+						}
+						if($grade->grade == $marksMath){
+							$marksMath = (float)((float)$grade->upper + (float)$grade->lower)/2;
+						}
+						if($grade->grade == $marksSci){
+							$marksSci = (float)((float)$grade->upper + (float)$grade->lower)/2;
+						}
+					}
+
+				}		
 
 				$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();
 				$value2 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',9)->where('exam_id',$exam_id)->get();
@@ -220,11 +237,11 @@ class EditController extends BaseController{
 
 				if(empty($value1)){
 				    DB::table('Mark')->insert(
-				      array('student_id'=>$studentId,'subject_id'=>8,'exam_id'=>$exam_id,'marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng,'template_id'=>$template)
+				      array('student_id'=>$studentId,'subject_id'=>8,'exam_id'=>$exam_id,'input_data'=>$inputEng,'marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng,'template_id'=>$template)
 				    );
 				}
 				else{
-				  DB::table('Mark')->where('id',(int)($value1[0]->id))->limit(1)->update(array('marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng,'template_id'=>$template)
+				  DB::table('Mark')->where('id',(int)($value1[0]->id))->limit(1)->update(array('input_data'=>$inputEng,'marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng,'template_id'=>$template)
 				  );
 				}
 				
@@ -232,11 +249,11 @@ class EditController extends BaseController{
 
 				if(empty($value2)){
 				    DB::table('Mark')->insert(
-				      array('student_id'=>$studentId,'subject_id'=>9,'exam_id'=>$exam_id,'marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath,'template_id'=>$template)
+				      array('student_id'=>$studentId,'subject_id'=>9,'exam_id'=>$exam_id,'input_data'=>$inputMath,'marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath,'template_id'=>$template)
 				    );
 				}
 				else{
-				  DB::table('Mark')->where('id',(int)($value2[0]->id))->update(array('marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath,'template_id'=>$template)
+				  DB::table('Mark')->where('id',(int)($value2[0]->id))->update(array('input_data'=>$inputMath,'marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath,'template_id'=>$template)
 				  );
 				}
 				
@@ -244,11 +261,11 @@ class EditController extends BaseController{
 			  
 				if(empty($value3)){
 				    DB::table('Mark')->insert(
-				      array('student_id'=>$studentId,'subject_id'=>10,'exam_id'=>$exam_id,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
+				      array('student_id'=>$studentId,'subject_id'=>10,'exam_id'=>$exam_id,'input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
 				    );
 				}
 				else{
-				  DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
+				  DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
 				  	);
 				}
 				
@@ -272,6 +289,6 @@ class EditController extends BaseController{
 
 		    return 'Changes updated successful in the Database';
 		}
-	//}
+	}
 }
 

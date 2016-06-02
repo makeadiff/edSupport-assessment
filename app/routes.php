@@ -3,7 +3,7 @@
   Route::filter('login_check',function()
   {
       session_start();
-        //$_SESSION['user_id']=9006;//50423;//9006;//5828; //9006;//57184;//46174;//;//57184;
+      //$_SESSION['user_id']=9006;//50423;//9006;//5828; //9006;//57184;//46174;//;//57184;
       if(empty($_SESSION['user_id'])){
 
 	  if(App::environment('local'))
@@ -23,7 +23,7 @@
     $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
 
     $user_id = $_SESSION['user_id'];
-    //$cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
+    $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
     //$_SESSION['city_id']=$cityId->city_id;
     
     $flag = false;
@@ -73,6 +73,8 @@
     Route::get('/manage/report/generatecsv','ReportController@generateRawDump');
     Route::get('/manage/report/downloadcsv','ReportController@downloadCSV');
     Route::get('/manage/report/annual-impact','ReportController@generateAnnualImpact');
+
+    Route::get('/gradefix','GradeController@gradefix');
   });
     
 Route::get('/manage/report/getcsv/{year}','ReportController@getCSV');  

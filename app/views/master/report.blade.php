@@ -8,6 +8,16 @@
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="{{{URL::to('/')}}}/css/materialize.min.css"  media="screen,projection"/>
     <link href="{{{URL::to('/')}}}/css/custom.css" rel="stylesheet">
+
+    <style type="text/css">
+      .error{
+        border-bottom:red thin solid;
+        background:red;
+        color:#FFF;
+      }
+
+    </style>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{{URL::to('/')}}}/js/jquery-1.9.0.js"></script>
     <script src="{{{URL::to('/')}}}/js/bootstrap.min.js"></script>
@@ -93,7 +103,7 @@
               echo $value.')';
             ?></a>
           </li>
-          <li><a href="{{{URL::to('/manage')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
+          <li><a href="{{{URL::to('/')}}}/../../../madapp/index.php/auth/logout">Logout</a></li>
         </ul>
       </div>
     </div>

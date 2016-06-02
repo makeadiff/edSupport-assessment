@@ -157,6 +157,40 @@
       }
     }
 
+    public function gradefix(){
+      $datas = DB::table('Mark')->get();
+
+      foreach ($datas as $data) {
+        if($data->template_id == -1 && ($data->input_data == 0 || $data->input_data == null)){
+          DB::table('Mark')->where('id','=',$data->id)->update(['input_data'=>$data->marks]);
+        }
+        else if($data->template_id == -2 && ($data->input_data == 0 || $data->input_data == null)){
+          $marks = (float)$data->marks;
+          if($marks >= 0){
+            $marks = round($marks/9.5,0);
+          }
+          else {
+            $marks = (float)$data->marks;
+          }
+          echo $marks;
+          DB::table('Mark')->where('id','=',$data->id)->update(['input_data'=>$marks]);
+        }
+        else if($data->template_id >0){
+          $template_id = $data->template_id;
+          $grade_templates = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.from_mark','C.to_mark','C.grade')->where('A.id',$template_id)->where('A.status',1)->get();
+
+          foreach ($grade_templates as $template) {
+            if($data->marks >= $template->from_mark && $data->marks<=$template->to_mark){
+              $input = $template->grade;
+              echo $input;
+            } 
+          }
+          DB::table('Mark')->where('id','=',$data->id)->update(['input_data'=>$input]);
+
+        }
+
+      }
+
+    }
+
   }
-
-
