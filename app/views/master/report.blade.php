@@ -10,12 +10,7 @@
     <link href="{{{URL::to('/')}}}/css/custom.css" rel="stylesheet">
 
     <style type="text/css">
-      .error{
-        border-bottom:red thin solid;
-        background:red;
-        color:#FFF;
-      }
-
+      
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
