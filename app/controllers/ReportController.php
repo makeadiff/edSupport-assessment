@@ -588,36 +588,6 @@
   }
   
 // Function to Calculate the Grades from given input of Marks  
-  
-function getGrade($value){
-    if($value>=91&&$value<=100){
-      return("A1");
-    }
-    else if($value>=81&&$value<=90){
-      return("A2");
-    }
-    else if($value>=71&&$value<=80){
-      return("B1");
-    }
-    else if($value>=61&&$value<=70){
-      return("B2");
-    }
-    else if($value>=51&&$value<=60){
-      return("C1");
-    }
-    else if($value>=41&&$value<=50){
-      return("C2");
-    }
-    else if($value>=33&&$value<=40){
-      return("D");
-    }
-    else if($value>=21&&$value<=32){
-      return("E1");
-    }
-    else if($value>=0&&$value<=20){
-      return("E2");
-    }
-  }
 
 function array2csv(array &$array)
   {

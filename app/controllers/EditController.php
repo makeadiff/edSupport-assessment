@@ -291,6 +291,8 @@ class EditController extends BaseController{
 		}
 	}
 
+	/* Updating Input Data Field where it's not there already */
+
 	public function updateInputData(){
 		$data = DB::table('Mark')->get();
 		

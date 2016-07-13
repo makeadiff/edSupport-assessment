@@ -73,26 +73,28 @@ $(document).ready(function(){
     } // End if
   });
 
-  $('form').change(function(e){
-    var link = window.location.toString();
-    var n = link.indexOf('/assessment');
-    if(n>=0){
-      if(validate_form()){
-        var data = $('#updateScores').serialize();
-        document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
-        var base_url = window.location;
-        e.preventDefault();
-        $.ajax({
-          type: "POST",
-          url: base_url + "/update",
-          data: data,
-          success: function(data){
-            document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip">'+data+'<i class="material-icons">close</i></div>';
-          }
-        });
-      }
-      else{
-        document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip error">Validation Error<i class="material-icons">close</i></div>';
+  $('form').not('#selectCity').not('#centerId').not('#year').change(function(e){
+    if(this.id=='updateScores'){ /* The AJAX script needs to run only for the form with id as updateScores */
+      var link = window.location.toString();
+      var n = link.indexOf('/assessment');
+      if(n>=0){
+        if(validate_form()){
+          var data = $('#updateScores').serialize();
+          document.getElementById('updateSuccess').innerHTML = '<br/><div class="progress"><div class="indeterminate"></div></div>';
+          var base_url = window.location;
+          e.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: base_url + "/update",
+            data: data,
+            success: function(data){
+              document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip">'+data+'<i class="material-icons">close</i></div>';
+            }
+          });
+        }
+        else{
+          document.getElementById('updateSuccess').innerHTML = '<br/><div class="chip error">Validation Error<i class="material-icons">close</i></div>';
+        }
       }
     }
   });
@@ -206,6 +208,8 @@ $(document).ready(function(){
 
   });
 
+
+//Adding and Removing Rows in the Grade Template Creation
 
   $('#addMoreRows').click(function(e){
     var count = document.getElementById('count').value;
