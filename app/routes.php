@@ -78,5 +78,6 @@
   });
     
 Route::get('/manage/report/getcsv/{year}','ReportController@getCSV');  
+Route::get('/manage/update/inputdata','EditController@updateInputData');  
 
   

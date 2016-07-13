@@ -297,10 +297,16 @@ function getGrades(template){
         sciScore = document.getElementById('sciScore'+temp_count).value;
         mathScore = document.getElementById('mathScore'+temp_count).value;
 
+
         if(!(engScore!="" || mathScore!=""|| sciScore!="")){
           for (i=0;i<parsed.grade.length;i++){
             grade_options += '<option value="'+parsed.grade[i].grade+'">'+parsed.grade[i].grade+'</option>';
           }
+
+          //alert(grade_options);
+          var selectEng = '<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'">';
+          var selectMath = '<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'">';
+          var selectSci = '<select class="markInput secured " id="sciScore'+temp_count+'" name="sciScore'+temp_count+'">';
 
           $('#engScore'+temp_count).replaceWith('<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'"></select>');
           $('#mathScore'+temp_count).replaceWith('<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'"></select>');
@@ -309,7 +315,7 @@ function getGrades(template){
           $('#engScore'+temp_count).html(grade_options);
           $('#mathScore'+temp_count).html(grade_options);
           $('#sciScore'+temp_count).html(grade_options);
-          
+
           if(engScore!=""){
             $('#engScore'+temp_count).val(engScore).change();
           }

@@ -11,7 +11,7 @@ class EditController extends BaseController{
       	$centerName = DB::table('Center')->select('id','name')->where('id',$centerId)->first();
     
       	$dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
-      	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.status','=',1);
+      	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year);
 
       	$classList = $dataSelect->get();
       	
@@ -288,6 +288,26 @@ class EditController extends BaseController{
 			
 
 		    return 'Changes updated successful in the Database';
+		}
+	}
+
+	public function updateInputData(){
+		$data = DB::table('Mark')->get();
+		
+		foreach ($data as $dataset) {
+			$student_id = $dataset->student_id;
+			$subject_id = $dataset->subject_id;
+			$exam_id = $dataset->exam_id;
+			$marks = $dataset->marks;
+			$total = $dataset->total;
+			$input_data = $dataset->input_data;
+			
+
+			if($template_id==-1){
+				DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template));
+			}
+			$template_id = $dataset->template_id;
+			$mark = $
 		}
 	}
 }
