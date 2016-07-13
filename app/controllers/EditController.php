@@ -295,19 +295,45 @@ class EditController extends BaseController{
 		$data = DB::table('Mark')->get();
 		
 		foreach ($data as $dataset) {
+			$id = $dataset->id;
 			$student_id = $dataset->student_id;
 			$subject_id = $dataset->subject_id;
 			$exam_id = $dataset->exam_id;
 			$marks = $dataset->marks;
 			$total = $dataset->total;
 			$input_data = $dataset->input_data;
-			
-
-			if($template_id==-1){
-				DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template));
-			}
 			$template_id = $dataset->template_id;
-			$mark = $
+
+			if($template_id==-1 && ($input_data == 0 || $input_data == null)){
+				$input_data = $marks;
+				//echo 'Mark '.$marks.' - '.$input_data.'<br/>';
+				//DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template));
+				DB::table('Mark')->where('id','=',$id)->update(['input_data'=>$input_data]);
+			}
+			else if($template_id==-2 && ($input_data == 0 || $input_data == null)){
+				if($marks>=0){
+					$input_data = (float)$marks/9.5;
+					//echo 'GPA '.$marks.' - '.$input_data.'<br/>';
+					DB::table('Mark')->where('id','=',$id)->update(['input_data'=>$input_data]);
+				}
+				else if($marks<0){
+					$input_data = $marks;
+					//echo 'GPA '.$marks.' - '.$input_data.'<br/>';
+					DB::table('Mark')->where('id','=',$id)->update(['input_data'=>$input_data]);
+				}
+			}
+			else if($template_id>0 && ($input_data == 0 || $input_data == null)){
+				$template_id = $dataset->template_id;
+		        $grade_templates = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('C.from_mark','C.to_mark','C.grade')->where('A.id',$template_id)->where('A.status',1)->get();
+
+		        foreach ($grade_templates as $template) {
+		        	if($marks >= $template->from_mark && $marks<=$template->to_mark){
+		            	$input_data = $template->grade;
+		            	//echo 'Grade '.$marks.' - '.$input_data.'<br/>';
+		            	DB::table('Mark')->where('id','=',$id)->update(['input_data'=>$input_data]);
+		            } 
+		        }
+			}
 		}
 	}
 }
