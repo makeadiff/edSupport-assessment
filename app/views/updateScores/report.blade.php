@@ -3,6 +3,7 @@
 
 @section('content')
 
+<div class="cover"></div>
 
 <?php
 
@@ -198,7 +199,8 @@
 				        	}
 				        	echo '</select>'.'</strong></td>';
 			      echo '<td class="mark_data">'.
-				  '<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
+				  '<input type="hidden" value="'.$class->name.'" id="studentName'.$i.'" name="studentName'.$i.'">'.
+				  '<input type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
 				  '<input class="markInput secured " type="text" value="" id="engScore'.$i.'" name="engScore'.$i.'"/><span class="total'.$i.'">/</span>'.
 				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>'.
 				  '<td class="mark_data"><input class="markInput secured " type="text" value="" id="mathScore'.$i.'" name="mathScore'.$i.'"/><span class="total'.$i.'">/</span>'.
@@ -283,7 +285,7 @@
 				        }
 				        	
 				      echo '</select>'.'</strong></td>';
-					  echo '<td class="mark_data">'.'<input class="studentId" type="hidden" value="'.$class->id.'" name="studentId'.$i.'"/>';		      
+					  echo '<td class="mark_data">'.'<input type="hidden" value="'.$class->name.'" id="studentName'.$i.'" name="studentName'.$i.'">'.'<input type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
 					}
 					if($class->subject_id == 8){
 					  if($class->marks == '-1' ) $class->marks='';

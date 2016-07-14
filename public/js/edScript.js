@@ -9,11 +9,19 @@ var count;
 $(document).ready(function(){
 
   var window_width = $(window).width();
+  var window_height = $(window).height();
   var container_width = $('.container').width();
   $('#fixed-top-div').css({
     width: container_width,
     left: (window_width/2) - (container_width/2) + 12,
   });
+
+  $('.cover').css({
+    width: window_width,
+    height: window_height
+  });
+
+  $('.cover').hide();
 
   $(window).resize(function(){
     var window_width = $(window).width();
@@ -73,7 +81,7 @@ $(document).ready(function(){
     } // End if
   });
 
-  $('form').not('#selectCity').not('#centerId').not('#year').change(function(e){
+  $('form').not('#selectCity').change(function(e){
     if(this.id=='updateScores'){ /* The AJAX script needs to run only for the form with id as updateScores */
       var link = window.location.toString();
       var n = link.indexOf('/assessment');
@@ -106,14 +114,38 @@ $(document).ready(function(){
     
     $('.'+id).val(this.value);
 
+    var flag = false;
+
     var classname = '.'+id;
     var length = $(classname).length;
     var data = this.value;
-    //value = this.value;
 
+    for(i=0;i<length;i++){
+      var element = $(classname)[i];
+      template_id = element.id;
+      var temp_count = template_id.substring(8,10);
 
+      engScore = document.getElementById('engScore'+temp_count).value;
+      sciScore = document.getElementById('sciScore'+temp_count).value;
+      mathScore = document.getElementById('mathScore'+temp_count).value;
+      studentName = document.getElementById('studentName'+temp_count).value;
+      
+      if((engScore!="" || mathScore!="" || sciScore!="") && (engScore!="0" || mathScore!="0" || sciScore!="0") && !flag){
+        var check = confirm('Updated scores may be deleted');
+        if(check){
+          flag = true;
+          getGrades(template_id);          
+        }
 
-    var base_url = window.location;
+      }
+      else{
+        getGrades(template_id);
+      }
+
+    }
+  });
+
+    /*var base_url = window.location;
     if(this.value>=0){
       var base_url = window.location;
       e.preventDefault();
@@ -199,13 +231,12 @@ $(document).ready(function(){
         }
       }
     }
-  });
+  });*/
 
+  
   $('.studentGrade').change(function(e){
     var id = this.id;
-    
     getGrades(id);
-
   });
 
 
@@ -230,9 +261,6 @@ $(document).ready(function(){
     var count = document.getElementById('count').value;
     var string = '<td><input type="number" name="lower'+count+'" value="" placeholder="90" min="0" required></td><td><input type="number" name="upper'+count+'" value="" placeholder="100" min="0" required></td><td><input type="text" name="grade'+count+'" maxlength="2" required></td>';
 
-    //var tableBody = document.getElementById('tableBody');
-    //tableBody.innerHTML += string;
-
     var table = document.getElementById('gradeTable');
     var row = table.deleteRow(-1);
     e.preventDefault;
@@ -255,10 +283,10 @@ function concat(){
 }
 
 function getGrades(template){
-  //alert(template);
+  
   var temp_count = template.substring(8,10);
   var value = document.getElementById(template).value;
-  
+  //alert(value);
   var data = value;
 
   if(value==-1){
@@ -269,12 +297,16 @@ function getGrades(template){
     $('#totalMath'+temp_count).show();
     $('#totalSci'+temp_count).show();
     $('.total'+temp_count).show();
+
+    $('#engScore'+temp_count).replaceWith('<input class="markInput secured" id="engScore'+temp_count+'" name="engScore'+temp_count+'" value="'+engScore+'"/>');
+    $('#mathScore'+temp_count).replaceWith('<input class="markInput secured" id="mathScore'+temp_count+'" name="mathScore'+temp_count+'" value="'+mathScore+'"/>');
+    $('#sciScore'+temp_count).replaceWith('<input class="markInput secured" id="sciScore'+temp_count+'" name="sciScore'+temp_count+'" value="'+sciScore+'"/>');
   }
-  else{
+  else if(value==-2){
     engScore = document.getElementById('engScore'+temp_count).value;
     sciScore = document.getElementById('sciScore'+temp_count).value;
     mathScore = document.getElementById('mathScore'+temp_count).value;
-    if(engScore <= 10 && mathScore <= 10 && sciScore <= 10){ 
+    if((engScore <= 10 && mathScore <= 10 && sciScore <= 10)||(!Number.isInteger(engScore) || !Number.isInteger(mathScore) || !Number.isInteger(sciScore))){ 
       $('.total'+temp_count).hide();
       $('#totalEng'+temp_count).hide();
       $('#totalMath'+temp_count).hide();
@@ -283,10 +315,16 @@ function getGrades(template){
     else{
       document.getElementById(template).value = -1;
     }
-  }
 
-  //AJAX Script to fetch the Grade Template for the Database.
-  if(value>=0){
+    $('#engScore'+temp_count).replaceWith('<input class="markInput secured" id="engScore'+temp_count+'" name="engScore'+temp_count+'" value="'+engScore+'"/>');
+    $('#mathScore'+temp_count).replaceWith('<input class="markInput secured" id="mathScore'+temp_count+'" name="mathScore'+temp_count+'" value="'+mathScore+'"/>');
+    $('#sciScore'+temp_count).replaceWith('<input class="markInput secured" id="sciScore'+temp_count+'" name="sciScore'+temp_count+'" value="'+sciScore+'"/>');
+  }
+  else if(value>=0){
+    $('.total'+temp_count).hide();
+    $('#totalEng'+temp_count).hide();
+    $('#totalMath'+temp_count).hide();
+    $('#totalSci'+temp_count).hide();
     var base_url = window.location;
     $.ajax({
       type: "POST",
@@ -301,47 +339,38 @@ function getGrades(template){
         sciScore = document.getElementById('sciScore'+temp_count).value;
         mathScore = document.getElementById('mathScore'+temp_count).value;
 
+        for (i=0;i<parsed.grade.length;i++){
+          grade_options += '<option value="'+parsed.grade[i].grade+'">'+parsed.grade[i].grade+'</option>';
+        }
 
-        if(!(engScore!="" || mathScore!=""|| sciScore!="")){
-          for (i=0;i<parsed.grade.length;i++){
-            grade_options += '<option value="'+parsed.grade[i].grade+'">'+parsed.grade[i].grade+'</option>';
-          }
+        //alert(grade_options);
+        var selectEng = '<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'">';
+        var selectMath = '<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'">';
+        var selectSci = '<select class="markInput secured " id="sciScore'+temp_count+'" name="sciScore'+temp_count+'">';
 
-          //alert(grade_options);
-          var selectEng = '<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'">';
-          var selectMath = '<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'">';
-          var selectSci = '<select class="markInput secured " id="sciScore'+temp_count+'" name="sciScore'+temp_count+'">';
+        $('#engScore'+temp_count).replaceWith('<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'"></select>');
+        $('#mathScore'+temp_count).replaceWith('<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'"></select>');
+        $('#sciScore'+temp_count).replaceWith('<select class="markInput secured " id="sciScore'+temp_count+'" name="sciScore'+temp_count+'"></select>');
 
-          $('#engScore'+temp_count).replaceWith('<select class="markInput secured " id="engScore'+temp_count+'" name="engScore'+temp_count+'"></select>');
-          $('#mathScore'+temp_count).replaceWith('<select class="markInput secured " id="mathScore'+temp_count+'" name="mathScore'+temp_count+'"></select>');
-          $('#sciScore'+temp_count).replaceWith('<select class="markInput secured " id="sciScore'+temp_count+'" name="sciScore'+temp_count+'"></select>');
+        $('#engScore'+temp_count).html(grade_options);
+        $('#mathScore'+temp_count).html(grade_options);
+        $('#sciScore'+temp_count).html(grade_options);
 
-          $('#engScore'+temp_count).html(grade_options);
-          $('#mathScore'+temp_count).html(grade_options);
-          $('#sciScore'+temp_count).html(grade_options);
-
-          if(engScore!=""){
-            $('#engScore'+temp_count).val(engScore).change();
-          }
-          if(mathScore!=""){
-            $('#mathScore'+temp_count).val(mathScore).change();
-          }
-          if(sciScore!=""){
-            $('#sciScore'+temp_count).val(sciScore).change();
-          }
+        if(engScore!=""){
+          $('#engScore'+temp_count).val(engScore).change();
+        }
+        if(mathScore!=""){
+          $('#mathScore'+temp_count).val(mathScore).change();
+        }
+        if(sciScore!=""){
+          $('#sciScore'+temp_count).val(sciScore).change();
         }
       }
     });
   }
-  else if(value==-1 || value==-2){
-    $('#engScore'+temp_count).replaceWith('<input class="markInput secured" id="engScore'+temp_count+'" name="engScore'+temp_count+'" value="'+engScore+'"/>');
-    $('#mathScore'+temp_count).replaceWith('<input class="markInput secured" id="mathScore'+temp_count+'" name="mathScore'+temp_count+'" value="'+mathScore+'"/>');
-    $('#sciScore'+temp_count).replaceWith('<input class="markInput secured" id="sciScore'+temp_count+'" name="sciScore'+temp_count+'" value="'+sciScore+'"/>');
-  }
 }
 
 function validate_form(){
-
 
   var length = $('.gradeSelect').length;
   var engScore = 'engScore'+temp_count;
@@ -356,7 +385,6 @@ function validate_form(){
   for (var i=0;i<length;i++){
     var template = 'template'+i;
     var temp_count = i;
-
     var template_value = document.getElementById(template).value;
     if(template_value == -1){
       engScore = parseFloat(document.getElementById('engScore'+temp_count).value);
