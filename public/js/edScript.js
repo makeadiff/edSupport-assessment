@@ -21,7 +21,7 @@ $(document).ready(function(){
     height: window_height
   });
 
-  $('.cover').hide();
+  $('.cover').delay(1500).fadeOut(2000);
 
   $(window).resize(function(){
     var window_width = $(window).width();
@@ -110,9 +110,10 @@ $(document).ready(function(){
 
 
   $('.masterSelect').change(function(e) {
+    $('.cover').fadeIn(200);
     var id = this.id;
     
-    $('.'+id).val(this.value);
+    //$('.'+id).val(this.value);
 
     var flag = false;
 
@@ -130,19 +131,25 @@ $(document).ready(function(){
       mathScore = document.getElementById('mathScore'+temp_count).value;
       studentName = document.getElementById('studentName'+temp_count).value;
       
+
       if((engScore!="" || mathScore!="" || sciScore!="") && (engScore!="0" || mathScore!="0" || sciScore!="0") && !flag){
-        var check = confirm('Updated scores may be deleted');
+        var check = confirm('Updated scores MAY BE deleted for '+studentName+' and others.');
         if(check){
           flag = true;
+          $('#template'+temp_count).val(this.value);
           getGrades(template_id);          
         }
+        else{
 
+        }
       }
       else{
+        $('#template'+temp_count).val(this.value);
         getGrades(template_id);
       }
 
     }
+    $('.cover').fadeOut(200);
   });
 
     /*var base_url = window.location;
@@ -235,8 +242,28 @@ $(document).ready(function(){
 
   
   $('.studentGrade').change(function(e){
+    $('.cover').fadeIn(200);
     var id = this.id;
-    getGrades(id);
+    var temp_count = id.substring(8,10);
+
+    engScore = document.getElementById('engScore'+temp_count).value;
+    sciScore = document.getElementById('sciScore'+temp_count).value;
+    mathScore = document.getElementById('mathScore'+temp_count).value;
+    studentName = document.getElementById('studentName'+temp_count).value;
+
+    if((engScore!="" || mathScore!="" || sciScore!="") && (engScore!="0" || mathScore!="0" || sciScore!="0")){
+      var check = confirm('Updated scores MAY BE deleted for '+studentName+'.');
+      if(check){
+        $('#template'+temp_count).val(this.value);
+        getGrades(id);          
+      }
+      else{
+
+      }
+    }
+    $('#template'+temp_count).val(this.value);
+    getGrades(id);   
+    $('.cover').fadeOut(200);
   });
 
 
@@ -283,7 +310,6 @@ function concat(){
 }
 
 function getGrades(template){
-  
   var temp_count = template.substring(8,10);
   var value = document.getElementById(template).value;
   //alert(value);
