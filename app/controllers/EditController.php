@@ -11,17 +11,106 @@ class EditController extends BaseController{
       	$centerName = DB::table('Center')->select('id','name')->where('id',$centerId)->first();
     
       	$dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
-      	$dataSelect = $dataClass->select('Student.name','Student.id','StudentLevel.level_id','Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year);
 
-      	$classList = $dataSelect->get();
-      	
       	$className = $dataClass->select('Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->where('Level.grade','>','0')->groupby('Level.grade')->get();
 
-      	//return $classList;
-	    //$className is fetching all the grades available in the selected Center.
-      
-      	$marks = DB::table('Mark')->join('Student','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->join('Center','Center.id','=','Student.center_id')->select('Student.name','Student.id','StudentLevel.level_id','Mark.input_data as marks','Mark.subject_id','Mark.total','Level.grade','Mark.template_id')->distinct()->orderby('Level.grade','ASC')->orderby('Student.name','ASC')->orderby('Student.id','ASC')->orderby('Mark.subject_id','ASC')->where('Level.grade','>','0')->where('Level.year','=',$year)->where('Student.center_id','=',$centerId)->where('Mark.exam_id',$exam_id)->where('Student.status','=',1)->get();
-      
+
+      	$datas = DB::table('Student')->leftjoin('Mark','Student.id','=','Mark.student_id')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Level','Level.id','=','StudentLevel.level_id')->leftJoin('Subject','Subject.id','=','Mark.subject_id')->leftJoin('Exam','Exam.id','=','Mark.Exam_id')->join('Center','Center.id','=','Student.center_id')->join('City','City.id','=','Center.city_id')->select('Student.id as student_id','Student.name as student_name','Level.grade as class','Mark.input_data as marks','Mark.template_id as grade_template','Subject.name as subject_name','Mark.Total as total','Mark.subject_id as subject_id_mark','Exam.Exam_on as Year')->distinct()->orderBy('Level.grade','ASC')->orderBy('student_id','ASC')->where('Center.status','=',1)->where('Level.year','=',$year)->where('Center.id','=',$centerId)->get();
+
+      	$i = -1;
+	    $prev_student = 0;
+
+	    $data_array = array();      
+
+	    foreach ($datas as $data) {
+
+	        $patternMath = '/^Math/';
+	        $patternEng = '/^English/';
+	        $patternSci = '/^Science/';
+
+	      //------------- general data -------------------------------
+	        $student_id = $data->student_id;
+	        $class = $data->class;
+	        $student_name = $data->student_name;
+	        $subject_name_mark = $data->subject_name;
+	        $subject_id_mark = $data->subject_id_mark;
+	        $mark = $data->marks;
+	        $total = $data->total;
+	        $grade_template_id = $data->grade_template;
+
+	        //var_dump($data);
+
+	        if($mark == '-1' ) $mark='';
+		  	if($mark == '-2' ) $mark='AB';
+		  	if($mark == '-3' ) $mark='NA';
+		  	if($mark == '-4' ) $mark='OT';
+		  	if($mark == '-5' ) $mark='P';
+		  	if($mark == '-6' ) $mark='F';
+		  	if($mark == '-7' ) $mark='RE';
+
+	        if($student_id != $prev_student){
+	          $i++;
+	          $prev_student = $student_id;
+	        }
+	      //----------------------------------------------------------
+	        $data_array[$i]['id'] = $student_id;
+	        $data_array[$i]['name'] = $student_name;
+	        $data_array[$i]['grade'] = $class;
+	        
+	        if(isset($grade_template_id)){
+	        	$data_array[$i]['template_id'] = $grade_template_id;
+	        }
+	        else{
+	        	$data_array[$i]['template_id'] = '-1';	
+	        }
+
+	      //----------------------------------------------------------
+
+	        if($subject_id_mark==8){          
+	          if(!empty($mark)){
+	            $data_array[$i]['english_mark'] = $mark;
+	            $data_array[$i]['english_total'] = $total;
+	          }
+	          else{
+	            $data_array[$i]['english_mark'] = '-1';
+	            $data_array[$i]['english_total'] = '100';
+	          }
+	        }
+	        else if($subject_id_mark==9){
+	          if(!empty($mark)){
+	            $data_array[$i]['math_mark'] = $mark;
+	            $data_array[$i]['math_total'] = $total;
+	          }
+	          else{
+	            $data_array[$i]['math_mark'] = '-1';
+	            $data_array[$i]['math_total'] = '100';
+	          }
+	        }
+	        else if($subject_id_mark == 10){
+	          if(!empty($mark)){
+	            $data_array[$i]['science_mark'] = $mark;
+	            $data_array[$i]['science_total'] = $total;
+	          }
+	          else{
+	            $data_array[$i]['science_mark'] = '-1';
+	            $data_array[$i]['science_total'] = '100';
+	          }
+	        }
+	        
+	        if(!isset($data_array[$i]['english_mark'])){
+	          $data_array[$i]['english_mark'] = '-1';
+	          $data_array[$i]['english_total'] = '100';
+	        }
+	        if(!isset($data_array[$i]['math_mark'])){
+	          $data_array[$i]['math_mark'] = '-1';
+	          $data_array[$i]['math_total'] = '100';
+	        }
+	        if(!isset($data_array[$i]['science_mark'])){
+	          $data_array[$i]['science_mark'] = '-1';
+	          $data_array[$i]['science_total'] = '100';
+	        }
+	    }
+
       	$cityId = $_SESSION['city_id'];
 	  	$centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
 
@@ -31,24 +120,8 @@ class EditController extends BaseController{
 		$center_reason = DB::table('Mark_Reason')->where('center_id','=',$centerId)->first();
 
 
-  	//Information 01: If the data set is empty, without marks, we fetch the list of students only. Else we fetch the data from the MARK table.
-
-      if(empty($classList)){
-		return View::make('updateScores.nodata')->with('message','No Data is avaiable for the selected Center and Level.');
- 	  echo count($classArray);    
- 	  }
-      
-      if(empty($marks)){
-		$flag = 0;
-		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$classList,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates,'center_reason'=>$center_reason]);
-	  }
-	  
-	  else{
-		$flag = 1;
-		return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$marks,'flag'=>$flag,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates,'center_reason'=>$center_reason]);
-	  }
-	     
-    }
+  	  	return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$data_array,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates,'center_reason'=>$center_reason]);
+	}
   
     public function index(){
       return View::make('content.errorAccess')->with('message','This page cannot be accessed directly');

@@ -133,12 +133,89 @@
 		<input type="hidden" name="center_id" value="{{$centerName->id}}">
 	
 		<?php
-		    if($flag==0){
-		      $i = 0;
-		      $lastGrade = 0;
-		      
-		      foreach ($classList as $class){
-		      	 $grade = $class->grade;
+		    $i = 0;
+		    $lastGrade = 0;
+		    
+		    foreach ($classList as $class){
+	      	 	switch ($class['english_mark']) {
+	      			case '-1':
+	      				$class['english_mark'] = '';
+	      				break;
+	      			case '-2':
+	      				$class['english_mark'] = 'AB';
+	      				break;
+	      			case '-3':
+	      				$class['english_mark'] = 'NA';
+	      				break;
+	      			case '-4':
+	      				$class['english_mark'] = 'OT';
+	      				break;
+	      			case '-5':
+	      				$class['english_mark'] = 'P';
+	      				break;
+	      			case '-6':
+	      				$class['english_mark'] = 'F';
+	      				break;
+	      			case '-7':
+	      				$class['english_mark'] = 'RE';
+	      				break;
+	      			default:
+	      				break;
+	      		}
+
+	      		switch ($class['math_mark']) {
+					case '-1':
+						$class['math_mark'] = '';
+						break;
+					case '-2':
+						$class['math_mark'] = 'AB';
+						break;
+					case '-3':
+						$class['math_mark'] = 'NA';
+						break;
+					case '-4':
+						$class['math_mark'] = 'OT';
+						break;
+					case '-5':
+						$class['math_mark'] = 'P';
+						break;
+					case '-6':
+						$class['math_mark'] = 'F';
+						break;
+					case '-7':
+						$class['math_mark'] = 'RE';
+						break;
+					default:
+						break;
+				}
+
+				switch ($class['science_mark']) {
+					case '-1':
+						$class['science_mark'] = '';
+						break;
+					case '-2':
+						$class['science_mark'] = 'AB';
+						break;
+					case '-3':
+						$class['science_mark'] = 'NA';
+						break;
+					case '-4':
+						$class['science_mark'] = 'OT';
+						break;
+					case '-5':
+						$class['science_mark'] = 'P';
+						break;
+					case '-6':
+						$class['science_mark'] = 'F';
+						break;
+					case '-7':
+						$class['science_mark'] = 'RE';
+						break;
+					default:
+						break;
+				}
+
+		      	$grade = $class['grade'];
 		      		if($lastGrade == 0){
 		      			echo'<div class="row" id="'.$grade.'">
 		      			<div class="col s12 m2">
@@ -155,14 +232,15 @@
 				        	<option value="0" disabled selected>--Select Grading Template--</option>'
 				        	.'<option value="-1" selected>Marks</option>'
 				        	.'<option value="-2">CGPA</option>';
-				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
+				        	foreach ($grading_templates as $template) {
+				     			echo '<option value='.$template->id.'>'.$template->name.'</option>';
 				        	}
 				        	echo '</select>
 				        </div>';
 
 		      			echo $tableHeaders;
 		      		} 
+		      	
 		      		elseif ($grade > $lastGrade) {
 		      			echo $tableFooter;
 		      			echo'<div class="row" id="'.$grade.'">
@@ -188,176 +266,32 @@
 		      			echo $tableHeaders;
 		      	  }
 
-			      echo '<tr class="content">'.
-			      '<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
+			    echo '<tr class="content">'.
+			      '<td><strong>'.ucwords(strtolower($class['name'])).''.PHP_EOL.
 			      '<select class="gradeSelect studentGrade grade_template'.$grade.'" name="template'.$i.'" id="template'.$i.'">'.PHP_EOL.
-				        	'<option value="0" disabled>--Select Grading Template--</option>'.PHP_EOL
-				        	.'<option value="-1" selected>Marks</option>'.PHP_EOL
-				        	.'<option value="-2">CGPA</option>'.PHP_EOL;
-				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value="'.$template->id.'">'.$template->name.'</option>'.PHP_EOL;
-				        	}
-				        	echo '</select>'.'</strong></td>';
-			      echo '<td class="mark_data">'.
-				  '<input type="hidden" value="'.$class->name.'" id="studentName'.$i.'" name="studentName'.$i.'">'.
-				  '<input type="hidden" value="'.$class->id.'" name="studentId'.$i.'">'.
-				  '<input class="markInput secured " type="text" value="" id="engScore'.$i.'" name="engScore'.$i.'"/><span class="total'.$i.'">/</span>'.
-				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>'.
-				  '<td class="mark_data"><input class="markInput secured " type="text" value="" id="mathScore'.$i.'" name="mathScore'.$i.'"/><span class="total'.$i.'">/</span>'.
-				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>'.
-				  '<td class="mark_data"><input class="markInput secured " type="text" value="" id="sciScore'.$i.'" name="sciScore'.$i.'"/><span class="total'.$i.'">/</span>'.
-				  '<input class="markInput" type="number" value="100" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.
+				        '<option value="0" disabled>--Select Grading Template--</option>'.PHP_EOL
+				        .'<option value="-1" '.($class['template_id']==-1?'selected':'').'>Marks</option>'.PHP_EOL
+				        .'<option value="-2"'.($class['template_id']==-2?'selected':'').'>CGPA</option>'.PHP_EOL;
+				        foreach ($grading_templates as $template) { 
+				        	echo '<option value="'.$template->id.'"'.($class['template_id']==$template->id?'selected':'').'>'.$template->name.'</option>'.PHP_EOL;
+				        }
+				echo '</select>'.'</strong></td>';
+			    echo '<td class="mark_data">'.
+				  '<input type="hidden" value="'.$class['name'].'" id="studentName'.$i.'" name="studentName'.$i.'">'.PHP_EOL.
+				  '<input type="hidden" value="'.$class['id'].'" name="studentId'.$i.'">'.PHP_EOL.
+				  '<input class="markInput secured " type="text" value="'.$class['english_mark'].'" id="engScore'.$i.'" name="engScore'.$i.'"/>
+				  <span class="total'.$i.'">/</span>'.
+				  '<input class="markInput" type="number" value="'.$class['english_total'].'" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>'.
+				  '<td class="mark_data"><input class="markInput secured " type="text" value="'.$class['math_mark'].'" id="mathScore'.$i.'" name="mathScore'.$i.'"/><span class="total'.$i.'">/</span>'.
+				  '<input class="markInput" type="number" value="'.$class['math_total'].'" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>'.
+				  '<td class="mark_data"><input class="markInput secured " type="text" value="'.$class['science_mark'].'" id="sciScore'.$i.'" name="sciScore'.$i.'"/><span class="total'.$i.'">/</span>'.
+				  '<input class="markInput" type="number" value="'.$class['science_total'].'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.
 				'</tr>';
 			      $i++;
 
 			     $lastGrade = $grade;
 		      }
-		      echo $tableFooter;
-		    }
-		    else{
-		      $i = -1;
-		      $studentId = 0;
-		      $lastGrade = 0;
-		      //If Marks are already Entered for the list of Students then  ::  Update the Scores;
-		      	foreach ($classList as $class){
-		      		
-		      		//Segregating Class Data with respect to the Grade.
-
-		      		$grade = $class->grade;
-		      		if($lastGrade == 0){
-		      			echo'<div class="row" id="'.$grade.'">
-		      			<div class="col s12 m2">
-					        <div class="card-panel green">
-					          <span class="white-text">
-					          Grade: '
-					          .$grade.
-					          '</span>
-					        </div>
-				        </div>'.
-				        '<div class="col s12 m4">
-				        	<br/>
-				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>'
-				        	.'<option value="-1" selected>Marks</option>'
-				        	.'<option value="-2">CGPA</option>';
-				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
-				        	}
-				        	echo '</select>
-				        </div>';
-		      			echo $tableHeaders;
-		      		} 
-		      		elseif ($grade > $lastGrade) {
-		      			echo $tableFooter;
-		      			echo'<div class="row" id="'.$grade.'">
-		      			<div class="col s12 m2">
-					        <div class="card-panel green">
-					          <span class="white-text">
-					          Grade: '
-					          .$grade.
-					          '</span>
-					        </div>
-				        </div>'.
-				        '<div class="col s12 m4">
-				        	<br/>
-				        	<select class="masterSelect" name="grade_template'.$grade.'" id="grade_template'.$grade.'">
-				        	<option value="0"disabled selected>--Select Grading Template--</option>'
-				        	.'<option value="-1" selected>Marks</option>'
-				        	.'<option value="-2">CGPA</option>';
-				        	foreach ($grading_templates as $template) { 
-				        		echo '<option value='.$template->id.'>'.$template->name.'</option>';
-				        	}
-				        	echo '</select>
-				        </div>';
-		      			echo $tableHeaders;
-		      		}
-
-		      		if($class->id != $studentId){
-					  $i++;
-					  echo '<tr class="content">'.
-			      		'<td><strong>'.ucwords(strtolower($class->name)).''.PHP_EOL.
-			      		'<select class="gradeSelect studentGrade grade_template'.$grade.'" name="template'.$i.'" id="template'.$i.'">'.PHP_EOL
-				        .'<option value="0" disabled>--Select Grading Template--</option>'.PHP_EOL
-			        	.'<option value="-1" '.($class->template_id==-1?'selected':'').'>Marks</option>'.PHP_EOL
-				        .'<option value="-2"'.($class->template_id==-2?'selected':'').'>CGPA</option>'.PHP_EOL;
-				        foreach ($grading_templates as $template) { 
-				        	echo '<option value="'.$template->id.'"'.($class->template_id==$template->id?'selected':'').'>'.$template->name.'</option>'.PHP_EOL;
-				        }
-				        	
-				      echo '</select>'.'</strong></td>';
-					  echo '<td class="mark_data">'.'<input type="hidden" value="'.$class->name.'" id="studentName'.$i.'" name="studentName'.$i.'">'.'<input type="hidden" value="'.$class->id.'" name="studentId'.$i.'">';		      
-					}
-					if($class->subject_id == 8){
-					  if($class->marks == '-1' ) $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-
-					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" id="engScore'.$i.'" name="engScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalEng'.$i.'" name="totalEng'.$i.'"/></td>';
-					}
-					else if($class->subject_id == 9){
-					  if($class->marks == '-1') $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-					  
-					  echo '<td class="mark_data"><input class="markInput secured" type="text" value="'.$class->marks.'" name="mathScore'.$i.'" id="mathScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalMath'.$i.'" name="totalMath'.$i.'"/></td>';
-					}
-					else if($class->subject_id == 10){
-					  if($class->marks == '-1' ) $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-					  
-					  echo '<td class="mark_data"><input class="markInput secured" type="text" value="'.$class->marks.'" name="sciScore'.$i.'" id="sciScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalSci'.$i.'" name="totalSci'.$i.'"/></td>'.'</tr>';
-					}
-					/*else if($class->subject_id == 11){
-					  if($class->marks == '-1' ) $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-
-					  echo '<input class="markInput secured" type="text" value="'.$class->marks.'" name="bioScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalBio'.$i.'" name="totalBio'.$i.'"/></td>';
-					}
-					else if($class->subject_id == 12){
-					  if($class->marks == '-1') $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-					  
-					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="chemScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalChem'.$i.'" name="totalChem'.$i.'"/></td>';
-					}
-					else if($class->subject_id == 13){
-					  if($class->marks == '-1' ) $class->marks='';
-					  if($class->marks == '-2' ) $class->marks='AB';
-					  if($class->marks == '-3' ) $class->marks='NA';
-					  if($class->marks == '-4' ) $class->marks='OT';
-					  if($class->marks == '-5' ) $class->marks='P';
-					  if($class->marks == '-6' ) $class->marks='F';
-					  if($class->marks == '-7' ) $class->marks='RE';
-					  
-					  echo '<td><input class="markInput secured" type="text" value="'.$class->marks.'" name="phyScore'.$i.'" maxlength="3"/><span class="total'.$i.'">/</span>'.'<input class="markInput total" type="number" value="'.$class->total.'" max="100" min="0" id="totalPhy'.$i.'" name="totalPhy'.$i.'"/></td>'.'</tr>';
-					}*/
-					$studentId=$class->id;
-					$lastGrade = $grade;
-			  	}	
-			  	echo $tableFooter;
-		    }
+		    echo $tableFooter;
 		    
 	    ?>
 
