@@ -3,33 +3,31 @@
   Route::filter('login_check',function()
   {
       session_start();
-      //$_SESSION['user_id']=9006;//50423;//9006;//5828; //9006;//57184;//46174;//;//57184;
+      // $_SESSION['user_id']=57184;//50423;//9006;//5828; //9006;//57184;//46174;//;//57184;
       if(empty($_SESSION['user_id'])){
-
-	  if(App::environment('local'))
-	      return Redirect::to('http://localhost/makeadiff.in/home/makeadiff/public_html/madapp/index.php/auth/login/' . base64_encode(Request::url()));
-	  else
-	      return Redirect::to('http://makeadiff.in/madapp/index.php/auth/login/' . base64_encode(Request::url()));
-
+    	  if(App::environment('local'))
+    	      return Redirect::to('http://localhost/makeadiff.in/home/makeadiff/public_html/madapp/index.php/auth/login/' . base64_encode(Request::url()));
+    	  else
+    	      return Redirect::to('http://makeadiff.in/madapp/index.php/auth/login/' . base64_encode(Request::url()));
       }
   });
 
 
-  
+
   Route::filter('cs_check',function(){
-    
+
     $user_id = $_SESSION['user_id'];
     $user = DB::table('User')->find($user_id);
-    $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get(); 
+    $groups = DB::table('UserGroup')->join('Group','Group.id','=','UserGroup.group_id')->select('Group.name','Group.id')->where('user_id',$user_id)->get();
 
     $user_id = $_SESSION['user_id'];
     $cityId = DB::table('User')->select('city_id')->where('id',$user_id)->first();
-    //$_SESSION['city_id']=$cityId->city_id;
-    
+    $_SESSION['city_id']=$cityId->city_id;
+
     $flag = false;
-  
+
     //$_SESSION['group_id']=0;
-    
+
     foreach($groups as $group) {
       if($group->id == 1 || $group->id == 3 || $group->id == 4 || $group->id == 358 || $group->id == 19 || $group->id == 355 || $group->id == 9 || $group->id == 8 || $group->id == 350) {
 	  $flag = true;
@@ -75,8 +73,8 @@
     Route::get('/manage/report/annual-impact','ReportController@generateAnnualImpact');
 
   });
-    
-Route::get('/manage/report/getcsv/{year}','ReportController@getCSV');  
-Route::get('/manage/update/inputdata','EditController@updateInputData');  
 
-  
+Route::get('/manage/report/getcsv/{year}','ReportController@getCSV');
+Route::get('/manage/update/inputdata','EditController@updateInputData');
+Route::get('/importcsv',"ImportController@selectFile");
+Route::post('/importcsv',"ImportController@importfromcsv");

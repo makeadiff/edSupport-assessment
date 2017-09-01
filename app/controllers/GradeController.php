@@ -1,14 +1,14 @@
 <?php
 
   class GradeController extends BaseController{
-    
+
     public function index(){
       return View::make('grade.index');
     }
 
     public function createTemplate(){
       $city_id = $_SESSION['city_id'];
-	  //return $city_id;      
+	  //return $city_id;
 	  $states = DB::table('State')->select('name','id')->get();
 	  //return $centers;
       return View::make('grade.create')->with('states',$states);
@@ -22,7 +22,7 @@
           $value = DB::table('Grade_Template')->select('id','name')->where('name','like',$input)->get();
           return json_encode($value);
         }
-      } 
+      }
     }
 
     public function showList(){
@@ -41,7 +41,7 @@
     }
 
     //Controller Function to Create a new Template
-    
+
     public function create(){
       $data = Input::all();
       $templateName = Input::get('gradeNameConcated');
@@ -57,7 +57,7 @@
         return View::make('grade.success')->with('message','A Grade Template with the same name exists')->with('id',$template_id);
       }
 
-      
+
       $count = Input::get('count');
 
       if($count>0){
@@ -72,7 +72,7 @@
           //return $grade_template_id;
           $id_collection = DB::table('Grade_Template_Collection')->insertGetId(
             array('id'=>'','grade_id'=>$id,'grade_template_id'=>$grade_template_id)
-          ); 
+          );
 
         }
       }
@@ -94,7 +94,7 @@
       else{
 
         $grade_id = DB::table('Grade_Template_Collection')->select('grade_id')->where('grade_template_id',$template_id->id)->get();
-          
+
         foreach ($grade_id as $id) {
           DB::table('Grade_Template_Grade')->where('id',$id->grade_id)->delete();
         }
@@ -110,19 +110,19 @@
             $id = DB::table('Grade_Template_Grade')->insertGetId(
               array('id'=>'','grade'=>$grade,'from_mark'=>$lower,'to_mark'=>$upper)
             );
-            
+
             //return $grade_template_id;
-            
+
             $id_collection = DB::table('Grade_Template_Collection')->insertGetId(
               array('id'=>'','grade_id'=>$id,'grade_template_id'=>$template_id->id)
-            ); 
+            );
 
           }
-        }   
+        }
       }
 
-      
-     
+
+
       $template_id = DB::table('Grade_Template')->select('id')->where('name',$templateName)->first();
       return View::make('grade.success')->with('message','The Grade Template has been modified successfully')->with('id',$template_id);
     }
@@ -136,14 +136,14 @@
 
       $template = DB::table('Grade_Template as A')->join('Grade_Template_Collection as B','A.id','=','B.grade_template_id')->join('Grade_Template_Grade as C','C.id','=','B.grade_id')->select('A.id','A.name','C.grade','C.id','C.from_mark','C.to_mark')->where('A.id',$template_id)->where('A.status',1)->get();
       //return $template;
-      
+
 
       if(empty(!$template) && substr_compare($url,'view',16)>0){
         return View::make('grade.template')->with('template',$template)->with('templateName',$templateName);
       }
       else if(empty(!$template) && substr_compare($url,'modify',17)>0){
         return View::make('grade.modify')->with('template',$template)->with('templateName',$templateName);
-      } 
+      }
     }
 
     public function fetchTemplate($template_id){

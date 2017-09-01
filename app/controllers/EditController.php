@@ -1,15 +1,15 @@
 <?php
 
 class EditController extends BaseController{
-    
+
     public function getListOfStudents(){
-    
+
     	$centerId = Input::get('centerId');
       	$year = Input::get('year');
       	$exam_id = DB::select(DB::raw("select id,exam_type_id from Exam where EXTRACT(year from Exam_on)='$year' and status='1' limit 1"));
       	$exam_id =  $exam_id[0]->id;
       	$centerName = DB::table('Center')->select('id','name')->where('id',$centerId)->first();
-    
+
       	$dataClass = DB::table('Student')->join('StudentLevel','StudentLevel.student_id','=','Student.id')->join('Center','Center.id','=','Student.center_id')->join('Level','Level.id','=','StudentLevel.level_id');
 
       	$className = $dataClass->select('Level.grade')->where('Student.center_id','=',$centerId)->orderby('Level.grade','ASC')->where('Level.grade','>','0')->groupby('Level.grade')->get();
@@ -24,7 +24,7 @@ class EditController extends BaseController{
       	$i = -1;
 	    $prev_student = 0;
 
-	    $data_array = array();      
+	    $data_array = array();
 
 	    foreach ($datas as $data) {
 
@@ -60,17 +60,17 @@ class EditController extends BaseController{
 	        $data_array[$i]['id'] = $student_id;
 	        $data_array[$i]['name'] = $student_name;
 	        $data_array[$i]['grade'] = $class;
-	        
+
 	        if(isset($grade_template_id)){
 	        	$data_array[$i]['template_id'] = $grade_template_id;
 	        }
 	        else{
-	        	$data_array[$i]['template_id'] = '-1';	
+	        	$data_array[$i]['template_id'] = '-1';
 	        }
 
 	      //----------------------------------------------------------
 
-	        if($subject_id_mark==8){          
+	        if($subject_id_mark==8){
 	          if(!empty($mark)){
 	            $data_array[$i]['english_mark'] = $mark;
 	            $data_array[$i]['english_total'] = $total;
@@ -100,7 +100,7 @@ class EditController extends BaseController{
 	            $data_array[$i]['science_total'] = '100';
 	          }
 	        }
-	        
+
 	        if(!isset($data_array[$i]['english_mark'])){
 	          $data_array[$i]['english_mark'] = '-1';
 	          $data_array[$i]['english_total'] = '100';
@@ -116,21 +116,21 @@ class EditController extends BaseController{
 	    }
 
       	$cityId = $_SESSION['city_id'];
-	  	$centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
+	  	  $centerList = DB::table('Center')->join('City','Center.city_id','=','City.id')->select('Center.name','Center.id')->where('Center.city_id',$cityId)->where('Center.status','=','1')->get();
 
-		$grading_templates = DB::table('Grade_Template')->select('id','name')->where('status',1)->get(); 
-	    		  
+    		$grading_templates = DB::table('Grade_Template')->select('id','name')->where('status',1)->get();
 
-		$center_reason = DB::table('Mark_Reason')->where('center_id','=',$centerId)->first();
+
+    		$center_reason = DB::table('Mark_Reason')->where('center_id','=',$centerId)->first();
 
 
   	  	return View::make('updateScores.report',['centerName'=>$centerName,'year'=>$year,'classList'=>$data_array,'className'=>$className,'centerList'=>$centerList,'grading_templates'=>$grading_templates,'center_reason'=>$center_reason]);
 	}
-  
+
     public function index(){
       return View::make('content.errorAccess')->with('message','This page cannot be accessed directly');
     }
-    
+
     public function updateData(){
    		if(Request::ajax()){
 		  	$data = Input::all();
@@ -158,7 +158,7 @@ class EditController extends BaseController{
 				$totalEng = Input::get($te);
 				$totalSci = Input::get($ts);
 				$template = Input::get($templateID);
-				
+
 				$statusEng = 'updated';
 				$statusMath = 'updated';
 				$statusSci = 'updated';
@@ -191,7 +191,7 @@ class EditController extends BaseController{
 				  $marksEng = -7;
 				  $statusEng = 're-exam';
 				}
-				 
+
 				if(empty($marksMath)){
 				  $marksMath = -1;
 				  $statusMath = 'not updated';
@@ -259,7 +259,7 @@ class EditController extends BaseController{
 				if(empty($studentId)) break;
 
 				if($template==-2){
-					if (!is_nan((float)$marksEng)){ 
+					if (!is_nan((float)$marksEng)){
 						if((float)$marksEng <= 10){
 							$marksEng = (float) $marksEng * 9.5;
 						}
@@ -302,14 +302,14 @@ class EditController extends BaseController{
 						}
 					}
 
-				}		
+				}
 
 				$value1 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',8)->where('exam_id',$exam_id)->get();
 				$value2 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',9)->where('exam_id',$exam_id)->get();
 				$value3 = DB::table('Mark')->select('id')->where('student_id',$studentId)->where('subject_id',10)->where('exam_id',$exam_id)->get();
 
 
-			    
+
 			  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones
 
 				if(empty($value1)){
@@ -321,8 +321,8 @@ class EditController extends BaseController{
 				  DB::table('Mark')->where('id',(int)($value1[0]->id))->limit(1)->update(array('input_data'=>$inputEng,'marks'=> $marksEng,'total'=>$totalEng,'status'=>$statusEng,'template_id'=>$template)
 				  );
 				}
-				
-			  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones      
+
+			  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones
 
 				if(empty($value2)){
 				    DB::table('Mark')->insert(
@@ -333,9 +333,9 @@ class EditController extends BaseController{
 				  DB::table('Mark')->where('id',(int)($value2[0]->id))->update(array('input_data'=>$inputMath,'marks'=>$marksMath,'total'=>$totalMath,'status'=>$statusMath,'template_id'=>$template)
 				  );
 				}
-				
-			  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones      
-			  
+
+			  //       If table already had entry for the same kid and for the same id, update the current values instead of inserting new ones
+
 				if(empty($value3)){
 				    DB::table('Mark')->insert(
 				      array('student_id'=>$studentId,'subject_id'=>10,'exam_id'=>$exam_id,'input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
@@ -345,7 +345,7 @@ class EditController extends BaseController{
 				  DB::table('Mark')->where('id',(int)($value3[0]->id))->update(array('input_data'=>$inputSci,'marks'=>$marksSci,'total'=>$totalSci,'status'=>$statusSci,'template_id'=>$template)
 				  	);
 				}
-				
+
 					$j++;
 			}
 
@@ -355,14 +355,14 @@ class EditController extends BaseController{
 			$reason = Input::get('reason');
 
 			$center_reason = DB::table('Mark_Reason')->select('id')->where('center_id','=',$center_id)->first();
-			
+
 			if(empty($center_reason) && !empty($reason)){
-				DB::table('Mark_Reason')->insert(array('center_id'=>$center_id,'reason'=>$reason));	
+				DB::table('Mark_Reason')->insert(array('center_id'=>$center_id,'reason'=>$reason));
 			}
 			elseif (!empty($center_reason) && !empty($reason)) {
 				DB::table('Mark_Reason')->where('id','=',$center_reason->id)->update(array('reason'=>$reason));
 			}
-			
+
 
 		    return 'Changes updated successful in the Database';
 		}
@@ -372,7 +372,7 @@ class EditController extends BaseController{
 
 	public function updateInputData(){
 		$data = DB::table('Mark')->get();
-		
+
 		foreach ($data as $dataset) {
 			$id = $dataset->id;
 			$student_id = $dataset->student_id;
@@ -410,10 +410,9 @@ class EditController extends BaseController{
 		            	$input_data = $template->grade;
 		            	//echo 'Grade '.$marks.' - '.$input_data.'<br/>';
 		            	DB::table('Mark')->where('id','=',$id)->update(['input_data'=>$input_data]);
-		            } 
+		            }
 		        }
 			}
 		}
 	}
 }
-
